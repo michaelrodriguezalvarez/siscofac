@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NomArea index{% endblock %}
+
+{% block body %}
+    <h1>NomArea index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nom_area in nom_areas %}
+            <tr>
+                <td>{{ nom_area.id }}</td>
+                <td>{{ nom_area.nombre }}</td>
+                <td>
+                    <a href="{{ path('nom_area_show', {'id': nom_area.id}) }}">show</a>
+                    <a href="{{ path('nom_area_edit', {'id': nom_area.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('nom_area_new') }}">Create new</a>
+{% endblock %}

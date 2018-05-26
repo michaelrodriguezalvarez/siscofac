@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NomProveedor{% endblock %}
+
+{% block body %}
+    <h1>NomProveedor</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ nom_proveedor.id }}</td>
+            </tr>
+            <tr>
+                <th>Provincia</th>
+                <td>{{ nom_proveedor.provincia }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ nom_proveedor.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ nom_proveedor.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Correo</th>
+                <td>{{ nom_proveedor.correo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('nom_proveedor_index') }}">back to list</a>
+
+    <a href="{{ path('nom_proveedor_edit', {'id': nom_proveedor.id}) }}">edit</a>
+
+    {{ include('nom_proveedor/_delete_form.html.twig') }}
+{% endblock %}

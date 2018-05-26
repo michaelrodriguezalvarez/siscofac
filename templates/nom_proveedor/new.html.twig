@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New NomProveedor{% endblock %}
+
+{% block body %}
+    <h1>Create new NomProveedor</h1>
+
+    {{ include('nom_proveedor/_form.html.twig') }}
+
+    <a href="{{ path('nom_proveedor_index') }}">back to list</a>
+{% endblock %}

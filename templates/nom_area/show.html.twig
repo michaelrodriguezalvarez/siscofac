@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NomArea{% endblock %}
+
+{% block body %}
+    <h1>NomArea</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ nom_area.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ nom_area.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('nom_area_index') }}">back to list</a>
+
+    <a href="{{ path('nom_area_edit', {'id': nom_area.id}) }}">edit</a>
+
+    {{ include('nom_area/_delete_form.html.twig') }}
+{% endblock %}

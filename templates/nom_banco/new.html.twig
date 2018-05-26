@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New NomBanco{% endblock %}
+
+{% block body %}
+    <h1>Create new NomBanco</h1>
+
+    {{ include('nom_banco/_form.html.twig') }}
+
+    <a href="{{ path('nom_banco_index') }}">back to list</a>
+{% endblock %}
