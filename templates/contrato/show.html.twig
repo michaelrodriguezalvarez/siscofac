@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrato{% endblock %}
+
+{% block body %}
+    <h1>Contrato</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contrato.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ contrato.numero }}</td>
+            </tr>
+            <tr>
+                <th>Anno</th>
+                <td>{{ contrato.anno ? contrato.anno|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaInicio</th>
+                <td>{{ contrato.fechaInicio ? contrato.fechaInicio|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaTerminacion</th>
+                <td>{{ contrato.fechaTerminacion ? contrato.fechaTerminacion|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Proveedor</th>
+                <td>{{ contrato.proveedor }}</td>
+            </tr>
+            <tr>
+                <th>TipoDeServicio</th>
+                <td>{{ contrato.tipoDeServicio }}</td>
+            </tr>
+            <tr>
+                <th>Objeto</th>
+                <td>{{ contrato.objeto }}</td>
+            </tr>
+            <tr>
+                <th>Nit</th>
+                <td>{{ contrato.nit }}</td>
+            </tr>
+            <tr>
+                <th>TipoDePersona</th>
+                <td>{{ contrato.tipoDePersona }}</td>
+            </tr>
+            <tr>
+                <th>CuentaBancariaCup</th>
+                <td>{{ contrato.cuentaBancariaCup }}</td>
+            </tr>
+            <tr>
+                <th>CuentaBancariaCuc</th>
+                <td>{{ contrato.cuentaBancariaCuc }}</td>
+            </tr>
+            <tr>
+                <th>ValorContratoCup</th>
+                <td>{{ contrato.valorContratoCup }}</td>
+            </tr>
+            <tr>
+                <th>ValorContratoCuc</th>
+                <td>{{ contrato.valorContratoCuc }}</td>
+            </tr>
+            <tr>
+                <th>EjecucionContratoCup</th>
+                <td>{{ contrato.ejecucionContratoCup }}</td>
+            </tr>
+            <tr>
+                <th>EjecucionContratoCuc</th>
+                <td>{{ contrato.ejecucionContratoCuc }}</td>
+            </tr>
+            <tr>
+                <th>SaldoCup</th>
+                <td>{{ contrato.saldoCup }}</td>
+            </tr>
+            <tr>
+                <th>SaldoCuc</th>
+                <td>{{ contrato.saldoCuc }}</td>
+            </tr>
+            <tr>
+                <th>Banco</th>
+                <td>{{ contrato.banco }}</td>
+            </tr>
+            <tr>
+                <th>AprobContratoComiteContratacion</th>
+                <td>{{ contrato.aprobContratoComiteContratacion }}</td>
+            </tr>
+            <tr>
+                <th>AprobContratoComiteAdministracion</th>
+                <td>{{ contrato.aprobContratoComiteAdministracion }}</td>
+            </tr>
+            <tr>
+                <th>AreaAdministraContrato</th>
+                <td>{{ contrato.areaAdministraContrato }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('contrato_index') }}">back to list</a>
+
+    <a href="{{ path('contrato_edit', {'id': contrato.id}) }}">edit</a>
+
+    {{ include('contrato/_delete_form.html.twig') }}
+{% endblock %}

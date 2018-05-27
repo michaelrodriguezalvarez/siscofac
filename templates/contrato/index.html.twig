@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrato index{% endblock %}
+
+{% block body %}
+    <h1>Contrato index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Anno</th>
+                <th>FechaInicio</th>
+                <th>FechaTerminacion</th>
+                <th>Proveedor</th>
+                <th>TipoDeServicio</th>
+                <th>Objeto</th>
+                <th>Nit</th>
+                <th>TipoDePersona</th>
+                <th>CuentaBancariaCup</th>
+                <th>CuentaBancariaCuc</th>
+                <th>ValorContratoCup</th>
+                <th>ValorContratoCuc</th>
+                <th>EjecucionContratoCup</th>
+                <th>EjecucionContratoCuc</th>
+                <th>SaldoCup</th>
+                <th>SaldoCuc</th>
+                <th>Banco</th>
+                <th>AprobContratoComiteContratacion</th>
+                <th>AprobContratoComiteAdministracion</th>
+                <th>AreaAdministraContrato</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contrato in contratos %}
+            <tr>
+                <td>{{ contrato.id }}</td>
+                <td>{{ contrato.numero }}</td>
+                <td>{{ contrato.anno ? contrato.anno|date('Y-m-d') : '' }}</td>
+                <td>{{ contrato.fechaInicio ? contrato.fechaInicio|date('Y-m-d') : '' }}</td>
+                <td>{{ contrato.fechaTerminacion ? contrato.fechaTerminacion|date('Y-m-d') : '' }}</td>
+                <td>{{ contrato.proveedor }}</td>
+                <td>{{ contrato.tipoDeServicio }}</td>
+                <td>{{ contrato.objeto }}</td>
+                <td>{{ contrato.nit }}</td>
+                <td>{{ contrato.tipoDePersona }}</td>
+                <td>{{ contrato.cuentaBancariaCup }}</td>
+                <td>{{ contrato.cuentaBancariaCuc }}</td>
+                <td>{{ contrato.valorContratoCup }}</td>
+                <td>{{ contrato.valorContratoCuc }}</td>
+                <td>{{ contrato.ejecucionContratoCup }}</td>
+                <td>{{ contrato.ejecucionContratoCuc }}</td>
+                <td>{{ contrato.saldoCup }}</td>
+                <td>{{ contrato.saldoCuc }}</td>
+                <td>{{ contrato.banco }}</td>
+                <td>{{ contrato.aprobContratoComiteContratacion }}</td>
+                <td>{{ contrato.aprobContratoComiteAdministracion }}</td>
+                <td>{{ contrato.areaAdministraContrato }}</td>
+                <td>
+                    <a href="{{ path('contrato_show', {'id': contrato.id}) }}">show</a>
+                    <a href="{{ path('contrato_edit', {'id': contrato.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="23">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('contrato_new') }}">Create new</a>
+{% endblock %}

@@ -70,6 +70,13 @@ class Factura
      */
     private $contrato = 'NULL';
 
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=true, options={"default"="NULL"})
+     */
+    private $estado = 'NULL';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +162,18 @@ class Factura
     public function setContrato(?int $contrato): self
     {
         $this->contrato = $contrato;
+
+        return $this;
+    }
+
+    public function getEstado(): ?int
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?int $estado): self
+    {
+        $this->estado = $estado;
 
         return $this;
     }

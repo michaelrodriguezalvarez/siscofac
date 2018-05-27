@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NomEstadoFactura index{% endblock %}
+
+{% block body %}
+    <h1>NomEstadoFactura index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estado</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nom_estado_factura in nom_estado_facturas %}
+            <tr>
+                <td>{{ nom_estado_factura.id }}</td>
+                <td>{{ nom_estado_factura.estado }}</td>
+                <td>
+                    <a href="{{ path('nom_estado_factura_show', {'id': nom_estado_factura.id}) }}">show</a>
+                    <a href="{{ path('nom_estado_factura_edit', {'id': nom_estado_factura.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('nom_estado_factura_new') }}">Create new</a>
+{% endblock %}

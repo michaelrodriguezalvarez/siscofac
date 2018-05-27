@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acuerdo{% endblock %}
+
+{% block body %}
+    <h1>Acuerdo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ acuerdo.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ acuerdo.numero }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ acuerdo.fecha ? acuerdo.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('acuerdo_index') }}">back to list</a>
+
+    <a href="{{ path('acuerdo_edit', {'id': acuerdo.id}) }}">edit</a>
+
+    {{ include('acuerdo/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New NomEstadoFactura{% endblock %}
+
+{% block body %}
+    <h1>Create new NomEstadoFactura</h1>
+
+    {{ include('nom_estado_factura/_form.html.twig') }}
+
+    <a href="{{ path('nom_estado_factura_index') }}">back to list</a>
+{% endblock %}
