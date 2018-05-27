@@ -2,11 +2,17 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <!--The responsive viewport meta tag-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}SISCOFAC{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+
+        <script src="{{ asset('build/manifest.js') }}"></script>
+        <script src="{{ asset('build/vendor.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
