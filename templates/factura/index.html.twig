@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Factura index{% endblock %}
+
+{% block body %}
+    <h1>Factura index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Fecha</th>
+                <th>TipoServicio</th>
+                <th>Concepto</th>
+                <th>ValorCup</th>
+                <th>ValorCuc</th>
+                <th>Contrato</th>
+                <th>Estado</th>
+                <th>NumeroCheque</th>
+                <th>FechaCheque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for factura in facturas %}
+            <tr>
+                <td>{{ factura.id }}</td>
+                <td>{{ factura.numero }}</td>
+                <td>{{ factura.fecha ? factura.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ factura.tipoServicio }}</td>
+                <td>{{ factura.concepto }}</td>
+                <td>{{ factura.valorCup }}</td>
+                <td>{{ factura.valorCuc }}</td>
+                <td>{{ factura.contrato }}</td>
+                <td>{{ factura.estado }}</td>
+                <td>{{ factura.numeroCheque }}</td>
+                <td>{{ factura.fechaCheque ? factura.fechaCheque|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('factura_show', {'id': factura.id}) }}">show</a>
+                    <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('factura_new') }}">Create new</a>
+{% endblock %}

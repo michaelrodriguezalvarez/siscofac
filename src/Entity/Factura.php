@@ -22,60 +22,74 @@ class Factura
     private $id;
 
     /**
-     * @var int|null
+     * @var int
      *
-     * @ORM\Column(name="numero", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="numero", type="integer", nullable=false)
      */
-    private $numero = 'NULL';
+    private $numero;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fecha", type="date", nullable=false)
      */
-    private $fecha = 'NULL';
+    private $fecha;
 
     /**
-     * @var int|null
+     * @var int
      *
-     * @ORM\Column(name="tipo_servicio", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="tipo_servicio", type="integer", nullable=false)
      */
-    private $tipoServicio = 'NULL';
+    private $tipoServicio;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="concepto", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="concepto", type="text", length=65535, nullable=false)
      */
-    private $concepto = 'NULL';
+    private $concepto;
 
     /**
-     * @var float|null
+     * @var float
      *
-     * @ORM\Column(name="valor_cup", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="valor_cup", type="float", precision=10, scale=0, nullable=false)
      */
-    private $valorCup = 'NULL';
+    private $valorCup;
 
     /**
-     * @var float|null
+     * @var float
      *
-     * @ORM\Column(name="valor_cuc", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="valor_cuc", type="float", precision=10, scale=0, nullable=false)
      */
-    private $valorCuc = 'NULL';
+    private $valorCuc;
 
     /**
-     * @var int|null
+     * @var int
      *
-     * @ORM\Column(name="contrato", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="contrato", type="integer", nullable=false)
      */
-    private $contrato = 'NULL';
+    private $contrato;
 
     /**
-     * @var int|null
+     * @var int
      *
-     * @ORM\Column(name="estado", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="estado", type="integer", nullable=false)
      */
-    private $estado = 'NULL';
+    private $estado;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="numero_cheque", type="bigint", nullable=false)
+     */
+    private $numeroCheque;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_cheque", type="date", nullable=false)
+     */
+    private $fechaCheque;
 
     public function getId(): ?int
     {
@@ -87,7 +101,7 @@ class Factura
         return $this->numero;
     }
 
-    public function setNumero(?int $numero): self
+    public function setNumero(int $numero): self
     {
         $this->numero = $numero;
 
@@ -99,7 +113,7 @@ class Factura
         return $this->fecha;
     }
 
-    public function setFecha(?\DateTimeInterface $fecha): self
+    public function setFecha(\DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
 
@@ -111,7 +125,7 @@ class Factura
         return $this->tipoServicio;
     }
 
-    public function setTipoServicio(?int $tipoServicio): self
+    public function setTipoServicio(int $tipoServicio): self
     {
         $this->tipoServicio = $tipoServicio;
 
@@ -123,7 +137,7 @@ class Factura
         return $this->concepto;
     }
 
-    public function setConcepto(?string $concepto): self
+    public function setConcepto(string $concepto): self
     {
         $this->concepto = $concepto;
 
@@ -135,7 +149,7 @@ class Factura
         return $this->valorCup;
     }
 
-    public function setValorCup(?float $valorCup): self
+    public function setValorCup(float $valorCup): self
     {
         $this->valorCup = $valorCup;
 
@@ -147,7 +161,7 @@ class Factura
         return $this->valorCuc;
     }
 
-    public function setValorCuc(?float $valorCuc): self
+    public function setValorCuc(float $valorCuc): self
     {
         $this->valorCuc = $valorCuc;
 
@@ -159,7 +173,7 @@ class Factura
         return $this->contrato;
     }
 
-    public function setContrato(?int $contrato): self
+    public function setContrato(int $contrato): self
     {
         $this->contrato = $contrato;
 
@@ -171,9 +185,33 @@ class Factura
         return $this->estado;
     }
 
-    public function setEstado(?int $estado): self
+    public function setEstado(int $estado): self
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getNumeroCheque(): ?int
+    {
+        return $this->numeroCheque;
+    }
+
+    public function setNumeroCheque(int $numeroCheque): self
+    {
+        $this->numeroCheque = $numeroCheque;
+
+        return $this;
+    }
+
+    public function getFechaCheque(): ?\DateTimeInterface
+    {
+        return $this->fechaCheque;
+    }
+
+    public function setFechaCheque(\DateTimeInterface $fechaCheque): self
+    {
+        $this->fechaCheque = $fechaCheque;
 
         return $this;
     }

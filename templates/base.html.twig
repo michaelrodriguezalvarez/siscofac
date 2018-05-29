@@ -9,10 +9,14 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <!-- Menu de navegacion-->
+        {% include 'principal/menu.html.twig' %}
+
         {% block body %}{% endblock %}
 
         <script src="{{ asset('build/manifest.js') }}"></script>
         <script src="{{ asset('build/vendor.js') }}"></script>
+        <script src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
