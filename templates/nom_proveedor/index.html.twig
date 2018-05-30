@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Nombre</th>
                 <th>Provincia</th>
                 <th>Direccion</th>
                 <th>Telefono</th>
@@ -20,6 +21,7 @@
         {% for nom_proveedor in nom_proveedors %}
             <tr>
                 <td>{{ nom_proveedor.id }}</td>
+                <td>{{ nom_proveedor.nombre }}</td>
                 <td>{{ nom_proveedor.provincia }}</td>
                 <td>{{ nom_proveedor.direccion }}</td>
                 <td>{{ nom_proveedor.telefono }}</td>
@@ -31,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

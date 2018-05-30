@@ -20,7 +20,7 @@ class SuplementoType extends AbstractType
             ->add('fechaTerminacion')
             ->add('acuerdo',EntityType::class, array(
                 'class' => Acuerdo::class,
-                'choice_label'=>'numero'
+                //'choice_label'=>'numero'
             ))
             ->add('contrato')
             ->add('contrato',EntityType::class, array(

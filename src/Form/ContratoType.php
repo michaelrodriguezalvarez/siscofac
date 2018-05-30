@@ -10,17 +10,22 @@ use App\Entity\NomBanco;
 use App\Entity\Acuerdo;
 use App\Entity\NomArea;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Doctrine\ORM\EntityManager;
+
 class ContratoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {              
         $builder
             ->add('numero')
-            ->add('anno')
+            ->add('anno', ChoiceType::class, array(
+                'choices'  => $this->getUltimosNAnnosHastaActual(10)
+            ))
             ->add('fechaInicio')
             ->add('fechaTerminacion')
             ->add('proveedor',EntityType::class, array(
@@ -52,12 +57,12 @@ class ContratoType extends AbstractType
             ->add('aprobContratoComiteContratacion')
             ->add('aprobContratoComiteContratacion',EntityType::class, array(
                 'class' => Acuerdo::class,
-                'choice_label'=>'numero'
+                //'choice_label'=>'numero'
             ))
             ->add('aprobContratoComiteAdministracion')
             ->add('aprobContratoComiteAdministracion',EntityType::class, array(
                 'class' => Acuerdo::class,
-                'choice_label'=>'numero'
+                //'choice_label'=>'numero'
             ))
             ->add('areaAdministraContrato',EntityType::class, array(
                 'class' => NomArea::class,
@@ -72,4 +77,18 @@ class ContratoType extends AbstractType
             'data_class' => Contrato::class,
         ]);
     }
+
+    public function getUltimosNAnnosHastaActual($n):array{
+        $anno_actual = date('Y'); 
+        $annos = array();       
+
+        while ($n >= 0) {
+            array_unshift($annos, $anno_actual - $n);
+            $n--;
+        }
+
+        return array_combine($annos, $annos);
+    }
+
+    
 }
