@@ -1,0 +1,53 @@
+#In the forms
+Numero: Number
+Fecha: Date
+Tipo servicio: Type of service
+Concepto: Concept
+Valor cup: Value in CUP
+Valor cuc: Value in CUC
+Contrato: Contract
+Estado: State
+Numero cheque: Check number
+Fecha cheque: Check date 
+Anno: Year
+Fecha inicio: Start date
+Fecha terminacion: Finish date
+Proveedor: Provider
+Tipo de servicio: Type of service
+Objeto: Object
+Nit: Nit
+Tipo de persona: Kind of person
+Cuenta bancaria cup: Bank account in CUP
+Cuenta bancaria cuc: Bank account in CUC
+Valor contrato cup: Contract value in CUP 
+Valor contrato cuc: Contract value in CUC
+Ejecucion contrato cup: Contract execution in CUP
+Ejecucion contrato cuc: Contract execution in CUC
+Saldo cup: Balance in CUP
+Saldo cuc: Balance in CUC
+Banco: Bank
+Aprob contrato comite contratacion: Approve contract contracting committee
+Aprob contrato comite administracion: Approve contract management committee
+Area administra contrato: Area administers contract
+Acuerdo: Agreement
+Nombre: Name
+Provincia: Province
+Direccion: Address
+Telefono: Phone
+Correo: Mail
+#In the menu
+Escritorio: Desk
+Gestionar: Manage
+Factura: Invoice
+Suplemento: Supplement
+Nomencladores: Nomenclators
+Proveedores: Suppliers
+Areas: Areas
+Bancos: Banks
+Estados Factura: Invoice States
+Tipo de Persona: Kind of Person
+Tipo de Servicio: Type of Service
+Usuario: User
+Detalles: Details
+Modificar: Modify
+Salir: Logout

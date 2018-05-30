@@ -1,0 +1,53 @@
+#En los formularios
+Numero: Número
+Fecha: Fecha
+Tipo servicio: Tipo de Servicio
+Concepto: Concepto
+Valor cup: Valor en CUP
+Valor cuc: Valor en CUC
+Contrato: Contrato
+Estado: Estado
+Numero cheque: Número de Cheque
+Fecha cheque: Fecha del Cheque
+Anno: Año
+Fecha inicio: Fecha de inicio
+Fecha terminacion: Fecha de terminación
+Proveedor: Proveedor
+Tipo de servicio: Tipo de servicio
+Objeto: Objeto
+Nit: Nit
+Tipo de persona: Tipo de persona
+Cuenta bancaria cup: Cuenta bancaria en CUP
+Cuenta bancaria cuc: Cuenta bancaria en CUC
+Valor contrato cup: Valor contrato en CUP
+Valor contrato cuc: Valor contrato en CUC
+Ejecucion contrato cup: Ejecución contrato en CUP
+Ejecucion contrato cuc: Ejecución contrato en CUC
+Saldo cup: Saldo en CUP
+Saldo cuc: Saldo en CUC
+Banco: Banco
+Aprob contrato comite contratacion: Aprob contrato comite contratación
+Aprob contrato comite administracion: Aprob contrato comite administración
+Area administra contrato: Area que administra el contrato
+Acuerdo: Acuerdo
+Nombre: Nombre
+Provincia: Provincia
+Direccion: Dirección
+Telefono: Teléfono
+Correo: Correo
+#En el menu
+Escritorio: Escritorio
+Gestionar: Gestionar
+Factura: Factura
+Suplemento: Suplemento
+Nomencladores: Nomencladores
+Proveedores: Proveedores
+Areas: Areas
+Bancos: Bancos
+Estados Factura: Estados Factura
+Tipo de Persona: Tipo de Persona
+Tipo de Servicio: Tipo de Servicio
+Usuario: Usuario
+Detalles: Detalles
+Modificar: Modificar
+Salir: Salir

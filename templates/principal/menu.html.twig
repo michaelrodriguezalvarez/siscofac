@@ -7,59 +7,54 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ path('principal') }}">Inicio <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('principal') }}">{% trans %}Escritorio{% endtrans %} <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Gestionar
+                    {% trans %}Gestionar{% endtrans %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ path('contrato_index') }}">Contrato</a>
+                    <a class="dropdown-item" href="{{ path('contrato_index') }}">{% trans %}Contrato{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('factura_index') }}">Factura</a>
+                    <a class="dropdown-item" href="{{ path('factura_index') }}">{% trans %}Factura{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('acuerdo_index') }}">Acuerdo</a>
+                    <a class="dropdown-item" href="{{ path('acuerdo_index') }}">{% trans %}Acuerdo{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('suplemento_index') }}">Suplemento</a>
+                    <a class="dropdown-item" href="{{ path('suplemento_index') }}">{% trans %}Suplemento{% endtrans %}</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Nomencladores
+                    {% trans %}Nomencladores{% endtrans %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ path('nom_proveedor_index') }}">Proveedores</a>
+                    <a class="dropdown-item" href="{{ path('nom_proveedor_index') }}">{% trans %}Proveedores{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('nom_area_index') }}">Areas</a>
+                    <a class="dropdown-item" href="{{ path('nom_area_index') }}">{% trans %}Areas{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('nom_banco_index') }}">Bancos</a>
+                    <a class="dropdown-item" href="{{ path('nom_banco_index') }}">{% trans %}Bancos{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('nom_estado_factura_index') }}">Estados Factura</a>
+                    <a class="dropdown-item" href="{{ path('nom_estado_factura_index') }}">{% trans %}Estados Factura{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('nom_provincia_index') }}">Provincia</a>
+                    <a class="dropdown-item" href="{{ path('nom_provincia_index') }}">{% trans %}Provincia{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('nom_tipo_persona_index') }}">Tipo de Persona</a>
+                    <a class="dropdown-item" href="{{ path('nom_tipo_persona_index') }}">{% trans %}Tipo de Persona{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('nom_tipo_servicio_index') }}">Tipo de Servicio</a>
+                    <a class="dropdown-item" href="{{ path('nom_tipo_servicio_index') }}">{% trans %}Tipo de Servicio{% endtrans %}</a>
                 </div>
             </li>
             <li class="nav-item dropdown my-2 my-lg-0">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Usuario
+                    {% trans %}Usuario{% endtrans %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Detalles</a>
+                    <a class="dropdown-item" href="#">{% trans %}Detalles{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Modificar</a>
+                    <a class="dropdown-item" href="#">{% trans %}Modificar{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Salir</a>
+                    <a class="dropdown-item" href="#">{% trans %}Salir{% endtrans %}</a>
                 </div>
             </li>
         </ul>
-        <!--<form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Usuario" aria-label="Usuario">
-            <input class="form-control mr-sm-2" type="password" placeholder="Clave" aria-label="Clave">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Entrar</button>
-        </form>-->
     </div>
 </nav>
