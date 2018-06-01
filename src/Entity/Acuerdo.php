@@ -66,6 +66,6 @@ class Acuerdo
 
     public function __toString()
     {
-        return 'No. ' . $this->getNumero() . '/' . $this->getFecha()->format('d-m-Y');
+        return 'No. ' . $this->getNumero() . ' Fecha ' . $this->getFecha()->format('d/m/Y');
     }
 }

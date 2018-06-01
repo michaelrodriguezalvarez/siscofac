@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Contrato{% endblock %}
+{% block title %}{% trans %}Adicionar{% endtrans %} {% trans %}Nuevo{% endtrans %} {% trans %}Contrato{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Create new Contrato</h1>
+    <h1>{% trans %}Adicionar{% endtrans %} {% trans %}Nuevo{% endtrans %} {% trans %}Contrato{% endtrans %}</h1>
 
-    {{ include('contrato/_form.html.twig') }}
+    {% include 'contrato/botones.html.twig' %}
 
-    <a href="{{ path('contrato_index') }}">back to list</a>
+    <br>
+    <br>
+    {% include 'contrato/formulario.html.twig' %}
+
+    {#{ include('contrato/_form.html.twig') }#}
+
 {% endblock %}

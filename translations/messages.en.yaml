@@ -16,6 +16,8 @@ Proveedor: Provider
 Tipo de servicio: Type of service
 Objeto: Object
 Nit: Nit
+Reeup: Reeup
+Carnet identidad: Identity card
 Tipo de persona: Kind of person
 Cuenta bancaria cup: Bank account in CUP
 Cuenta bancaria cuc: Bank account in CUC
@@ -49,5 +51,21 @@ Tipo de Persona: Kind of Person
 Tipo de Servicio: Type of Service
 Usuario: User
 Detalles: Details
-Modificar: Modify
+Modificar: Edit
 Salir: Logout
+#In the buttons
+Adicionar: Add
+Buscar: Search
+Listar: List
+Nuevo: New
+Guardar: Save
+#In the options
+Activo: Enabled
+Inactivo: Disabled
+Comprobacion Contrato: Contract Verification
+Comite de Contratacion: Contracting Committee
+Comite de Administracion: Management Committee
+Valor contrato inicial cup: Initial contract value CUP
+Valor contrato inicial cuc: Initial contract value CUC
+Valor contrato total cup: Total contract value CUP
+Valor contrato total cuc: Total contract value CUC

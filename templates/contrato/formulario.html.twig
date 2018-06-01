@@ -1,0 +1,124 @@
+<div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="12" class="text-center">{% trans %}Contrato{% endtrans %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="3">{{ form_row(form.numero) }}</td>
+          <td colspan="3">{{ form_row(form.anno) }}</td>
+          <td colspan="3">{{ form_row(form.fechaInicio) }}</td>
+          <td colspan="3">{{ form_row(form.fechaTerminacion) }}</td>
+        </tr>
+        <tr>
+          <td colspan="12">
+              <div class="row col-lg-12">
+                  <div class="col-lg-11">{{ form_row(form.proveedor) }}</div>
+                  <div class="col-lg-1"><a class="btn btn-default border" href="#" id="btn_nuevo_proveedor">Nuevo</a></div>
+              </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+              {{ form_label(form.tipoDeServicio) }}
+              {{ form_errors(form.tipoDeServicio) }}
+
+                  {% for tipoDeServicio in form.tipoDeServicio %}
+                      <div>
+                          {{ form_errors(tipoDeServicio) }}
+                          {{ form_widget(tipoDeServicio) }}
+                          {{ form_label(tipoDeServicio) }}
+                      </div>
+                  {% endfor %}
+
+          </td>
+          <td colspan="9">{{ form_row(form.objeto) }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+              {{ form_row(form.nit) }}
+                <hr>
+              {{ form_row(form.reeup) }}
+                <hr>
+              {{ form_row(form.carnetIdentidad) }}
+            </td>
+            <td colspan="6">
+              {{ form_row(form.cuentaBancariaCup) }}
+                <hr>
+              {{ form_row(form.cuentaBancariaCuc) }}
+            </td>
+            <td colspan="3">{{ form_row(form.banco) }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                {{ form_label(form.tipoDePersona) }}
+                {{ form_errors(form.tipoDePersona) }}
+
+                {% for tipoDePersona in form.tipoDePersona %}
+                    <div>
+                        {{ form_errors(tipoDePersona) }}
+                        {{ form_widget(tipoDePersona) }}
+                        {{ form_label(tipoDePersona) }}
+                    </div>
+                {% endfor %}
+
+            </td>
+            <td colspan="2">
+                {{ form_row(form.valorContratoInicialCup) }}
+                <hr>
+                {{ form_row(form.valorContratoInicialCuc) }}
+            </td>
+            <td colspan="2">
+                {{ form_row(form.valorContratoTotalCup) }}
+                <hr>
+                {{ form_row(form.valorContratoTotalCuc) }}
+            </td>
+            <td colspan="2">
+                {{ form_row(form.ejecucionContratoCup) }}
+                <hr>
+                {{ form_row(form.ejecucionContratoCuc) }}
+            </td>
+            <td colspan="2">
+                {{ form_row(form.saldoCup) }}
+                {{ form_row(form.saldoCuc) }}
+            </td>
+        </tr>
+        <!-- Area para los suplementos del contrato
+        <tr>
+            <td colspan="12"></td>
+        </tr>
+        -->
+        <tr>
+            <td colspan="3"><span>{% trans %}Comprobacion Contrato{% endtrans %}</span></td>
+            <td colspan="5">
+                <p>{% trans %}Comite de Contratacion{% endtrans %}</p>
+                <hr>
+                <p>{% trans %}Acuerdo{% endtrans %}</p>
+                {{ form_errors(form.aprobContratoComiteContratacion) }}
+                {{ form_widget(form.aprobContratoComiteContratacion) }}
+            </td>
+            <td colspan="4">
+                <p>{% trans %}Comite de Administracion{% endtrans %}</p>
+                <hr>
+                <p>{% trans %}Acuerdo{% endtrans %}</p>
+                {{ form_errors(form.aprobContratoComiteAdministracion) }}
+                {{ form_widget(form.aprobContratoComiteAdministracion) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="12">
+                {{ form_row(form.areaAdministraContrato) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="12">
+                {{ form_row(form.estado) }}
+            </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<button class="btn btn-success">{{ button_label|default('Guardar')|trans}}</button>

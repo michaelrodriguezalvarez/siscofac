@@ -11,7 +11,7 @@ Encore
     // .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-     .addEntry('app', './assets/js/app.js')
+     .addEntry('app', ['./assets/js/app.js','./assets/js/proveedor.js'])
      //.addStyleEntry('css/app', './assets/css/*.css')
      // this creates a 'vendor.js' file with jquery and the bootstrap JS module
      .createSharedEntry('vendor',[

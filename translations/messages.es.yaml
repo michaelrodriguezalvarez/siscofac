@@ -1,5 +1,5 @@
 #En los formularios
-Numero: Número
+Numero: No.
 Fecha: Fecha
 Tipo servicio: Tipo de Servicio
 Concepto: Concepto
@@ -16,6 +16,8 @@ Proveedor: Proveedor
 Tipo de servicio: Tipo de servicio
 Objeto: Objeto
 Nit: Nit
+Reeup: Reeup
+Carnet identidad: Carnet de identidad
 Tipo de persona: Tipo de persona
 Cuenta bancaria cup: Cuenta bancaria en CUP
 Cuenta bancaria cuc: Cuenta bancaria en CUC
@@ -51,3 +53,19 @@ Usuario: Usuario
 Detalles: Detalles
 Modificar: Modificar
 Salir: Salir
+#En los Botones
+Adicionar: Adicionar
+Buscar: Buscar
+Listar: Listar
+Nuevo: Nuevo
+Guardar: Guardar
+#En las opciones
+Activo: Activo
+Inactivo: Inactivo
+Comprobacion Contrato: Comprobación Contrato
+Comite de Contratacion: Comité de Contratación
+Comite de Administracion: Comité de Administración
+Valor contrato inicial cup: Valor contrato inicial CUP
+Valor contrato inicial cuc: Valor contrato inicial CUC
+Valor contrato total cup: Valor contrato total CUP
+Valor contrato total cuc: Valor contrato total CUC

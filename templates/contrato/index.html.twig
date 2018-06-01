@@ -17,11 +17,15 @@
                 <th>TipoDeServicio</th>
                 <th>Objeto</th>
                 <th>Nit</th>
+                <th>Reeup</th>
+                <th>CarnetIdentidad</th>
                 <th>TipoDePersona</th>
                 <th>CuentaBancariaCup</th>
                 <th>CuentaBancariaCuc</th>
-                <th>ValorContratoCup</th>
-                <th>ValorContratoCuc</th>
+                <th>ValorContratoInicialCup</th>
+                <th>ValorContratoInicialCuc</th>
+                <th>ValorContratoTotalCup</th>
+                <th>ValorContratoTotalCuc</th>
                 <th>EjecucionContratoCup</th>
                 <th>EjecucionContratoCuc</th>
                 <th>SaldoCup</th>
@@ -30,6 +34,7 @@
                 <th>AprobContratoComiteContratacion</th>
                 <th>AprobContratoComiteAdministracion</th>
                 <th>AreaAdministraContrato</th>
+                <th>Estado</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -45,11 +50,15 @@
                 <td>{{ contrato.tipoDeServicio }}</td>
                 <td>{{ contrato.objeto }}</td>
                 <td>{{ contrato.nit }}</td>
+                <td>{{ contrato.reeup }}</td>
+                <td>{{ contrato.carnetIdentidad }}</td>
                 <td>{{ contrato.tipoDePersona }}</td>
                 <td>{{ contrato.cuentaBancariaCup }}</td>
                 <td>{{ contrato.cuentaBancariaCuc }}</td>
-                <td>{{ contrato.valorContratoCup }}</td>
-                <td>{{ contrato.valorContratoCuc }}</td>
+                <td>{{ contrato.valorContratoInicialCup }}</td>
+                <td>{{ contrato.valorContratoInicialCuc }}</td>
+                <td>{{ contrato.valorContratoTotalCup }}</td>
+                <td>{{ contrato.valorContratoTotalCuc }}</td>
                 <td>{{ contrato.ejecucionContratoCup }}</td>
                 <td>{{ contrato.ejecucionContratoCuc }}</td>
                 <td>{{ contrato.saldoCup }}</td>
@@ -58,6 +67,7 @@
                 <td>{{ contrato.aprobContratoComiteContratacion }}</td>
                 <td>{{ contrato.aprobContratoComiteAdministracion }}</td>
                 <td>{{ contrato.areaAdministraContrato }}</td>
+                <td>{{ contrato.estado }}</td>
                 <td>
                     <a href="{{ path('contrato_show', {'id': contrato.id}) }}">show</a>
                     <a href="{{ path('contrato_edit', {'id': contrato.id}) }}">edit</a>
@@ -65,7 +75,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="23">no records found</td>
+                <td colspan="28">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

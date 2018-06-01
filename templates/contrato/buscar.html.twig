@@ -1,0 +1,38 @@
+<div>
+    <label for="">Numero</label><input type="text">
+    <label for="">Año</label>
+    <select name="anno" id="">
+        <option value="Seleccionar">Seleccionar</option>
+        <option value="2018">2018</option>
+        <option value="2017">2017</option>
+    </select>
+    <label for="">Proveedor</label><input type="text">
+    <button class="btn btn-primary">Buscar</button>
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{% trans %}Numero{% endtrans %}</th>
+                <th>{% trans %}Año{% endtrans %}</th>
+                <th>{% trans %}Proveedor{% endtrans %}</th>
+                <th>{% trans %}Tipo de Servicio{% endtrans %}</th>
+                <th>{% trans %}Acciones{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>123</td><td>2017</td><td>DIVEP SS</td><td>Compra Venta</td><td><a class="btn btn-primary" href="#">Detalles</a></td>
+            <tr>
+            <tr>
+                <td>125</td><td>2018</td><td>DIVEP SS</td><td>Compra Venta</td><td><a class="btn btn-primary" href="#">Detalles</a></td>
+            <tr>
+            <tr>
+                <td>156</td><td>2018</td><td>DIVEP SS</td><td>Ejecucion de Obra</td><td><a class="btn btn-primary" href="#">Detalles</a></td>
+            <tr>
+            <tbody>
+        </table>
+    </div>
+
+</div>

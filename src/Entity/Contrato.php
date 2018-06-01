@@ -80,6 +80,20 @@ class Contrato
     /**
      * @var int
      *
+     * @ORM\Column(name="reeup", type="bigint", nullable=false)
+     */
+    private $reeup;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="carnet_identidad", type="integer", nullable=false)
+     */
+    private $carnetIdentidad;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="tipo_de_persona", type="integer", nullable=false)
      */
     private $tipoDePersona;
@@ -101,16 +115,30 @@ class Contrato
     /**
      * @var float
      *
-     * @ORM\Column(name="valor_contrato_cup", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="valor_contrato_inicial_cup", type="float", precision=10, scale=0, nullable=false)
      */
-    private $valorContratoCup;
+    private $valorContratoInicialCup;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="valor_contrato_cuc", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="valor_contrato_inicial_cuc", type="float", precision=10, scale=0, nullable=false)
      */
-    private $valorContratoCuc;
+    private $valorContratoInicialCuc;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="valor_contrato_total_cup", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $valorContratoTotalCup;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="valor_contrato_total_cuc", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $valorContratoTotalCuc;
 
     /**
      * @var float
@@ -167,6 +195,13 @@ class Contrato
      * @ORM\Column(name="area_administra_contrato", type="integer", nullable=false)
      */
     private $areaAdministraContrato;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=false)
+     */
+    private $estado;
 
     public function getId(): ?int
     {
@@ -269,6 +304,30 @@ class Contrato
         return $this;
     }
 
+    public function getReeup(): ?int
+    {
+        return $this->reeup;
+    }
+
+    public function setReeup(int $reeup): self
+    {
+        $this->reeup = $reeup;
+
+        return $this;
+    }
+
+    public function getCarnetIdentidad(): ?int
+    {
+        return $this->carnetIdentidad;
+    }
+
+    public function setCarnetIdentidad(int $carnetIdentidad): self
+    {
+        $this->carnetIdentidad = $carnetIdentidad;
+
+        return $this;
+    }
+
     public function getTipoDePersona(): ?int
     {
         return $this->tipoDePersona;
@@ -305,26 +364,50 @@ class Contrato
         return $this;
     }
 
-    public function getValorContratoCup(): ?float
+    public function getValorContratoInicialCup(): ?float
     {
-        return $this->valorContratoCup;
+        return $this->valorContratoInicialCup;
     }
 
-    public function setValorContratoCup(float $valorContratoCup): self
+    public function setValorContratoInicialCup(float $valorContratoInicialCup): self
     {
-        $this->valorContratoCup = $valorContratoCup;
+        $this->valorContratoInicialCup = $valorContratoInicialCup;
 
         return $this;
     }
 
-    public function getValorContratoCuc(): ?float
+    public function getValorContratoInicialCuc(): ?float
     {
-        return $this->valorContratoCuc;
+        return $this->valorContratoInicialCuc;
     }
 
-    public function setValorContratoCuc(float $valorContratoCuc): self
+    public function setValorContratoInicialCuc(float $valorContratoInicialCuc): self
     {
-        $this->valorContratoCuc = $valorContratoCuc;
+        $this->valorContratoInicialCuc = $valorContratoInicialCuc;
+
+        return $this;
+    }
+
+    public function getValorContratoTotalCup(): ?float
+    {
+        return $this->valorContratoTotalCup;
+    }
+
+    public function setValorContratoTotalCup(float $valorContratoTotalCup): self
+    {
+        $this->valorContratoTotalCup = $valorContratoTotalCup;
+
+        return $this;
+    }
+
+    public function getValorContratoTotalCuc(): ?float
+    {
+        return $this->valorContratoTotalCuc;
+    }
+
+    public function setValorContratoTotalCuc(float $valorContratoTotalCuc): self
+    {
+        $this->valorContratoTotalCuc = $valorContratoTotalCuc;
 
         return $this;
     }
@@ -424,4 +507,18 @@ class Contrato
 
         return $this;
     }
+
+    public function getEstado(): ?int
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(int $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+
 }
