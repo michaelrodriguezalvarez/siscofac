@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Suplemento{% endblock %}
+
+{% block body %}
+    <h1>Edit Suplemento</h1>
+
+    {{ include('suplemento/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('suplemento_index') }}">back to list</a>
+
+    {{ include('suplemento/_delete_form.html.twig') }}
+{% endblock %}

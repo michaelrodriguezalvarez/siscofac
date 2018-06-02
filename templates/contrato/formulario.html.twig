@@ -1,3 +1,5 @@
+{% include 'contrato/ventana_modal.html.twig' %}
+
 <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -15,8 +17,14 @@
         <tr>
           <td colspan="12">
               <div class="row col-lg-12">
-                  <div class="col-lg-11">{{ form_row(form.proveedor) }}</div>
-                  <div class="col-lg-1"><a class="btn btn-default border" href="#" id="btn_nuevo_proveedor">Nuevo</a></div>
+                  <div id="combo_proveedores" class="col-lg-10">{{ form_row(form.proveedor) }}</div>
+                  <div class="col-lg-1">
+                      <div class="bd-example">
+                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_nuevo_proveedor">
+                              {% trans %}Nuevo{% endtrans %} {% trans %}Proveedor{% endtrans %}
+                          </button>
+                      </div>
+                  </div>
               </div>
           </td>
         </tr>

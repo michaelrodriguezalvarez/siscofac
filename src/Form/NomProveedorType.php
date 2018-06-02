@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\NomProveedor;
 use App\Entity\NomProvincia;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +20,9 @@ class NomProveedorType extends AbstractType
                 'class' => NomProvincia::class,
                 'choice_label'=>'nombre'
             ))
-            ->add('direccion')
+            ->add('direccion',TextareaType::class, array(
+                'attr' => array('class' => 'form-control'),
+            ))
             ->add('telefono')
             ->add('correo')
         ;

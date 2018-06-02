@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suplemento{% endblock %}
+
+{% block body %}
+    <h1>Suplemento</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ suplemento.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ suplemento.numero }}</td>
+            </tr>
+            <tr>
+                <th>Objeto</th>
+                <td>{{ suplemento.objeto }}</td>
+            </tr>
+            <tr>
+                <th>ValorSuplementoCup</th>
+                <td>{{ suplemento.valorSuplementoCup }}</td>
+            </tr>
+            <tr>
+                <th>ValorSuplementoCuc</th>
+                <td>{{ suplemento.valorSuplementoCuc }}</td>
+            </tr>
+            <tr>
+                <th>FechaInicio</th>
+                <td>{{ suplemento.fechaInicio ? suplemento.fechaInicio|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaTerminacion</th>
+                <td>{{ suplemento.fechaTerminacion ? suplemento.fechaTerminacion|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Acuerdo</th>
+                <td>{{ suplemento.acuerdo }}</td>
+            </tr>
+            <tr>
+                <th>Contrato</th>
+                <td>{{ suplemento.contrato }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('suplemento_index') }}">back to list</a>
+
+    <a href="{{ path('suplemento_edit', {'id': suplemento.id}) }}">edit</a>
+
+    {{ include('suplemento/_delete_form.html.twig') }}
+{% endblock %}
