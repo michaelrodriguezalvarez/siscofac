@@ -33,15 +33,16 @@ class NomProveedorController extends Controller
     public function new(Request $request): Response
     {
         $nomProveedor = new NomProveedor();
-        $form = $this->createForm(NomProveedorType::class, $nomProveedor);
-        //Seteo manual del campo provincia
-        /*if ($request->request->get("nom_proveedor") != null){
-            $provincia = $this->getDoctrine()->getRepository(NomProvincia::class)->find($request->request->get("nom_proveedor")["provincia"]);
-            $request->request->set($request->request->get("nom_proveedor")["provincia"],$provincia);
-            var_dump($request->request->get("nom_proveedor"));            
-        }*/
-        $form->handleRequest($request);
 
+        $provincias_parsed = $this->getDoctrine()
+            ->getRepository(NomProvincia::class)
+            ->getParsedFieldFromSelect();
+
+        $form = $this->createForm(NomProveedorType::class,$nomProveedor,["provincias_parsed"=>$provincias_parsed],
+        	array('action' => $this->generateUrl('nom_proveedor_new_modal'))
+        );        
+        $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($nomProveedor);
@@ -99,20 +100,27 @@ class NomProveedorController extends Controller
     }
 
     /**
-     * @Route("/new_modal", name="nom_proveedor_new_modal", methods="GET|POST")
+     * @Route("/new/modal", name="nom_proveedor_new_modal", methods="GET|POST")
      */
     public function new_modal(Request $request): Response
     {
         $nomProveedor = new NomProveedor();
-        $form = $this->createForm(NomProveedorType::class, $nomProveedor);
-        $form->handleRequest($request);
 
+        $provincias_parsed = $this->getDoctrine()
+            ->getRepository(NomProvincia::class)
+            ->getParsedFieldFromSelect();
+
+        $form = $this->createForm(NomProveedorType::class,$nomProveedor,["provincias_parsed"=>$provincias_parsed],
+        	array('action' => $this->generateUrl('nom_proveedor_new_modal'))
+    		);    
+
+        $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($nomProveedor);
-            $em->flush();
-
-            return $this->redirectToRoute('nom_proveedor_new');
+            $em->flush(); 
+            return $this->redirectToRoute('contrato_new');
         }
 
         return $this->render('nom_proveedor/new_modal.html.twig', [

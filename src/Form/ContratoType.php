@@ -30,7 +30,7 @@ class ContratoType extends AbstractType
             ->add('fechaTerminacion')
             ->add('proveedor',EntityType::class, array(
                 'class' => NomProveedor::class,
-                'choice_label'=>'provincia'
+                'choice_label'=>'nombre'
             ))
             ->add('tipoDeServicio',EntityType::class, array(
                 'class' => NomTipoServicio::class,
