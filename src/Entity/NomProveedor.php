@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * NomProveedor
  *
  * @ORM\Table(name="nom_proveedor")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\NomProveedorRepository")
  */
 class NomProveedor
 {
@@ -55,6 +55,13 @@ class NomProveedor
      * @ORM\Column(name="correo", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
     private $correo = 'NULL';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="organismo", type="string", length=255, nullable=true, options={"default"="NULL"})
+     */
+    private $organismo = 'NULL';
 
     public function getId(): ?int
     {
@@ -117,6 +124,18 @@ class NomProveedor
     public function setCorreo(?string $correo): self
     {
         $this->correo = $correo;
+
+        return $this;
+    }
+
+    public function getOrganismo(): ?string
+    {
+        return $this->organismo;
+    }
+
+    public function setOrganismo(?string $organismo): self
+    {
+        $this->organismo = $organismo;
 
         return $this;
     }

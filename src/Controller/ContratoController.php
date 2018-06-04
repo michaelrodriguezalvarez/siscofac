@@ -3,6 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Contrato;
+use App\Entity\NomProveedor;
+use App\Entity\NomTipoServicio;
+use App\Entity\NomTipoPersona;
+use App\Entity\NomBanco;
+use App\Entity\Acuerdo;
+use App\Entity\NomArea;
 use App\Form\ContratoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +37,46 @@ class ContratoController extends Controller
      */
     public function new(Request $request): Response
     {
+        $ultimos_annos_hasta_actual = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getUltimosNAnnosHastaActual(10);
+
+        $proveedores = $this->getDoctrine()
+            ->getRepository(NomProveedor::class)
+            ->getParsedFieldFromSelect();
+        
+        $tipos_de_servicios = $this->getDoctrine()
+            ->getRepository(NomTipoServicio::class)
+            ->getParsedFieldFromSelect();
+
+        $tipos_de_persona = $this->getDoctrine()
+            ->getRepository(NomTipoPersona::class)
+            ->getParsedFieldFromSelect();
+
+        $bancos = $this->getDoctrine()
+            ->getRepository(NomBanco::class)
+            ->getParsedFieldFromSelect();
+
+        $acuerdos = $this->getDoctrine()
+            ->getRepository(Acuerdo::class)
+            ->getParsedFieldFromSelect();
+
+        $areas_administra_contrato = $this->getDoctrine()
+            ->getRepository(NomArea::class)
+            ->getParsedFieldFromSelect();
+
         $contrato = new Contrato();
-        $form = $this->createForm(ContratoType::class, $contrato);
+        $form = $this->createForm(ContratoType::class, $contrato,[
+            "ultimos_annos_hasta_actual"=>$ultimos_annos_hasta_actual,
+            'proveedores'=>$proveedores,            
+            'tipos_de_servicios'=>$tipos_de_servicios,
+            'tipos_de_persona'=>$tipos_de_persona,
+            'bancos'=>$bancos,
+            'acuerdos'=>$acuerdos,
+            'areas_administra_contrato'=>$areas_administra_contrato,
+            ],
+            array('action' => $this->generateUrl('contrato_new'))
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,7 +84,7 @@ class ContratoController extends Controller
             $em->persist($contrato);
             $em->flush();
 
-            return $this->redirectToRoute('contrato_index');
+            return $this->redirectToRoute('contrato_new');
         }
 
         return $this->render('contrato/new.html.twig', [

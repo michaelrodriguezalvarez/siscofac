@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Contrato
  *
  * @ORM\Table(name="contrato")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ContratoRepository")
  */
 class Contrato
 {
@@ -29,9 +29,9 @@ class Contrato
     private $numero;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="anno", type="date", nullable=false)
+     * @ORM\Column(name="anno", type="integer", nullable=false)
      */
     private $anno;
 
@@ -78,16 +78,16 @@ class Contrato
     private $nit;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="reeup", type="bigint", nullable=false)
+     * @ORM\Column(name="reeup", type="string", nullable=false)
      */
     private $reeup;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="carnet_identidad", type="integer", nullable=false)
+     * @ORM\Column(name="carnet_identidad", type="string", nullable=false)
      */
     private $carnetIdentidad;
 
@@ -99,16 +99,16 @@ class Contrato
     private $tipoDePersona;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="cuenta_bancaria_cup", type="bigint", nullable=false)
+     * @ORM\Column(name="cuenta_bancaria_cup", type="string", nullable=false)
      */
     private $cuentaBancariaCup;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="cuenta_bancaria_cuc", type="bigint", nullable=false)
+     * @ORM\Column(name="cuenta_bancaria_cuc", type="string", nullable=false)
      */
     private $cuentaBancariaCuc;
 
@@ -220,12 +220,12 @@ class Contrato
         return $this;
     }
 
-    public function getAnno(): ?\DateTimeInterface
+    public function getAnno(): ?int
     {
         return $this->anno;
     }
 
-    public function setAnno(\DateTimeInterface $anno): self
+    public function setAnno(int $anno): self
     {
         $this->anno = $anno;
 
@@ -304,24 +304,24 @@ class Contrato
         return $this;
     }
 
-    public function getReeup(): ?int
+    public function getReeup(): ?string
     {
         return $this->reeup;
     }
 
-    public function setReeup(int $reeup): self
+    public function setReeup(string $reeup): self
     {
         $this->reeup = $reeup;
 
         return $this;
     }
 
-    public function getCarnetIdentidad(): ?int
+    public function getCarnetIdentidad(): ?string
     {
         return $this->carnetIdentidad;
     }
 
-    public function setCarnetIdentidad(int $carnetIdentidad): self
+    public function setCarnetIdentidad(string $carnetIdentidad): self
     {
         $this->carnetIdentidad = $carnetIdentidad;
 
@@ -340,24 +340,24 @@ class Contrato
         return $this;
     }
 
-    public function getCuentaBancariaCup(): ?int
+    public function getCuentaBancariaCup(): ?string
     {
         return $this->cuentaBancariaCup;
     }
 
-    public function setCuentaBancariaCup(int $cuentaBancariaCup): self
+    public function setCuentaBancariaCup(string $cuentaBancariaCup): self
     {
         $this->cuentaBancariaCup = $cuentaBancariaCup;
 
         return $this;
     }
 
-    public function getCuentaBancariaCuc(): ?int
+    public function getCuentaBancariaCuc(): ?string
     {
         return $this->cuentaBancariaCuc;
     }
 
-    public function setCuentaBancariaCuc(int $cuentaBancariaCuc): self
+    public function setCuentaBancariaCuc(string $cuentaBancariaCuc): self
     {
         $this->cuentaBancariaCuc = $cuentaBancariaCuc;
 

@@ -30,7 +30,7 @@ class AcuerdoController extends Controller
      * @Route("/new", name="acuerdo_new", methods="GET|POST")
      */
     public function new(Request $request): Response
-    {
+    {       
         $acuerdo = new Acuerdo();
         $form = $this->createForm(AcuerdoType::class, $acuerdo);
         $form->handleRequest($request);

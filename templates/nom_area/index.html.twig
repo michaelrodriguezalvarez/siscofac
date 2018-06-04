@@ -10,6 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Correo</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +20,8 @@
             <tr>
                 <td>{{ nom_area.id }}</td>
                 <td>{{ nom_area.nombre }}</td>
+                <td>{{ nom_area.cargo }}</td>
+                <td>{{ nom_area.correo }}</td>
                 <td>
                     <a href="{{ path('nom_area_show', {'id': nom_area.id}) }}">show</a>
                     <a href="{{ path('nom_area_edit', {'id': nom_area.id}) }}">edit</a>

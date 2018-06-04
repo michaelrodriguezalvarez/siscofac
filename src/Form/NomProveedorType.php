@@ -26,6 +26,7 @@ class NomProveedorType extends AbstractType
             ))
             ->add('telefono')
             ->add('correo')
+            ->add('organismo')
         ;
     }
 

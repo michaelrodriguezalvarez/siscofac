@@ -4,17 +4,17 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class NomProvinciaRepository extends EntityRepository
+class NomBancoRepository extends EntityRepository
 {
     public function getParsedFieldFromSelect(): array
     {
-        $provincias = $this->findAll();
+        $bancos = $this->findAll();
         $resultado_nombres = array();
         $resultado_ids = array();
 
-        foreach ($provincias as $provincia) {
-        	array_push($resultado_nombres, $provincia->getNombre());
-            array_push($resultado_ids, $provincia->getId());            
+        foreach ($bancos as $banco) {
+            array_push($resultado_nombres, $banco->getNombre());
+            array_push($resultado_ids, $banco->getId());            
         }  
 
         return array_combine($resultado_nombres,$resultado_ids);         

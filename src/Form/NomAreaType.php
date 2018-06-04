@@ -13,6 +13,8 @@ class NomAreaType extends AbstractType
     {
         $builder
             ->add('nombre')
+            ->add('cargo')
+            ->add('correo')
         ;
     }
 

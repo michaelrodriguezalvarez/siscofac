@@ -11,14 +11,19 @@ Encore
     // .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-     .addEntry('app', ['./assets/js/app.js','./assets/js/proveedor.js'])
+     .addEntry('app', ['./assets/js/app.js'])
+     .addEntry('proveedor', ['./assets/js/proveedor.js'])
+     .addEntry('contrato', ['./assets/js/contrato.js'])
      //.addStyleEntry('css/app', './assets/css/*.css')
      // this creates a 'vendor.js' file with jquery and the bootstrap JS module
      .createSharedEntry('vendor',[
          './vendor/components/jquery/jquery.js',
          './vendor/twitter/bootstrap/dist/js/bootstrap.js',
+         './vendor/datatables/datatables/media/js/jquery.dataTables.js',
          // you can also extract CSS - this will create a 'vendor.css' file
          './vendor/twitter/bootstrap/dist/css/bootstrap.css',
+         './vendor/twitter/bootstrap/dist/css/bootstrap-grid.css',
+         './vendor/datatables/datatables/media/css/jquery.dataTables.css',
          //'./vendor/components/font-awesome/css/fontawesome-all.css'
      ])
     // uncomment if you use Sass/SCSS files

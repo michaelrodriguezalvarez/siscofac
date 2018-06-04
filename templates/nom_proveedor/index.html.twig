@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}NomProveedor index{% endblock %}
+{% block title %}{% trans %}Listar{% endtrans %} {% trans %}Proveedores{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>NomProveedor index</h1>
+    <div class="container small">
+        <h5>{% trans %}Listar{% endtrans %} {% trans %}Proveedores{% endtrans %}</h5>
 
-    <table class="table">
-        <thead>
+        <table id="table_proveedor_index" class="table table-striped table-bordered" style="width:100%">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
@@ -14,30 +15,46 @@
                 <th>Direccion</th>
                 <th>Telefono</th>
                 <th>Correo</th>
+                <th>Organismo</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for nom_proveedor in nom_proveedors %}
-            <tr>
-                <td>{{ nom_proveedor.id }}</td>
-                <td>{{ nom_proveedor.nombre }}</td>
-                <td>{{ nom_proveedor.provincia }}</td>
-                <td>{{ nom_proveedor.direccion }}</td>
-                <td>{{ nom_proveedor.telefono }}</td>
-                <td>{{ nom_proveedor.correo }}</td>
-                <td>
-                    <a href="{{ path('nom_proveedor_show', {'id': nom_proveedor.id}) }}">show</a>
-                    <a href="{{ path('nom_proveedor_edit', {'id': nom_proveedor.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% set nombre_provincia = "" %}
+            {% for nom_proveedor in nom_proveedors %}
 
-    <a href="{{ path('nom_proveedor_new') }}">Create new</a>
+                {% for provincia in nom_provincias %}
+                    {% if  provincia.id == nom_proveedor.provincia %}
+                        {% set nombre_provincia = provincia.nombre %}
+                    {% endif %}
+                {% endfor %}
+
+                <tr>
+                    <td>{{ nom_proveedor.id }}</td>
+                    <td>{{ nom_proveedor.nombre }}</td>
+                    <td>{{ nombre_provincia }}</td>
+                    <td>{{ nom_proveedor.direccion }}</td>
+                    <td>{{ nom_proveedor.telefono }}</td>
+                    <td>{{ nom_proveedor.correo }}</td>
+                    <td>{{ nom_proveedor.organismo }}</td>
+                    <td>
+                        <a class="btn-sm btn-info" href="{{ path('nom_proveedor_show', {'id': nom_proveedor.id}) }}">{% trans %}Detalles{% endtrans %}</a>
+                        <a class="btn-sm btn-warning" href="{{ path('nom_proveedor_edit', {'id': nom_proveedor.id}) }}">{% trans %}Modificar{% endtrans %}</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">{% trans %}No se encontraron registros{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn-sm btn-success" href="{{ path('nom_proveedor_new') }}">{% trans %}Nuevo{% endtrans %} {% trans %}Proveedor{% endtrans %}</a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/proveedor.js') }}"></script>
 {% endblock %}

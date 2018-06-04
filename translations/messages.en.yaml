@@ -3,9 +3,10 @@ Numero: Number
 Fecha: Date
 Tipo servicio: Type of service
 Concepto: Concept
-Valor cup: Value in CUP
-Valor cuc: Value in CUC
+Valor cup: Value
+Valor cuc: Value
 Contrato: Contract
+Contratos: Contracts
 Estado: State
 Numero cheque: Check number
 Fecha cheque: Check date 
@@ -21,12 +22,12 @@ Carnet identidad: Identity card
 Tipo de persona: Kind of person
 Cuenta bancaria cup: Bank account in CUP
 Cuenta bancaria cuc: Bank account in CUC
-Valor contrato cup: Contract value in CUP 
-Valor contrato cuc: Contract value in CUC
-Ejecucion contrato cup: Contract execution in CUP
-Ejecucion contrato cuc: Contract execution in CUC
-Saldo cup: Balance in CUP
-Saldo cuc: Balance in CUC
+Valor contrato cup: Contract value
+Valor contrato cuc: Contract value
+Ejecucion contrato cup: Contract execution
+Ejecucion contrato cuc: Contract execution
+Saldo cup: Balance
+Saldo cuc: Balance
 Banco: Bank
 Aprob contrato comite contratacion: Approve contract contracting committee
 Aprob contrato comite administracion: Approve contract management committee
@@ -59,14 +60,18 @@ Buscar: Search
 Listar: List
 Nuevo: New
 Guardar: Save
+Ejecutar: Execute
 #In the options
 Activo: Enabled
 Inactivo: Disabled
 Comprobacion Contrato: Contract Verification
 Comite de Contratacion: Contracting Committee
 Comite de Administracion: Management Committee
-Valor contrato inicial cup: Initial contract value CUP
-Valor contrato inicial cuc: Initial contract value CUC
-Valor contrato total cup: Total contract value CUP
-Valor contrato total cuc: Total contract value CUC
+Valor contrato inicial cup: Initial contract value
+Valor contrato inicial cuc: Initial contract value
+Valor contrato total cup: Total contract value
+Valor contrato total cuc: Total contract value
 Cerrar: Close
+#In the tables
+No se encontraron registros: No records found
+Acciones: Actions

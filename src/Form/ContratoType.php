@@ -10,9 +10,9 @@ use App\Entity\NomBanco;
 use App\Entity\Acuerdo;
 use App\Entity\NomArea;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,18 +24,17 @@ class ContratoType extends AbstractType
         $builder
             ->add('numero')
             ->add('anno', ChoiceType::class, array(
-                'choices'  => $this->getUltimosNAnnosHastaActual(10)
+                'choices'  => $options["ultimos_annos_hasta_actual"],
             ))
             ->add('fechaInicio')
             ->add('fechaTerminacion')
-            ->add('proveedor',EntityType::class, array(
-                'class' => NomProveedor::class,
-                'choice_label'=>'nombre'
+            ->add('proveedor',ChoiceType::class, array(
+                'choices' => $options["proveedores"],                
             ))
-            ->add('tipoDeServicio',EntityType::class, array(
-                'class' => NomTipoServicio::class,
-                'choice_label'=>'nombre',
+            ->add('tipoDeServicio',ChoiceType::class, array(
+                'choices'  => $options["tipos_de_servicios"],
                 'expanded' => true,
+                'data'=>1
             ))
             ->add('objeto',TextareaType::class, array(
                 'attr' => array('class' => 'form-control'),
@@ -43,42 +42,62 @@ class ContratoType extends AbstractType
             ->add('nit')
             ->add('reeup')
             ->add('carnetIdentidad')
-            ->add('tipoDePersona',EntityType::class, array(
-                'class' => NomTipoPersona::class,
-                'choice_label'=>'nombre',
+            ->add('tipoDePersona',ChoiceType::class, array(
+                'choices'  => $options["tipos_de_persona"],
                 'expanded' => true,
+                'data'=>1
             ))
             ->add('cuentaBancariaCup')
             ->add('cuentaBancariaCuc')
-            ->add('valorContratoInicialCup')
-            ->add('valorContratoInicialCuc')
-            ->add('valorContratoTotalCup',TextType::class,array(
-                'disabled'=>true
+            ->add('valorContratoInicialCup',MoneyType::class,array(
+                'currency'=>'CUP',                
+                'data'=>0,
             ))
-            ->add('valorContratoTotalCuc',TextType::class,array(
-                'disabled'=>true
+            ->add('valorContratoInicialCuc',MoneyType::class,array(
+                'currency'=>'CUC',
+                'data'=>0,
             ))
-            ->add('ejecucionContratoCup')
-            ->add('ejecucionContratoCuc')
-            ->add('saldoCup',TextType::class,array(
-                'disabled'=>true
+            ->add('valorContratoTotalCup',MoneyType::class,array(
+                'currency'=>'CUP',
+                'disabled'=>true,
+                'data'=>0,
             ))
-            ->add('saldoCuc',TextType::class,array(
-                'disabled'=>true
+            ->add('valorContratoTotalCuc',MoneyType::class,array(
+                'currency'=>'CUC',
+                'disabled'=>true,
+                'data'=>0,
             ))
-            ->add('banco',EntityType::class, array(
-                'class' => NomBanco::class,
-                'choice_label'=>'nombre'
+            ->add('ejecucionContratoCup',MoneyType::class,array(
+                'currency'=>'CUP',
+                'disabled'=>true,
+                'data'=>0,
             ))
-            ->add('aprobContratoComiteContratacion',EntityType::class, array(
-                'class' => Acuerdo::class,
+            ->add('ejecucionContratoCuc',MoneyType::class,array(
+                'currency'=>'CUC',
+                'disabled'=>true,
+                'data'=>0,
             ))
-            ->add('aprobContratoComiteAdministracion',EntityType::class, array(
-                'class' => Acuerdo::class,
+            ->add('saldoCup',MoneyType::class,array(
+                'currency'=>'CUP',
+                'disabled'=>true,
+                'data'=>0,
             ))
-            ->add('areaAdministraContrato',EntityType::class, array(
-                'class' => NomArea::class,
-                'choice_label'=>'nombre'
+            ->add('saldoCuc',MoneyType::class,array(
+                'currency'=>'CUC',
+                'disabled'=>true,
+                'data'=>0,
+            ))
+            ->add('banco',ChoiceType::class, array(
+                'choices' => $options["bancos"],                
+            ))
+            ->add('aprobContratoComiteContratacion',ChoiceType::class, array(
+                'choices'  => $options["acuerdos"],
+            ))
+            ->add('aprobContratoComiteAdministracion',ChoiceType::class, array(
+                'choices'  => $options["acuerdos"],
+            ))
+            ->add('areaAdministraContrato',ChoiceType::class, array(
+                'choices'  => $options["areas_administra_contrato"],
             ))
             ->add('estado', ChoiceType::class, array(
                 'choices' => array(
@@ -92,18 +111,13 @@ class ContratoType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Contrato::class,
+            'ultimos_annos_hasta_actual' => null,
+            'proveedores'=>null,            
+            'tipos_de_servicios'=>null,
+            'tipos_de_persona'=>null,
+            'bancos'=>null,
+            'acuerdos'=>null,
+            'areas_administra_contrato'=>null,
         ]);
-    }
-
-    public function getUltimosNAnnosHastaActual($n):array{
-        $anno_actual = date('Y');
-        $annos = array();
-
-        while ($n >= 0) {
-            array_unshift($annos, $anno_actual - $n);
-            $n--;
-        }
-
-        return array_combine($annos, $annos);
     }
 }

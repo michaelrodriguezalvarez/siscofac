@@ -3,9 +3,10 @@ Numero: No.
 Fecha: Fecha
 Tipo servicio: Tipo de Servicio
 Concepto: Concepto
-Valor cup: Valor en CUP
-Valor cuc: Valor en CUC
+Valor cup: Valor
+Valor cuc: Valor
 Contrato: Contrato
+Contratos: Contratos
 Estado: Estado
 Numero cheque: Número de Cheque
 Fecha cheque: Fecha del Cheque
@@ -21,12 +22,12 @@ Carnet identidad: Carnet de identidad
 Tipo de persona: Tipo de persona
 Cuenta bancaria cup: Cuenta bancaria en CUP
 Cuenta bancaria cuc: Cuenta bancaria en CUC
-Valor contrato cup: Valor contrato en CUP
-Valor contrato cuc: Valor contrato en CUC
-Ejecucion contrato cup: Ejecución contrato en CUP
-Ejecucion contrato cuc: Ejecución contrato en CUC
-Saldo cup: Saldo en CUP
-Saldo cuc: Saldo en CUC
+Valor contrato cup: Valor contrato
+Valor contrato cuc: Valor contrato
+Ejecucion contrato cup: Ejecución contrato
+Ejecucion contrato cuc: Ejecución contrato
+Saldo cup: Saldo
+Saldo cuc: Saldo
 Banco: Banco
 Aprob contrato comite contratacion: Aprob contrato comite contratación
 Aprob contrato comite administracion: Aprob contrato comite administración
@@ -59,14 +60,18 @@ Buscar: Buscar
 Listar: Listar
 Nuevo: Nuevo
 Guardar: Guardar
+Ejecutar: Ejecutar
 #En las opciones
 Activo: Activo
 Inactivo: Inactivo
 Comprobacion Contrato: Comprobación Contrato
 Comite de Contratacion: Comité de Contratación
 Comite de Administracion: Comité de Administración
-Valor contrato inicial cup: Valor contrato inicial CUP
-Valor contrato inicial cuc: Valor contrato inicial CUC
-Valor contrato total cup: Valor contrato total CUP
-Valor contrato total cuc: Valor contrato total CUC
+Valor contrato inicial cup: Valor contrato inicial
+Valor contrato inicial cuc: Valor contrato inicial
+Valor contrato total cup: Valor contrato total
+Valor contrato total cuc: Valor contrato total
 Cerrar: Cerrar
+#En las tablas
+No se encontraron registros: No se encontraron registros
+Acciones: Acciones

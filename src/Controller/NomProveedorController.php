@@ -23,8 +23,10 @@ class NomProveedorController extends Controller
         $nomProveedors = $this->getDoctrine()
             ->getRepository(NomProveedor::class)
             ->findAll();
-
-        return $this->render('nom_proveedor/index.html.twig', ['nom_proveedors' => $nomProveedors]);
+        $nomProvincias = $this->getDoctrine()
+            ->getRepository(NomProvincia::class)
+            ->findAll();
+        return $this->render('nom_proveedor/index.html.twig', ['nom_proveedors' => $nomProveedors,'nom_provincias'=>$nomProvincias]);
     }
 
     /**
