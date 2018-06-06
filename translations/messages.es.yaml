@@ -61,6 +61,8 @@ Listar: Listar
 Nuevo: Nuevo
 Guardar: Guardar
 Ejecutar: Ejecutar
+Mostrar: Mostrar
+Eliminar: Eliminar
 #En las opciones
 Activo: Activo
 Inactivo: Inactivo
@@ -75,3 +77,5 @@ Cerrar: Cerrar
 #En las tablas
 No se encontraron registros: No se encontraron registros
 Acciones: Acciones
+#En los mensajes
+Usted desea eliminar este elemento: ¿Usted confirma que desea eliminar este elemento?

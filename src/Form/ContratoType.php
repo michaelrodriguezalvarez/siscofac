@@ -34,58 +34,78 @@ class ContratoType extends AbstractType
             ->add('tipoDeServicio',ChoiceType::class, array(
                 'choices'  => $options["tipos_de_servicios"],
                 'expanded' => true,
-                'data'=>1
+                //'data'=>1
             ))
             ->add('objeto',TextareaType::class, array(
                 'attr' => array('class' => 'form-control'),
             ))
-            ->add('nit')
-            ->add('reeup')
-            ->add('carnetIdentidad')
+            ->add('nit',TextType::class,array(
+                "attr"=>array(
+                    'placeholder'=>'00000000000'
+                )
+            ))
+            ->add('reeup',TextType::class,array(
+                "attr"=>array(
+                    'placeholder'=>'00000000000'
+                )
+            ))
+            ->add('carnetIdentidad',TextType::class,array(
+                "attr"=>array(
+                    'placeholder'=>'00000000000'
+                )
+            ))
             ->add('tipoDePersona',ChoiceType::class, array(
                 'choices'  => $options["tipos_de_persona"],
                 'expanded' => true,
-                'data'=>1
+                //'data'=>1
             ))
-            ->add('cuentaBancariaCup')
-            ->add('cuentaBancariaCuc')
+            ->add('cuentaBancariaCup',TextType::class,array(
+                "attr"=>array(
+                    'placeholder'=>'00000000000000000000'
+                )
+            ))
+            ->add('cuentaBancariaCuc',TextType::class,array(
+                "attr"=>array(
+                    'placeholder'=>'00000000000000000000'
+                )
+            ))
             ->add('valorContratoInicialCup',MoneyType::class,array(
                 'currency'=>'CUP',                
-                'data'=>0,
+                //'data'=>0,
             ))
             ->add('valorContratoInicialCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                'data'=>0,
+                //'data'=>0,
             ))
             ->add('valorContratoTotalCup',MoneyType::class,array(
                 'currency'=>'CUP',
-                'disabled'=>true,
-                'data'=>0,
+                //'disabled'=>true,
+                //'data'=>0,
             ))
             ->add('valorContratoTotalCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                'disabled'=>true,
-                'data'=>0,
+                //'disabled'=>true,
+                //'data'=>0,
             ))
             ->add('ejecucionContratoCup',MoneyType::class,array(
                 'currency'=>'CUP',
-                'disabled'=>true,
-                'data'=>0,
+                //'disabled'=>true,
+                //'data'=>0,
             ))
             ->add('ejecucionContratoCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                'disabled'=>true,
-                'data'=>0,
+                //'disabled'=>true,
+                //'data'=>0,
             ))
             ->add('saldoCup',MoneyType::class,array(
                 'currency'=>'CUP',
-                'disabled'=>true,
-                'data'=>0,
+                //'disabled'=>true,
+                //'data'=>0,
             ))
             ->add('saldoCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                'disabled'=>true,
-                'data'=>0,
+                //'disabled'=>true,
+                //'data'=>0,
             ))
             ->add('banco',ChoiceType::class, array(
                 'choices' => $options["bancos"],                

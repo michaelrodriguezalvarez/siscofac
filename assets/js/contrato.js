@@ -4,7 +4,6 @@ $(document).ready(function(){
             select: true,
             "columnDefs": [
                 {"targets": 0, "searchable": false, "orderable": false, "visible": false},
-                {"targets": 1, "searchable": true, "orderable": true, "visible": false},
             ],
             "language": {
                 "sProcessing":     "Procesando...",

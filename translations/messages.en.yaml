@@ -61,6 +61,8 @@ Listar: List
 Nuevo: New
 Guardar: Save
 Ejecutar: Execute
+Mostrar: Show
+Eliminar: Delete
 #In the options
 Activo: Enabled
 Inactivo: Disabled
@@ -75,3 +77,5 @@ Cerrar: Close
 #In the tables
 No se encontraron registros: No records found
 Acciones: Actions
+#In the messages
+Usted desea eliminar este elemento: Are you sure you want to delete this item?

@@ -1,126 +1,134 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contrato{% endblock %}
+{% block title %}{% trans %}Mostrar{% endtrans %} {% trans %}Contrato{% endtrans %}{% endblock %}
+
 
 {% block body %}
-    <h1>Contrato</h1>
+    <div class="container small">
+    <h5>{% trans %}Mostrar{% endtrans %} {% trans %}Contrato{% endtrans %}</h5>
 
-    <table class="table">
+     <div class="col-lg-12">
+         <p>
+             <span><a class="btn btn-sm btn-primary" href="{{ path('contrato_index') }}">{% trans %}Listar{% endtrans %}</a></span>
+             <span><a class="btn btn-sm btn-primary" href="{{ path('contrato_edit', {'id': contrato.id}) }}">{% trans %}Modificar{% endtrans %}</a></span>
+             <span>{{ include('contrato/_delete_form.html.twig') }}</span>
+         </p>
+     </div>
+    <div class="table-responsive">
+    <table class="table table-bordered">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ contrato.id }}</td>
-            </tr>
-            <tr>
-                <th>Numero</th>
+                <th>{% trans %}Numero{% endtrans %}</th>
                 <td>{{ contrato.numero }}</td>
             </tr>
             <tr>
-                <th>Anno</th>
+                <th>{% trans %}Anno{% endtrans %}</th>
                 <td>{{ contrato.anno }}</td>
             </tr>
             <tr>
-                <th>FechaInicio</th>
-                <td>{{ contrato.fechaInicio ? contrato.fechaInicio|date('Y-m-d') : '' }}</td>
+                <th>{% trans %}Fecha inicio{% endtrans %}</th>
+                <td>{{ contrato.fechaInicio ? contrato.fechaInicio|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
-                <th>FechaTerminacion</th>
-                <td>{{ contrato.fechaTerminacion ? contrato.fechaTerminacion|date('Y-m-d') : '' }}</td>
+                <th>{% trans %}Fecha terminacion{% endtrans %}</th>
+                <td>{{ contrato.fechaTerminacion ? contrato.fechaTerminacion|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
-                <th>Proveedor</th>
-                <td>{{ contrato.proveedor }}</td>
+                <th>{% trans %}Proveedor{% endtrans %}</th>
+                <td>{{ proveedor }} - {{ provincia }}</td>
             </tr>
             <tr>
-                <th>TipoDeServicio</th>
-                <td>{{ contrato.tipoDeServicio }}</td>
+                <th>{% trans %}Tipo de servicio{% endtrans %}</th>
+                <td>{{ tipo_de_servicio }}</td>
             </tr>
             <tr>
-                <th>Objeto</th>
+                <th>{% trans %}Objeto{% endtrans %}</th>
                 <td>{{ contrato.objeto }}</td>
             </tr>
             <tr>
-                <th>Nit</th>
+                <th>{% trans %}Nit{% endtrans %}</th>
                 <td>{{ contrato.nit }}</td>
             </tr>
             <tr>
-                <th>Reeup</th>
+                <th>{% trans %}Reeup{% endtrans %}</th>
                 <td>{{ contrato.reeup }}</td>
             </tr>
             <tr>
-                <th>CarnetIdentidad</th>
+                <th>{% trans %}Carnet identidad{% endtrans %}</th>
                 <td>{{ contrato.carnetIdentidad }}</td>
             </tr>
             <tr>
-                <th>TipoDePersona</th>
-                <td>{{ contrato.tipoDePersona }}</td>
+                <th>{% trans %}Tipo de persona{% endtrans %}</th>
+                <td>{{ tipo_de_persona }}</td>
             </tr>
             <tr>
-                <th>CuentaBancariaCup</th>
+                <th>{% trans %}Cuenta bancaria cup{% endtrans %}</th>
                 <td>{{ contrato.cuentaBancariaCup }}</td>
             </tr>
             <tr>
-                <th>CuentaBancariaCuc</th>
+                <th>{% trans %}Cuenta bancaria cuc{% endtrans %}</th>
                 <td>{{ contrato.cuentaBancariaCuc }}</td>
             </tr>
             <tr>
-                <th>ValorContratoInicialCup</th>
+                <th>{% trans %}Valor contrato inicial cup{% endtrans %} CUP</th>
                 <td>{{ contrato.valorContratoInicialCup }}</td>
             </tr>
             <tr>
-                <th>ValorContratoInicialCuc</th>
+                <th>{% trans %}Valor contrato inicial cuc{% endtrans %} CUC</th>
                 <td>{{ contrato.valorContratoInicialCuc }}</td>
             </tr>
             <tr>
-                <th>ValorContratoTotalCup</th>
+                <th>{% trans %}Valor contrato total cup{% endtrans %} CUP</th>
                 <td>{{ contrato.valorContratoTotalCup }}</td>
             </tr>
             <tr>
-                <th>ValorContratoTotalCuc</th>
+                <th>{% trans %}Valor contrato total cuc{% endtrans %} CUC</th>
                 <td>{{ contrato.valorContratoTotalCuc }}</td>
             </tr>
             <tr>
-                <th>EjecucionContratoCup</th>
+                <th>{% trans %}Ejecucion contrato cup{% endtrans %} CUP</th>
                 <td>{{ contrato.ejecucionContratoCup }}</td>
             </tr>
             <tr>
-                <th>EjecucionContratoCuc</th>
+                <th>{% trans %}Ejecucion contrato cuc{% endtrans %} CUC</th>
                 <td>{{ contrato.ejecucionContratoCuc }}</td>
             </tr>
             <tr>
-                <th>SaldoCup</th>
+                <th>{% trans %}Saldo cup{% endtrans %} CUP</th>
                 <td>{{ contrato.saldoCup }}</td>
             </tr>
             <tr>
-                <th>SaldoCuc</th>
+                <th>{% trans %}Saldo cuc{% endtrans %} CUC</th>
                 <td>{{ contrato.saldoCuc }}</td>
             </tr>
             <tr>
-                <th>Banco</th>
-                <td>{{ contrato.banco }}</td>
+                <th>{% trans %}Banco{% endtrans %}</th>
+                <td>{{ banco }}</td>
             </tr>
             <tr>
-                <th>AprobContratoComiteContratacion</th>
-                <td>{{ contrato.aprobContratoComiteContratacion }}</td>
+                <th>{% trans %}Aprob contrato comite contratacion{% endtrans %}</th>
+                <td>{{ aprobContratoComiteContratacion }}</td>
             </tr>
             <tr>
-                <th>AprobContratoComiteAdministracion</th>
-                <td>{{ contrato.aprobContratoComiteAdministracion }}</td>
+                <th>{% trans %}Aprob contrato comite administracion{% endtrans %}</th>
+                <td>{{ aprobContratoComiteAdministracion }}</td>
             </tr>
             <tr>
-                <th>AreaAdministraContrato</th>
-                <td>{{ contrato.areaAdministraContrato }}</td>
+                <th>{% trans %}Area administra contrato{% endtrans %}</th>
+                <td>{{ areaAdministraContrato }}</td>
             </tr>
             <tr>
-                <th>Estado</th>
-                <td>{{ contrato.estado }}</td>
+                <th>{% trans %}Estado{% endtrans %}</th>
+                {% if estado == "Activo" %}
+                    <td class="bg-success">
+                {% else %}
+                    <td class="bg-danger">
+                {% endif %}
+                    {{ estado }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('contrato_index') }}">back to list</a>
-
-    <a href="{{ path('contrato_edit', {'id': contrato.id}) }}">edit</a>
-
-    {{ include('contrato/_delete_form.html.twig') }}
+    </div>
+    </div>
 {% endblock %}
