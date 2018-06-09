@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @Route("/nom/area")
@@ -89,5 +90,33 @@ class NomAreaController extends Controller
         }
 
         return $this->redirectToRoute('nom_area_index');
+    }
+
+    /**
+     * @Route("/new/modal", name="nom_area_new_modal", methods="GET|POST")
+     */
+    public function new_modal(Request $request): Response
+    {
+        $nomArea = new NomArea();
+        $form = $this->createForm(NomAreaType::class, $nomArea);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($nomArea);
+            $em->flush();
+
+            $session = new Session();
+            if ($session->get('escenario')=='contrato_edit'){
+                return $this->redirectToRoute($session->get('escenario'),$session->get('escenario_parametros'));
+            }else{
+                return $this->redirectToRoute($session->get('escenario'));
+            }
+        }
+
+        return $this->render('nom_area/new_modal.html.twig', [
+            'nom_area' => $nomArea,
+            'form' => $form->createView(),
+        ]);
     }
 }

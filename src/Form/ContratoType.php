@@ -110,12 +110,10 @@ class ContratoType extends AbstractType
             ->add('banco',ChoiceType::class, array(
                 'choices' => $options["bancos"],                
             ))
-            ->add('aprobContratoComiteContratacion',ChoiceType::class, array(
-                'choices'  => $options["acuerdos"],
-            ))
-            ->add('aprobContratoComiteAdministracion',ChoiceType::class, array(
-                'choices'  => $options["acuerdos"],
-            ))
+            ->add('numeroAprobContratoComiteContratacion')
+            ->add('fechaAprobContratoComiteContratacion')
+            ->add('numeroAprobContratoComiteAdministracion')
+            ->add('fechaAprobContratoComiteAdministracion')
             ->add('areaAdministraContrato',ChoiceType::class, array(
                 'choices'  => $options["areas_administra_contrato"],
             ))
@@ -136,7 +134,6 @@ class ContratoType extends AbstractType
             'tipos_de_servicios'=>null,
             'tipos_de_persona'=>null,
             'bancos'=>null,
-            'acuerdos'=>null,
             'areas_administra_contrato'=>null,
         ]);
     }

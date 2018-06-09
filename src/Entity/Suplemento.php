@@ -66,9 +66,16 @@ class Suplemento
     /**
      * @var int
      *
-     * @ORM\Column(name="acuerdo", type="integer", nullable=false)
+     * @ORM\Column(name="numero_acuerdo", type="integer", nullable=false)
      */
-    private $acuerdo;
+    private $numeroAcuerdo;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_acuerdo", type="date", nullable=false)
+     */
+    private $fechaAcuerdo;
 
     /**
      * @var int
@@ -154,14 +161,26 @@ class Suplemento
         return $this;
     }
 
-    public function getAcuerdo(): ?int
+    public function getNumeroAcuerdo(): ?int
     {
-        return $this->acuerdo;
+        return $this->numeroAcuerdo;
     }
 
-    public function setAcuerdo(int $acuerdo): self
+    public function setNumeroAcuerdo(int $numeroAcuerdo): self
     {
-        $this->acuerdo = $acuerdo;
+        $this->numeroAcuerdo = $numeroAcuerdo;
+
+        return $this;
+    }
+
+    public function getFechaAcuerdo(): ?\DateTimeInterface
+    {
+        return $this->fechaAcuerdo;
+    }
+
+    public function setFechaAcuerdo(\DateTimeInterface $fechaAcuerdo): self
+    {
+        $this->fechaAcuerdo = $fechaAcuerdo;
 
         return $this;
     }
@@ -177,6 +196,5 @@ class Suplemento
 
         return $this;
     }
-
 
 }

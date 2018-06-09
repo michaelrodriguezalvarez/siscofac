@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Suplemento;
+use App\Entity\Contrato;
 use App\Form\SuplementoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,15 +32,30 @@ class SuplementoController extends Controller
      */
     public function new(Request $request): Response
     {
+        $contratos = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getParsedFieldFromSelect();
+
         $suplemento = new Suplemento();
-        $form = $this->createForm(SuplementoType::class, $suplemento);
+        $form = $this->createForm(SuplementoType::class, $suplemento, ["contratos"=>$contratos]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($suplemento);
-            $em->flush();
 
+            $this->getDoctrine()
+                ->getRepository(Contrato::class)
+                ->updateValorTotalCUPYSaldoCUP($suplemento->getContrato(), $suplemento->getValorSuplementoCup());
+            $this->getDoctrine()
+                ->getRepository(Contrato::class)
+                ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc());
+
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                'Los datos fueron guardados satisfactoriamente'
+            );
             return $this->redirectToRoute('suplemento_index');
         }
 
@@ -62,7 +78,11 @@ class SuplementoController extends Controller
      */
     public function edit(Request $request, Suplemento $suplemento): Response
     {
-        $form = $this->createForm(SuplementoType::class, $suplemento);
+        $contratos = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getParsedFieldFromSelect();
+
+        $form = $this->createForm(SuplementoType::class, $suplemento,["contratos"=>$contratos]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

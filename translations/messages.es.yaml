@@ -1,5 +1,6 @@
 #En los formularios
 Numero: No.
+No. de Factura: No.
 Fecha: Fecha
 Tipo servicio: Tipo de Servicio
 Concepto: Concepto
@@ -38,10 +39,13 @@ Provincia: Provincia
 Direccion: Dirección
 Telefono: Teléfono
 Correo: Correo
+Organismo: Organismo
+Cargo: Cargo
 #En el menu
 Escritorio: Escritorio
 Gestionar: Gestionar
 Factura: Factura
+Facturas: Facturas
 Suplemento: Suplemento
 Nomencladores: Nomencladores
 Proveedores: Proveedores
@@ -59,6 +63,7 @@ Adicionar: Adicionar
 Buscar: Buscar
 Listar: Listar
 Nuevo: Nuevo
+Nueva: Nueva
 Guardar: Guardar
 Ejecutar: Ejecutar
 Mostrar: Mostrar
@@ -76,6 +81,14 @@ Valor contrato total cuc: Valor contrato total
 Cerrar: Cerrar
 #En las tablas
 No se encontraron registros: No se encontraron registros
+<<<<<<< .mine
 Acciones: Acciones
 #En los mensajes
 Usted desea eliminar este elemento: ¿Usted confirma que desea eliminar este elemento?
+Los datos fueron guardados satisfactoriamente: Los datos fueron guardados satisfactoriamente
+=======
+Acciones: Acciones
+#En los mensajes
+Usted desea eliminar este elemento: ¿Usted confirma que desea eliminar este elemento?
+
+>>>>>>> .theirs

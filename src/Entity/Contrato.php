@@ -178,16 +178,30 @@ class Contrato
     /**
      * @var int
      *
-     * @ORM\Column(name="aprob_contrato_comite_contratacion", type="integer", nullable=false)
+     * @ORM\Column(name="numero_aprob_contrato_comite_contratacion", type="integer", nullable=false)
      */
-    private $aprobContratoComiteContratacion;
+    private $numeroAprobContratoComiteContratacion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_aprob_contrato_comite_contratacion", type="date", nullable=false)
+     */
+    private $fechaAprobContratoComiteContratacion;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="aprob_contrato_comite_administracion", type="integer", nullable=false)
+     * @ORM\Column(name="numero_aprob_contrato_comite_administracion", type="integer", nullable=false)
      */
-    private $aprobContratoComiteAdministracion;
+    private $numeroAprobContratoComiteAdministracion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_aprob_contrato_comite_administracion", type="date", nullable=false)
+     */
+    private $fechaAprobContratoComiteAdministracion;
 
     /**
      * @var int
@@ -472,26 +486,50 @@ class Contrato
         return $this;
     }
 
-    public function getAprobContratoComiteContratacion(): ?int
+    public function getNumeroAprobContratoComiteContratacion(): ?int
     {
-        return $this->aprobContratoComiteContratacion;
+        return $this->numeroAprobContratoComiteContratacion;
     }
 
-    public function setAprobContratoComiteContratacion(int $aprobContratoComiteContratacion): self
+    public function setNumeroAprobContratoComiteContratacion(int $numeroAprobContratoComiteContratacion): self
     {
-        $this->aprobContratoComiteContratacion = $aprobContratoComiteContratacion;
+        $this->numeroAprobContratoComiteContratacion = $numeroAprobContratoComiteContratacion;
 
         return $this;
     }
 
-    public function getAprobContratoComiteAdministracion(): ?int
+    public function getFechaAprobContratoComiteContratacion(): ?\DateTimeInterface
     {
-        return $this->aprobContratoComiteAdministracion;
+        return $this->fechaAprobContratoComiteContratacion;
     }
 
-    public function setAprobContratoComiteAdministracion(int $aprobContratoComiteAdministracion): self
+    public function setFechaAprobContratoComiteContratacion(\DateTimeInterface $fechaAprobContratoComiteContratacion): self
     {
-        $this->aprobContratoComiteAdministracion = $aprobContratoComiteAdministracion;
+        $this->fechaAprobContratoComiteContratacion = $fechaAprobContratoComiteContratacion;
+
+        return $this;
+    }
+
+    public function getNumeroAprobContratoComiteAdministracion(): ?int
+    {
+        return $this->numeroAprobContratoComiteAdministracion;
+    }
+
+    public function setNumeroAprobContratoComiteAdministracion(int $numeroAprobContratoComiteAdministracion): self
+    {
+        $this->numeroAprobContratoComiteAdministracion = $numeroAprobContratoComiteAdministracion;
+
+        return $this;
+    }
+
+    public function getFechaAprobContratoComiteAdministracion(): ?\DateTimeInterface
+    {
+        return $this->fechaAprobContratoComiteAdministracion;
+    }
+
+    public function setFechaAprobContratoComiteAdministracion(\DateTimeInterface $fechaAprobContratoComiteAdministracion): self
+    {
+        $this->fechaAprobContratoComiteAdministracion = $fechaAprobContratoComiteAdministracion;
 
         return $this;
     }
@@ -519,6 +557,8 @@ class Contrato
 
         return $this;
     }
+
+
 
 
 }

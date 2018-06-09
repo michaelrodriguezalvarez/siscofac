@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @Route("/nom/banco")
@@ -89,5 +90,33 @@ class NomBancoController extends Controller
         }
 
         return $this->redirectToRoute('nom_banco_index');
+    }
+
+    /**
+     * @Route("/new/modal", name="nom_banco_new_modal", methods="GET|POST")
+     */
+    public function new_modal(Request $request): Response
+    {
+        $nomBanco = new NomBanco();
+        $form = $this->createForm(NomBancoType::class, $nomBanco);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($nomBanco);
+            $em->flush();
+
+            $session = new Session();
+            if ($session->get('escenario')=='contrato_edit'){
+                return $this->redirectToRoute($session->get('escenario'),$session->get('escenario_parametros'));
+            }else{
+                return $this->redirectToRoute($session->get('escenario'));
+            }
+        }
+
+        return $this->render('nom_banco/new_modal.html.twig', [
+            'nom_banco' => $nomBanco,
+            'form' => $form->createView(),
+        ]);
     }
 }

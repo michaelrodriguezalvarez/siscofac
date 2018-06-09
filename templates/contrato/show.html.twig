@@ -27,11 +27,11 @@
             </tr>
             <tr>
                 <th>{% trans %}Fecha inicio{% endtrans %}</th>
-                <td>{{ contrato.fechaInicio ? contrato.fechaInicio|date('d-m-Y') : '' }}</td>
+                <td>{{ contrato.fechaInicio ? contrato.fechaInicio|date('d/m/Y') : '' }}</td>
             </tr>
             <tr>
                 <th>{% trans %}Fecha terminacion{% endtrans %}</th>
-                <td>{{ contrato.fechaTerminacion ? contrato.fechaTerminacion|date('d-m-Y') : '' }}</td>
+                <td>{{ contrato.fechaTerminacion ? contrato.fechaTerminacion|date('d/m/Y') : '' }}</td>
             </tr>
             <tr>
                 <th>{% trans %}Proveedor{% endtrans %}</th>
@@ -107,11 +107,11 @@
             </tr>
             <tr>
                 <th>{% trans %}Aprob contrato comite contratacion{% endtrans %}</th>
-                <td>{{ aprobContratoComiteContratacion }}</td>
+                <td><span>{% trans %}Numero{% endtrans %} {{ contrato.numeroAprobContratoComiteContratacion }} - {% trans %}Fecha{% endtrans %} {{ contrato.fechaAprobContratoComiteContratacion ? contrato.fechaAprobContratoComiteContratacion | date('d/m/Y') : ''  }}</span></td>
             </tr>
             <tr>
                 <th>{% trans %}Aprob contrato comite administracion{% endtrans %}</th>
-                <td>{{ aprobContratoComiteAdministracion }}</td>
+                <td><span>{% trans %}Numero{% endtrans %} {{ contrato.numeroAprobContratoComiteAdministracion }} - {% trans %}Fecha{% endtrans %} {{ contrato.fechaAprobContratoComiteAdministracion ? contrato.fechaAprobContratoComiteAdministracion | date('d/m/Y') : '' }}</span></td>
             </tr>
             <tr>
                 <th>{% trans %}Area administra contrato{% endtrans %}</th>

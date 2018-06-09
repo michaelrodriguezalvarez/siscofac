@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\Suplemento;
 use App\Entity\Acuerdo;
 use App\Entity\Contrato;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,19 +17,27 @@ class SuplementoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('contrato',ChoiceType::class, array(
+                'choices' => $options["contratos"],
+            ))
             ->add('numero')
-            ->add('objeto')
-            ->add('valorSuplementoCup')
-            ->add('valorSuplementoCuc')
+            ->add('objeto',TextareaType::class, array(
+                'attr' => array('class' => 'form-control'),
+            ))
+            ->add('valorSuplementoCup',MoneyType::class,array(
+                'currency'=>'CUP',
+                //'data'=>0,
+            ))
+            ->add('valorSuplementoCuc',MoneyType::class,array(
+                'currency'=>'CUC',
+                //'data'=>0,
+            ))
             ->add('fechaInicio')
             ->add('fechaTerminacion')
-            ->add('acuerdo',EntityType::class, array(
-                'class' => Acuerdo::class,
-            ))
-            ->add('contrato',EntityType::class, array(
-                'class' => Contrato::class,
-                'choice_label'=>'numero'
-            ))
+            ->add('numeroAcuerdo')
+            ->add('fechaAcuerdo')
+
+
         ;
     }
 
@@ -35,6 +45,7 @@ class SuplementoType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Suplemento::class,
+            'contratos'=>null,
         ]);
     }
 }

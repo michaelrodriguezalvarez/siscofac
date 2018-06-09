@@ -97,21 +97,35 @@
         </tr>
         -->
         <tr>
-            <td colspan="3"><span>{% trans %}Comprobacion Contrato{% endtrans %}</span></td>
+            <td colspan="2"><span>{% trans %}Comprobacion Contrato{% endtrans %}</span></td>
             <td colspan="5">
                 <p>{% trans %}Comite de Contratacion{% endtrans %}</p>
                 <hr>
                 <p>{% trans %}Acuerdo{% endtrans %}
-                {{ form_errors(form.aprobContratoComiteContratacion) }}
-                {{ form_widget(form.aprobContratoComiteContratacion) }}
+                <hr>
+                    <span>
+                        {% trans %}Numero{% endtrans %}
+                        {{ form_errors(form.numeroAprobContratoComiteContratacion) }}
+                        {{ form_widget(form.numeroAprobContratoComiteContratacion) }}
+                        {% trans %}Fecha{% endtrans %}
+                        {{ form_errors(form.fechaAprobContratoComiteContratacion) }}
+                        {{ form_widget(form.fechaAprobContratoComiteContratacion) }}
+                    </span>
                 </p>
             </td>
-            <td colspan="4">
+            <td colspan="5">
                 <p>{% trans %}Comite de Administracion{% endtrans %}</p>
                 <hr>
                 <p>{% trans %}Acuerdo{% endtrans %}
-                {{ form_errors(form.aprobContratoComiteAdministracion) }}
-                {{ form_widget(form.aprobContratoComiteAdministracion) }}
+                <hr>
+                    <span>
+                        {% trans %}Numero{% endtrans %}
+                        {{ form_errors(form.numeroAprobContratoComiteAdministracion) }}
+                        {{ form_widget(form.numeroAprobContratoComiteAdministracion) }}
+                        {% trans %}Fecha{% endtrans %}
+                        {{ form_errors(form.fechaAprobContratoComiteAdministracion) }}
+                        {{ form_widget(form.fechaAprobContratoComiteAdministracion) }}
+                    </span>
                 </p>
             </td>
         </tr>

@@ -9,14 +9,15 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Contrato</th>
                 <th>Numero</th>
                 <th>Objeto</th>
                 <th>ValorSuplementoCup</th>
                 <th>ValorSuplementoCuc</th>
                 <th>FechaInicio</th>
                 <th>FechaTerminacion</th>
-                <th>Acuerdo</th>
-                <th>Contrato</th>
+                <th>Numero Acuerdo</th>
+                <th>Fecha Acuerdo</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,14 +25,15 @@
         {% for suplemento in suplementos %}
             <tr>
                 <td>{{ suplemento.id }}</td>
+                <td>{{ suplemento.contrato }}</td>
                 <td>{{ suplemento.numero }}</td>
                 <td>{{ suplemento.objeto }}</td>
                 <td>{{ suplemento.valorSuplementoCup }}</td>
                 <td>{{ suplemento.valorSuplementoCuc }}</td>
-                <td>{{ suplemento.fechaInicio ? suplemento.fechaInicio|date('Y-m-d') : '' }}</td>
-                <td>{{ suplemento.fechaTerminacion ? suplemento.fechaTerminacion|date('Y-m-d') : '' }}</td>
-                <td>{{ suplemento.acuerdo }}</td>
-                <td>{{ suplemento.contrato }}</td>
+                <td>{{ suplemento.fechaInicio ? suplemento.fechaInicio|date('d/m/Y') : '' }}</td>
+                <td>{{ suplemento.fechaTerminacion ? suplemento.fechaTerminacion|date('d/m/Y') : '' }}</td>
+                <td>{{ suplemento.numeroAcuerdo }}</td>
+                <td>{{ suplemento.fechaAcuerdo ? suplemento.fechaAcuerdo|date('d/m/Y') : '' }}</td>
                 <td>
                     <a href="{{ path('suplemento_show', {'id': suplemento.id}) }}">show</a>
                     <a href="{{ path('suplemento_edit', {'id': suplemento.id}) }}">edit</a>

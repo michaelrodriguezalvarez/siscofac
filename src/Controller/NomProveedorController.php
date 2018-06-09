@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @Route("/nom/proveedor")
@@ -121,8 +122,14 @@ class NomProveedorController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($nomProveedor);
-            $em->flush(); 
-            return $this->redirectToRoute('contrato_new');
+            $em->flush();
+
+            $session = new Session();
+            if ($session->get('escenario')=='contrato_edit'){
+                return $this->redirectToRoute($session->get('escenario'),$session->get('escenario_parametros'));
+            }else{
+                return $this->redirectToRoute($session->get('escenario'));
+            }
         }
 
         return $this->render('nom_proveedor/new_modal.html.twig', [

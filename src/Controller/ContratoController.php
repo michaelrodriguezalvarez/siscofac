@@ -14,6 +14,7 @@ use App\Form\ContratoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,14 +27,11 @@ class ContratoController extends Controller
      */
     public function index(): Response
     {
-        //var_dump($this->getDoctrine()
-        //    ->getRepository(Contrato::class)
-        //    ->getDatosParaListar());
-        $contratos = $this->getDoctrine()
+        $contratos_para_listar = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->findAll();
+            ->getDatosParaListar();
 
-        return $this->render('contrato/index.html.twig', ['contratos' => $contratos]);
+        return $this->render('contrato/index.html.twig', ['contratos_para_listar'=>$contratos_para_listar]);
     }
 
     /**
@@ -41,6 +39,9 @@ class ContratoController extends Controller
      */
     public function new(Request $request): Response
     {
+        $session = new Session();
+        $session->set('escenario','contrato_new');
+
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
             ->getUltimosNAnnosHastaActual(10);
@@ -61,10 +62,6 @@ class ContratoController extends Controller
             ->getRepository(NomBanco::class)
             ->getParsedFieldFromSelect();
 
-        $acuerdos = $this->getDoctrine()
-            ->getRepository(Acuerdo::class)
-            ->getParsedFieldFromSelect();
-
         $areas_administra_contrato = $this->getDoctrine()
             ->getRepository(NomArea::class)
             ->getParsedFieldFromSelect();
@@ -76,7 +73,6 @@ class ContratoController extends Controller
             'tipos_de_servicios'=>$tipos_de_servicios,
             'tipos_de_persona'=>$tipos_de_persona,
             'bancos'=>$bancos,
-            'acuerdos'=>$acuerdos,
             'areas_administra_contrato'=>$areas_administra_contrato,
             ],
             array('action' => $this->generateUrl('contrato_new'))
@@ -88,7 +84,10 @@ class ContratoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($contrato);
             $em->flush();
-
+            $this->addFlash(
+                'notice',
+                'Los datos fueron guardados satisfactoriamente'
+            );
             return $this->redirectToRoute('contrato_new');
         }
 
@@ -109,8 +108,6 @@ class ContratoController extends Controller
         $tipo_de_servicio = $this->getDoctrine()->getRepository(NomTipoServicio::class)->findOneBy(array('id'=>$contrato->getTipoDeServicio()));
         $tipo_de_persona = $this->getDoctrine()->getRepository(NomTipoPersona::class)->findOneBy(array('id'=>$contrato->getTipoDePersona()));
         $banco = $this->getDoctrine()->getRepository(NomBanco::class)->findOneBy(array('id'=>$contrato->getBanco()));
-        $aprobContratoComiteContratacion = $this->getDoctrine()->getRepository(Acuerdo::class)->findOneBy(array('id'=>$contrato->getAprobContratoComiteContratacion()));
-        $aprobContratoComiteAdministracion = $this->getDoctrine()->getRepository(Acuerdo::class)->findOneBy(array('id'=>$contrato->getAprobContratoComiteAdministracion()));
         $areaAdministraContrato = $this->getDoctrine()->getRepository(NomArea::class)->findOneBy(array('id'=>$contrato->getAreaAdministraContrato()));
 
         return $this->render('contrato/show.html.twig', [
@@ -120,8 +117,6 @@ class ContratoController extends Controller
             'tipo_de_servicio' => $tipo_de_servicio->getNombre(),
             'tipo_de_persona' => $tipo_de_persona->getNombre(),
             'banco' => $banco->getNombre(),
-            'aprobContratoComiteContratacion' => $aprobContratoComiteContratacion,
-            'aprobContratoComiteAdministracion' => $aprobContratoComiteAdministracion,
             'areaAdministraContrato' => $areaAdministraContrato->getNombre(),
             'estado' => $estados[$contrato->getEstado()]
         ]);
@@ -132,6 +127,10 @@ class ContratoController extends Controller
      */
     public function edit(Request $request, Contrato $contrato): Response
     {
+        $session = new Session();
+        $session->set('escenario','contrato_edit');
+        $session->set('escenario_parametros',array('id'=>$contrato->getId()));
+
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
             ->getUltimosNAnnosHastaActual(10);
@@ -152,21 +151,16 @@ class ContratoController extends Controller
             ->getRepository(NomBanco::class)
             ->getParsedFieldFromSelect();
 
-        $acuerdos = $this->getDoctrine()
-            ->getRepository(Acuerdo::class)
-            ->getParsedFieldFromSelect();
-
         $areas_administra_contrato = $this->getDoctrine()
             ->getRepository(NomArea::class)
             ->getParsedFieldFromSelect();
 
         $form = $this->createForm(ContratoType::class, $contrato, [
-        "ultimos_annos_hasta_actual"=>$ultimos_annos_hasta_actual,
+            'ultimos_annos_hasta_actual'=>$ultimos_annos_hasta_actual,
             'proveedores'=>$proveedores,
             'tipos_de_servicios'=>$tipos_de_servicios,
             'tipos_de_persona'=>$tipos_de_persona,
             'bancos'=>$bancos,
-            'acuerdos'=>$acuerdos,
             'areas_administra_contrato'=>$areas_administra_contrato,
             ],
             array('action' => $this->generateUrl('contrato_edit',['id' => $contrato->getId()])));
@@ -175,7 +169,10 @@ class ContratoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(
+                'notice',
+                'Los datos fueron guardados satisfactoriamente'
+            );
             return $this->redirectToRoute('contrato_edit', ['id' => $contrato->getId()]);
         }
 

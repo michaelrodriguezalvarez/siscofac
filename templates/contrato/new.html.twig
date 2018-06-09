@@ -9,16 +9,21 @@
         	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nuevo_proveedor">
         		{% trans %}Nuevo{% endtrans %} {% trans %}Proveedor{% endtrans %}
         	</button>  
-        	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nuevo_proveedor">
+        	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nuevo_banco">
         		{% trans %}Nuevo{% endtrans %} {% trans %}Banco{% endtrans %}
         	</button> 
-        	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nuevo_proveedor">
+        	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nueva_area">
         		{% trans %}Nueva{% endtrans %} {% trans %}Area{% endtrans %}
         	</button>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nuevo_proveedor">
-                {% trans %}Nuevo{% endtrans %} {% trans %}Acuerdo{% endtrans %}
-            </button>
-        </div>              
+        </div>
+
+
+        {% for message in app.flashes('notice') %}
+            <div class="alert-info">
+                {{ message |trans}}
+            </div>
+        {% endfor %}
+
 
         <br>
         

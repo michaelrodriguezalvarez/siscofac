@@ -13,7 +13,7 @@
         <br>
         <br>
 
-        {% if contratos | length == 0%}
+        {% if contratos_para_listar | length == 0%}
             <div class="col-lg-12">
                 <p class="alert-info">{% trans %}No se encontraron registros{% endtrans %}</p>
             </div>
@@ -52,38 +52,44 @@
             </tr>
         </thead>
         <tbody>
-        {% for contrato in contratos %}
-            <tr>
-                <td>{{ contrato.id }}</td>
-                <td>{{ contrato.numero }}</td>
-                <td>{{ contrato.anno }}</td>
-                <td>{{ contrato.fechaInicio ? contrato.fechaInicio|date('d-m-Y') : '' }}</td>
-                <td>{{ contrato.fechaTerminacion ? contrato.fechaTerminacion|date('d-m-Y') : '' }}</td>
-                <td>{{ contrato.proveedor }}</td>
-                <td>{{ contrato.tipoDeServicio }}</td>
-                <td>{{ contrato.objeto }}</td>
-                <td>{{ contrato.nit }}</td>
-                <td>{{ contrato.reeup }}</td>
-                <td>{{ contrato.carnetIdentidad }}</td>
-                <td>{{ contrato.tipoDePersona }}</td>
-                <td>{{ contrato.cuentaBancariaCup }}</td>
-                <td>{{ contrato.cuentaBancariaCuc }}</td>
-                <td>{{ contrato.valorContratoInicialCup }}</td>
-                <td>{{ contrato.valorContratoInicialCuc }}</td>
-                <td>{{ contrato.valorContratoTotalCup }}</td>
-                <td>{{ contrato.valorContratoTotalCuc }}</td>
-                <td>{{ contrato.ejecucionContratoCup }}</td>
-                <td>{{ contrato.ejecucionContratoCuc }}</td>
-                <td>{{ contrato.saldoCup }}</td>
-                <td>{{ contrato.saldoCuc }}</td>
-                <td>{{ contrato.banco }}</td>
-                <td>{{ contrato.aprobContratoComiteContratacion }}</td>
-                <td>{{ contrato.aprobContratoComiteAdministracion }}</td>
-                <td>{{ contrato.areaAdministraContrato }}</td>
-                <td>{{ contrato.estado }}</td>      
+        {% for contrato in contratos_para_listar %}
+             <tr>
+                <td>{{ contrato["id"] }}</td>
+                <td>{{ contrato["numero"] }}</td>
+                <td>{{ contrato["anno"] }}</td>
+                <td>{{ contrato["fechaInicio"] ? contrato["fechaInicio"]|date('d/m/Y') : '' }}</td>
+                <td>{{ contrato["fechaTerminacion"] ? contrato["fechaTerminacion"]|date('d/m/Y') : '' }}</td>
+                <td>{{ contrato["proveedor"] }}</td>
+                <td>{{ contrato["tipoDeServicio"] }}</td>
+                <td>{{ contrato["objeto"] }}</td>
+                <td>{{ contrato["nit"] }}</td>
+                <td>{{ contrato["reeup"] }}</td>
+                <td>{{ contrato["carnetIdentidad"] }}</td>
+                <td>{{ contrato["tipoDePersona"] }}</td>
+                <td>{{ contrato["cuentaBancariaCup"] }}</td>
+                <td>{{ contrato["cuentaBancariaCuc"] }}</td>
+                <td>{{ contrato["valorContratoInicialCup"] }}</td>
+                <td>{{ contrato["valorContratoInicialCuc"] }}</td>
+                <td>{{ contrato["valorContratoTotalCup"] }}</td>
+                <td>{{ contrato["valorContratoTotalCuc"] }}</td>
+                <td>{{ contrato["ejecucionContratoCup"] }}</td>
+                <td>{{ contrato["ejecucionContratoCuc"] }}</td>
+                <td>{{ contrato["saldoCup"] }}</td>
+                <td>{{ contrato["saldoCuc"] }}</td>
+                <td>{{ contrato["banco"] }}</td>
+                <td><span>{% trans %}Numero{% endtrans %} {{ contrato["numeroAprobContratoComiteContratacion"] }} - {% trans %}Fecha{% endtrans %} {{ contrato["fechaAprobContratoComiteContratacion"] ? contrato["fechaAprobContratoComiteContratacion"]|date('d/m/Y') : '' }}</span></td>
+                <td><span>{% trans %}Numero{% endtrans %} {{ contrato["numeroAprobContratoComiteAdministracion"] }} - {% trans %}Fecha{% endtrans %} {{ contrato["fechaAprobContratoComiteAdministracion"] ? contrato["fechaAprobContratoComiteAdministracion"]|date('d/m/Y') : '' }}</span></td>
+                <td>{{ contrato["areaAdministraContrato"] }}</td>
                 <td>
-                    <a class="btn-sm btn-primary" href="{{ path('contrato_show', {'id': contrato.id}) }}">{% trans %}Detalles{% endtrans %}</a>
-                    <a class="btn-sm btn-primary" href="{{ path('contrato_edit', {'id': contrato.id}) }}">{% trans %}Modificar{% endtrans %}</a>
+                {% if contrato["estado"] == 0 %}
+                    <span class="bg-danger">Inactivo</span>
+                {% else %}
+                    <span class="bg-success"> Activo</span>
+                {% endif %}
+                </td>
+                <td>
+                    <a class="btn-sm btn-primary" href="{{ path('contrato_show', {'id': contrato["id"]}) }}">{% trans %}Detalles{% endtrans %}</a>
+                    <a class="btn-sm btn-primary" href="{{ path('contrato_edit', {'id': contrato["id"]}) }}">{% trans %}Modificar{% endtrans %}</a>
                 </td>
             </tr>
         {% else %}
