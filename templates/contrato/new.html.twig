@@ -5,18 +5,9 @@
 {% block body %}
     <div class="container small">
         <h5>{% trans %}Adicionar{% endtrans %} {% trans %}Nuevo{% endtrans %} {% trans %}Contrato{% endtrans %}</h5>
-        <div class="col-lg-12">
-        	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nuevo_proveedor">
-        		{% trans %}Nuevo{% endtrans %} {% trans %}Proveedor{% endtrans %}
-        	</button>  
-        	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nuevo_banco">
-        		{% trans %}Nuevo{% endtrans %} {% trans %}Banco{% endtrans %}
-        	</button> 
-        	<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_nueva_area">
-        		{% trans %}Nueva{% endtrans %} {% trans %}Area{% endtrans %}
-        	</button>
-        </div>
 
+        {% include 'contrato/botones_adicionar.html.twig' %}
+        {% include 'contrato/ventana_modal.html.twig' %}
 
         {% for message in app.flashes('notice') %}
             <div class="alert-info">

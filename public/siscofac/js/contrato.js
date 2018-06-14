@@ -176,4 +176,19 @@ $(document).ready(function(){
         texto = texto.toString();
         return texto.replace(".",",");
     }
+
+    function Prueba() {
+        alert("Prueba");
+        /*$.ajax({
+            type: "POST",
+            url: "/recherche/ajax",
+            data: {
+                zoom: e.target.getZoom()
+            },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+            }
+        });*/
+    }
 });

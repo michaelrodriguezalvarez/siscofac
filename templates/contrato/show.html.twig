@@ -9,8 +9,8 @@
 
      <div class="col-lg-12">
          <p>
-             <span><a class="btn btn-sm btn-primary" href="{{ path('contrato_index') }}">{% trans %}Listar{% endtrans %}</a></span>
-             <span><a class="btn btn-sm btn-primary" href="{{ path('contrato_edit', {'id': contrato.id}) }}">{% trans %}Modificar{% endtrans %}</a></span>
+             {% include 'contrato/botones.html.twig' %}
+             {% include 'contrato/ventana_modal.html.twig' %}
              <span>{{ include('contrato/_delete_form.html.twig') }}</span>
          </p>
      </div>

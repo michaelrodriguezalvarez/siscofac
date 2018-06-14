@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Doctrine\ORM\Query\Expr;
 
 
@@ -99,5 +100,63 @@ class ContratoRepository extends EntityRepository
             ->getQuery();
         return $consulta->execute();
     }
+    public function getParsedFiltradosPorNumeroAnnoProveedor(int $numero,int $anno,string $proveedor,string $tipo_de_servicio):array {
+
+            $consulta = $this->getEntityManager()->createQueryBuilder()
+                ->select('con.id')
+                ->addSelect(' con.numero')
+                ->addSelect('con.anno')
+                ->addSelect('con.fechaInicio')
+                ->addSelect('con.fechaTerminacion')
+                ->addSelect('CONCAT(pro.nombre, \'-\' ,prv.nombre) AS proveedor')
+                ->addSelect('tds.nombre AS tipoDeServicio')
+                ->addSelect('con.objeto')
+                ->addSelect('con.nit')
+                ->addSelect('con.reeup')
+                ->addSelect('con.carnetIdentidad')
+                ->addSelect('tdp.nombre AS tipoDePersona')
+                ->addSelect('con.cuentaBancariaCup')
+                ->addSelect('con.cuentaBancariaCuc')
+                ->addSelect('con.valorContratoInicialCup')
+                ->addSelect('con.valorContratoInicialCuc')
+                ->addSelect('con.valorContratoTotalCup')
+                ->addSelect('con.valorContratoTotalCuc')
+                ->addSelect('con.ejecucionContratoCup')
+                ->addSelect('con.ejecucionContratoCuc')
+                ->addSelect('con.saldoCup')
+                ->addSelect('con.saldoCuc')
+                ->addSelect('ban.nombre AS banco')
+                ->addSelect('con.numeroAprobContratoComiteContratacion')
+                ->addSelect('con.fechaAprobContratoComiteContratacion')
+                ->addSelect('con.numeroAprobContratoComiteAdministracion')
+                ->addSelect('con.fechaAprobContratoComiteAdministracion')
+                ->addSelect('are.nombre AS areaAdministraContrato')
+                ->addSelect('con.estado')
+                ->from('App\Entity\Contrato','con')
+                ->innerJoin('App\Entity\NomProveedor','pro',Expr\Join::WITH,'con.proveedor = pro.id')
+                ->innerJoin('App\Entity\NomProvincia','prv', Expr\Join::WITH, 'pro.provincia = prv.id')
+                ->innerJoin('App\Entity\NomTipoServicio','tds', Expr\Join::WITH, 'con.tipoDeServicio = tds.id')
+                ->innerJoin('App\Entity\NomTipoPersona','tdp', Expr\Join::WITH, 'con.tipoDePersona = tdp.id')
+                ->innerJoin('App\Entity\NomBanco','ban', Expr\Join::WITH, 'con.banco = ban.id')
+                ->innerJoin('App\Entity\NomArea','are', Expr\Join::WITH, 'con.areaAdministraContrato = are.id')
+            ;
+
+            if ($numero != 0 && $anno != 0){
+                $consulta->where($consulta->expr()->eq('con.numero',$numero));
+                $consulta->andWhere($consulta->expr()->eq('con.anno',$anno));
+                if ($proveedor != "" && $tipo_de_servicio != ""){
+                    $consulta->andWhere('pro.nombre LIKE \'%'.$proveedor.'%\' OR prv.nombre LIKE \'%'.$proveedor.'%\'');
+                    $consulta->andWhere($consulta->expr()->eq('tds.nombre','\''.$tipo_de_servicio.'\''));
+                }
+            }else{
+                if ($proveedor != "" && $tipo_de_servicio != ""){
+                    $consulta->where('pro.nombre LIKE \'%'.$proveedor.'%\' OR prv.nombre LIKE \'%'.$proveedor.'%\'');
+                    $consulta->andWhere($consulta->expr()->eq('tds.nombre','\''.$tipo_de_servicio.'\''));
+                }else{
+                    throw new ORMInvalidArgumentException("Debe especificar los parámetros correctos");
+                }
+            }
+            return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
+        }
 
 }

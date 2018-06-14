@@ -53,3 +53,39 @@
         </div>
     </div>
 </div>
+
+<div id="modal_buscar_contrato" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_buscar_contratoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_buscar_contratoLabel">{% trans %}Buscar{% endtrans %} {% trans %}Contrato{% endtrans %} </h5>
+                <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ render(controller(
+                    'App\\Controller\\ContratoController::contrato_buscar_modal'
+                )) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_modificar_contrato" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_modificar_contratoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_modificar_contratoLabel">{% trans %}Modificar{% endtrans %} {% trans %}Contrato{% endtrans %} </h5>
+                <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ render(controller(
+                    'App\\Controller\\ContratoController::contrato_modificar_modal'
+                )) }}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,9 @@
 <a class="btn-sm btn-primary" href="{{ path('contrato_new') }}">{% trans %}Adicionar{% endtrans %}</a>
-<a class="btn-sm btn-primary" href="#">{% trans %}Buscar{% endtrans %}</a>
-<a class="btn-sm btn-primary" href="#">{% trans %}Modificar{% endtrans %}</a>
+<button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_buscar_contrato">
+    {% trans %}Buscar{% endtrans %}
+</button>
+<button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_modificar_contrato">
+    {% trans %}Modificar{% endtrans %}
+</button>
 <a class="btn-sm btn-primary" href="{{ path('contrato_index') }}">{% trans %}Listar{% endtrans %}</a>
 <a class="btn-sm btn-primary" href="{{ path('factura_index') }}">{% trans %}Ejecutar{% endtrans %}</a>
