@@ -64,7 +64,7 @@
                     var encontrado = data['encontrado'];
 
                     if(encontrado == "Si"){
-                        var ruta =  '{{ path('contrato_show', {'id': 'identificador_del_contrato'}) }}';
+                        var ruta =  '{{ path('contrato_show', {'id': 'identificador_del_contrato', 'destino':'contrato'}) }}';
                         ruta = ruta.replace("identificador_del_contrato", respuesta);
                         location.href = ruta;
                     }else{

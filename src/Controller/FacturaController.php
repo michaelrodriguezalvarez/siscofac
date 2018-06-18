@@ -15,13 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class FacturaController extends Controller
 {
     /**
-     * @Route("/", name="factura_index", methods="GET")
+     * @Route("/{id_contrato}/index", name="factura_index", methods="GET")
      */
-    public function index(): Response
+    public function index(int $id_contrato): Response
     {
-        $facturas = $this->getDoctrine()
+        /*$facturas = $this->getDoctrine()
             ->getRepository(Factura::class)
-            ->findAll();
+            ->findAll();*/
+
+         $facturas = $this->getDoctrine()
+            ->getRepository(Factura::class)
+            ->findBy(array('contrato'=>$id_contrato));
+
 
         return $this->render('factura/index.html.twig', ['facturas' => $facturas]);
     }

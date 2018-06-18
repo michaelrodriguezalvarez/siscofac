@@ -1,54 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Suplemento{% endblock %}
+{% block title %}{% trans %}Mostrar{% endtrans %} {% trans %}Suplemento{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Suplemento</h1>
+    <div class="container small">
+    <h5>{% trans %}Mostrar{% endtrans %} {% trans %}Suplemento{% endtrans %}</h5>
 
-    <table class="table">
+        {% include 'contrato/botones_suplemento.html.twig' %}
+        {% include 'contrato/ventana_modal.html.twig' %}
+
+    <div class="table-responsive">
+    <table class="table table-bordered">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ suplemento.id }}</td>
+                <th>{% trans %}Contrato{% endtrans %}</th>
+                <td>{{ contrato }}</td>
             </tr>
             <tr>
-                <th>Numero</th>
+                <th>{% trans %}Numero{% endtrans %}</th>
                 <td>{{ suplemento.numero }}</td>
             </tr>
             <tr>
-                <th>Objeto</th>
+                <th>{% trans %}Objeto{% endtrans %}</th>
                 <td>{{ suplemento.objeto }}</td>
             </tr>
             <tr>
-                <th>ValorSuplementoCup</th>
+                <th>{% trans %}Valor suplemento Cup{% endtrans %}</th>
                 <td>{{ suplemento.valorSuplementoCup }}</td>
             </tr>
             <tr>
-                <th>ValorSuplementoCuc</th>
+                <th>{% trans %}Valor suplemento Cuc{% endtrans %}</th>
                 <td>{{ suplemento.valorSuplementoCuc }}</td>
             </tr>
             <tr>
-                <th>FechaInicio</th>
+                <th>{% trans %}Fecha inicio{% endtrans %}</th>
                 <td>{{ suplemento.fechaInicio ? suplemento.fechaInicio|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>FechaTerminacion</th>
+                <th>{% trans %}Fecha terminacion{% endtrans %}</th>
                 <td>{{ suplemento.fechaTerminacion ? suplemento.fechaTerminacion|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Acuerdo</th>
-                <td>{{ suplemento.acuerdo }}</td>
+                <th>{% trans %}Numero acuerdo{% endtrans %}</th>
+                <td>{{ suplemento.numeroAcuerdo }}</td>
             </tr>
             <tr>
-                <th>Contrato</th>
-                <td>{{ suplemento.contrato }}</td>
+                <th>{% trans %}Fecha acuerdo{% endtrans %}</th>
+                <td>{{ suplemento.fechaAcuerdo ? suplemento.fechaAcuerdo|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('suplemento_index') }}">back to list</a>
-
-    <a href="{{ path('suplemento_edit', {'id': suplemento.id}) }}">edit</a>
-
-    {{ include('suplemento/_delete_form.html.twig') }}
+    </div>
+    </div>
 {% endblock %}

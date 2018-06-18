@@ -558,6 +558,14 @@ class Contrato
         return $this;
     }
 
+    /**
+     * @param int $id
+     */
+    public function __toString(): string
+    {
+        return $this->numero ."/" . $this->anno;
+    }
+
 
 
 

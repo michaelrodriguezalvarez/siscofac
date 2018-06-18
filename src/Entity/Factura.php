@@ -24,9 +24,16 @@ class Factura
     /**
      * @var int
      *
-     * @ORM\Column(name="numero", type="integer", nullable=false)
+     * @ORM\Column(name="numero_registro", type="integer", nullable=false)
      */
-    private $numero;
+    private $numero_registro;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_del_proveedor", type="text", length=255, nullable=false)
+     */
+    private $numero_del_proveedor;
 
     /**
      * @var \DateTime
@@ -96,14 +103,26 @@ class Factura
         return $this->id;
     }
 
-    public function getNumero(): ?int
+    public function getNumeroRegistro(): ?int
     {
-        return $this->numero;
+        return $this->numero_registro;
     }
 
-    public function setNumero(int $numero): self
+    public function setNumeroRegistro(int $numero_registro): self
     {
-        $this->numero = $numero;
+        $this->numero_registro = $numero_registro;
+
+        return $this;
+    }
+
+    public function getNumeroDelProveedor(): ?string
+    {
+        return $this->numero_del_proveedor;
+    }
+
+    public function setNumeroDelProveedor(string $numero_del_proveedor): self
+    {
+        $this->numero_del_proveedor = $numero_del_proveedor;
 
         return $this;
     }

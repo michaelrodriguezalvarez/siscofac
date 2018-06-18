@@ -7,11 +7,40 @@
     <div class="container small">
     <h5>{% trans %}Mostrar{% endtrans %} {% trans %}Contrato{% endtrans %}</h5>
 
+        <span class="text-info">
+            {% if cantidad_suplementos == 0 %}
+                Suplementos ({{ cantidad_suplementos }})
+            {% else %}
+                <a href="{{ path('suplemento_index',{'id_contrato':contrato.id}) }}">Suplementos ({{ cantidad_suplementos }})</a>
+            {% endif %}
+        </span>
+
+        <span class="text-info">
+            {% if cantidad_facturas == 0 %}
+                Facturas ({{ cantidad_facturas }})
+            {% else %}
+                <a href="{{ path('factura_index',{'id_contrato':contrato.id}) }}">Facturas ({{ cantidad_facturas }})</a>
+            {% endif %}
+        </span>
+
      <div class="col-lg-12">
          <p>
-             {% include 'contrato/botones.html.twig' %}
+             {% if destino == "contrato" %}
+                 {% include 'contrato/botones_contrato.html.twig' %}
+                 {% else %}
+                     {% if destino == "suplemento"%}
+                         {% include 'contrato/botones_suplemento.html.twig' %}
+                     {% else %}
+
+                         {% if destino == "factura"%}
+                             {% include 'contrato/botones_factura.html.twig' %}
+                         {% else %}
+                             <!-- Mostrar error -->
+                         {% endif %}
+                     {% endif %}
+             {% endif %}
+
              {% include 'contrato/ventana_modal.html.twig' %}
-             <span>{{ include('contrato/_delete_form.html.twig') }}</span>
          </p>
      </div>
     <div class="table-responsive">

@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Suplemento{% endblock %}
+{% block title %}{% trans %}Modificar{% endtrans %} {% trans %}Suplemento{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Edit Suplemento</h1>
+    <div class="container small">
+    <h5>{% trans %}Modificar{% endtrans %} {% trans %}Suplemento{% endtrans %}</h5>
 
-    {{ include('suplemento/_form.html.twig', {'button_label': 'Update'}) }}
+    {% include 'contrato/botones_suplemento.html.twig' %}
+    {% include 'contrato/ventana_modal.html.twig' %}
 
-    <a href="{{ path('suplemento_index') }}">back to list</a>
+    {% for message in app.flashes('notice') %}
+        <div class="alert-info">
+            {{ message |trans}}
+        </div>
+    {% endfor %}
+
+    <br>
+
+    {{ include('suplemento/_form.html.twig') }}
 
     {{ include('suplemento/_delete_form.html.twig') }}
 {% endblock %}

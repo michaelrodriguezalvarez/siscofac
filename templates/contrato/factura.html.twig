@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="col-lg-12">
+        <div id="div_respuesta_servidor_factura_modal" class="alert-info">
+            <label id="label_respuesta_servidor_factura_modal"></label>
+        </div>
+    </div>
+    <div class="row col-lg-12">
+        <div class="col-lg-3">
+            <label for="">{% trans %}Numero{% endtrans %}</label><input id="numero_form_factura_modal" name="numero_form_factura_modal" type="text" size="6" placeholder="{% trans %}No filtrar{% endtrans %}">
+        </div>
+        <div class="col-lg-3">
+            <label for="">{% trans %}Anno{% endtrans %}</label>
+            <select id="anno_form_factura_modal" name="anno_form_factura_modal">
+                <option value="No filtrar">{% trans %}No filtrar{% endtrans %}</option>
+                {% for ultimo_anno in ultimos_annos_hasta_actual %}
+                    <option value="{{ ultimo_anno }}">{{ ultimo_anno }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <label for="">Proveedor</label><input id="proveedor_form_factura_modal" name="proveedor_form_factura_modal" type="text" placeholder="{% trans %}No filtrar{% endtrans %}">
+        </div>
+        <div class="col-lg-3">
+            <label for="">{% trans %}Servicio{% endtrans %}</label>
+            <select id="servicio_form_factura_modal" name="servicio_form_factura_modal">
+                <option value="No filtrar">{% trans %}No filtrar{% endtrans %}</option>
+                {% for servicio in servicios %}
+                    <option value="{{ servicio.nombre }}">{{ servicio.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <br>
+        <input type="hidden" id="_token_form_factura_modal" name="_token_form_factura_modal" value="{{ csrf_token('factura_modal') }}">
+        <button id="btn_form_factura_modal" class="btn btn-sm btn-primary border">{% trans %}Buscar{% endtrans %}</button>
+        <label id="label_indicador_btn_form_factura_modal" for=""></label>
+        <br>
+        <br>
+    </div>
+</div>
+
+<script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#div_respuesta_servidor_factura_modal').hide();
+        $('#btn_form_factura_modal').click(function () {
+            $('#div_respuesta_servidor_factura_modal').hide();
+            $('#btn_form_factura_modal').prop('disabled',true);
+            $('#label_indicador_btn_form_factura_modal').text("Buscando...");
+            $.ajax({
+                type: "POST",
+                url: "{{ path('factura_modal_ajax') }}",
+                data: {
+                    numero_form_factura_modal: $('#numero_form_factura_modal').val(),
+                    anno_form_factura_modal: $('#anno_form_factura_modal').val(),
+                    proveedor_form_factura_modal: $('#proveedor_form_factura_modal').val(),
+                    servicio_form_factura_modal: $('#servicio_form_factura_modal').val(),
+                    _token_form_factura_modal: $('#_token_form_factura_modal').val(),
+                },
+                dataType: "json",
+                success: function(data) {
+                    var respuesta_form_factura_modal = data['data'];
+                    var encontrado_form_factura_modal = data['encontrado'];
+
+                    if(encontrado_form_factura_modal == "Si"){
+                        var ruta_form_factura_modal =  '{{ path('contrato_show', {'id': 'identificador_del_contrato', 'destino':'factura'}) }}';
+                        ruta_form_factura_modal = ruta_form_factura_modal.replace("identificador_del_contrato", respuesta_form_factura_modal);
+                        location.href = ruta_form_factura_modal;
+                    }else{
+                        $('#div_respuesta_servidor_factura_modal').show();
+                        $("#label_respuesta_servidor_factura_modal").text(respuesta_form_factura_modal);
+                    }
+                },
+                error: function() {
+                    alert("Error al procesar");
+                },
+                complete: function() {
+                    $('#btn_form_factura_modal').prop('disabled',false);
+                    $('#label_indicador_btn_form_factura_modal').text("");
+                }
+            });
+        });
+
+
+    })
+</script>

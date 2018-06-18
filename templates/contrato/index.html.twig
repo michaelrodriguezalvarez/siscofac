@@ -8,7 +8,7 @@
 
     <h5>{% trans %}Listar{% endtrans %} {% trans %}Contratos{% endtrans %}</h5>
     
-        {% include 'contrato/botones.html.twig' %}
+        {% include 'contrato/botones_contrato.html.twig' %}
         {% include 'contrato/ventana_modal.html.twig' %}
 
         <br>
@@ -89,7 +89,7 @@
                 {% endif %}
                 </td>
                 <td>
-                    <a class="btn-sm btn-primary" href="{{ path('contrato_show', {'id': contrato["id"]}) }}">{% trans %}Detalles{% endtrans %}</a>
+                    <a class="btn-sm btn-primary" href="{{ path('contrato_show', {'id': contrato["id"],'destino':'contrato'}) }}">{% trans %}Detalles{% endtrans %}</a>
                     <a class="btn-sm btn-primary" href="{{ path('contrato_edit', {'id': contrato["id"]}) }}">{% trans %}Modificar{% endtrans %}</a>
                 </td>
             </tr>

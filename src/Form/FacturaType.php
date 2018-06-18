@@ -26,8 +26,11 @@ class FacturaType extends AbstractType
                 'mapped'=>false,
                 'disabled'=>true
             ))
-            ->add('numero',IntegerType::class,array(
-                'label'=>'No. de Factura',
+            ->add('numero_registro',IntegerType::class,array(
+                'label'=>'No. de Registro',
+            ))
+            ->add('numero_del_proveedor',TextType::class,array(
+                'label'=>'No. de Factura del Proveedor',
             ))
             ->add('fecha')
             ->add('tipoServicio',EntityType::class, array(

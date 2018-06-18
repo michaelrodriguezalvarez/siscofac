@@ -1,0 +1,20 @@
+<div id="div_contrato_botones">
+    <a class="btn-sm btn-primary" href="{{ path('contrato_new') }}">{% trans %}Adicionar{% endtrans %}</a>
+    <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_buscar_contrato">
+        {% trans %}Buscar{% endtrans %}
+    </button>
+    <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_modificar_contrato">
+        {% trans %}Modificar{% endtrans %}
+    </button>
+    <a class="btn-sm btn-primary" href="{{ path('contrato_index') }}">{% trans %}Listar{% endtrans %}</a>
+
+    <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_suplemento">
+        {% trans %}Suplemento{% endtrans %}
+    </button>
+    <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_factura">
+        {% trans %}Ejecucion{% endtrans %}
+    </button>
+</div>
+
+
+

@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Suplemento;
 use App\Entity\Acuerdo;
 use App\Entity\Contrato;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\AbstractType;
@@ -17,8 +17,8 @@ class SuplementoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contrato',ChoiceType::class, array(
-                'choices' => $options["contratos"],
+            ->add('contrato',HiddenType::class,array(
+                'data'=>$options['id_contrato']
             ))
             ->add('numero')
             ->add('objeto',TextareaType::class, array(
@@ -45,7 +45,7 @@ class SuplementoType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Suplemento::class,
-            'contratos'=>null,
+            'id_contrato'=>null
         ]);
     }
 }

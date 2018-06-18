@@ -73,30 +73,32 @@ class ContratoRepository extends EntityRepository
         $resultado_ids = array();
 
         foreach ($contratos as $contrato) {
-            array_push($resultado_nombres, $contrato->getNumero());
+            array_push($resultado_nombres, $contrato->getNumero().'/'.$contrato->getAnno());
             array_push($resultado_ids, $contrato->getId());
         }
 
         return array_combine($resultado_nombres,$resultado_ids);
     }
 
-    public function updateValorTotalCUPYSaldoCUP(int $id_contrato, float $incremento):int{
+    public function updateValorTotalCUPYSaldoCUP(int $id_contrato, float $monto, bool $incremento):int{
+        $signo = $incremento == true ? '+' : '-';
         $consulta = $this->getEntityManager()->createQueryBuilder()
             ->update('App\Entity\Contrato','con')
-            ->set('con.valorContratoTotalCup', 'con.valorContratoTotalCup + :incremento')
-            ->set('con.saldoCup', 'con.saldoCup + :incremento')
+            ->set('con.valorContratoTotalCup', 'con.valorContratoTotalCup '.$signo.' :monto')
+            ->set('con.saldoCup', 'con.saldoCup '.$signo.' :monto')
             ->where('con.id = :id_contrato')
-            ->setParameters(array('id_contrato'=>$id_contrato,'incremento'=>$incremento))
+            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
             ->getQuery();
         return $consulta->execute();
     }
-    public function updateValorTotalCUCYSaldoCUC(int $id_contrato, float $incremento):int{
+    public function updateValorTotalCUCYSaldoCUC(int $id_contrato, float $monto, bool $incremento):int{
+        $signo = $incremento == true ? '+' : '-';
         $consulta = $this->getEntityManager()->createQueryBuilder()
             ->update('App\Entity\Contrato','con')
-            ->set('con.valorContratoTotalCuc', 'con.valorContratoTotalCuc + :incremento')
-            ->set('con.saldoCuc', 'con.saldoCuc + :incremento')
+            ->set('con.valorContratoTotalCuc', 'con.valorContratoTotalCuc '.$signo.' :monto')
+            ->set('con.saldoCuc', 'con.saldoCuc '.$signo.' :monto')
             ->where('con.id = :id_contrato')
-            ->setParameters(array('id_contrato'=>$id_contrato,'incremento'=>$incremento))
+            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
             ->getQuery();
         return $consulta->execute();
     }
@@ -158,5 +160,44 @@ class ContratoRepository extends EntityRepository
             }
             return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
         }
+
+        public function getSuplementoDadoNumeroYContrato(int $numero_suplemento,int $id_contrato):array
+        {
+            $consulta = $this->getEntityManager()->createQueryBuilder()
+                ->select('sup.id')
+                ->from('App\Entity\Suplemento','sup')
+                ->where($this->getEntityManager()->createQueryBuilder()->expr()->eq('sup.numero',$numero_suplemento))
+                ->andWhere($this->getEntityManager()->createQueryBuilder()->expr()->eq('sup.contrato',$id_contrato));
+            return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
+        }
+
+        public function getContratoPorNumeroYAnno(int $numero, int $anno):array
+        {
+            return $this->findBy(array('numero'=>$numero,'anno'=>$anno));
+        }
+
+        public function getCantidadContratosPorAnno($anno):int
+        {
+            return count($this->findBy(array('anno'=>$anno)));
+        }
+
+        public function getCantidadSuplentosDadoIdContrato(int $id_contrato):int
+        {
+            $consulta = $this->getEntityManager()->createQueryBuilder()
+                ->select('sup.id')
+                ->from('App\Entity\Suplemento','sup')
+                ->where($this->getEntityManager()->createQueryBuilder()->expr()->eq('sup.contrato',$id_contrato));
+            return count($this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult());
+        }
+
+        public function getCantidadFacturasDadoIdContrato(int $id_contrato):int
+        {
+            $consulta = $this->getEntityManager()->createQueryBuilder()
+                ->select('fac.id')
+                ->from('App\Entity\Factura','fac')
+                ->where($this->getEntityManager()->createQueryBuilder()->expr()->eq('fac.contrato',$id_contrato));
+            return count($this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult());
+        }
+
 
 }

@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Suplemento{% endblock %}
+{% block title %}{% trans %}Adicionar{% endtrans %} {% trans %}Nuevo{% endtrans %} {% trans %}Suplemento{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Create new Suplemento</h1>
+    <div class="container small">
+    <h5>{% trans %}Adicionar{% endtrans %} {% trans %}Nuevo{% endtrans %} {% trans %}Suplemento{% endtrans %}</h5>
+
+    {% include 'contrato/botones_suplemento.html.twig' %}
+    {% include 'contrato/ventana_modal.html.twig' %}
+
+    {% for message in app.flashes('notice') %}
+        <div class="alert-info">
+            {{ message |trans}}
+        </div>
+    {% endfor %}
+
+
+    <br>
 
     {{ include('suplemento/_form.html.twig') }}
 
-    <a href="{{ path('suplemento_index') }}">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/suplemento.js') }}"></script>
 {% endblock %}

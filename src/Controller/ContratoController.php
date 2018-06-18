@@ -67,6 +67,11 @@ class ContratoController extends Controller
             ->getRepository(NomArea::class)
             ->getParsedFieldFromSelect();
 
+        $anno_actual = date('Y');
+        $cantidad_de_contratos_del_anno_actual = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getCantidadContratosPorAnno($anno_actual);
+
         $contrato = new Contrato();
         $form = $this->createForm(ContratoType::class, $contrato,[
             "ultimos_annos_hasta_actual"=>$ultimos_annos_hasta_actual,
@@ -82,26 +87,39 @@ class ContratoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($contrato);
-            $em->flush();
-            $this->addFlash(
-                'notice',
-                'Los datos fueron guardados satisfactoriamente'
-            );
-            return $this->redirectToRoute('contrato_new');
+
+            $contratos_encontrados = $this->getDoctrine()
+                ->getRepository(Contrato::class)
+                ->getContratoPorNumeroYAnno($contrato->getNumero(), $contrato->getAnno());
+            if (count($contratos_encontrados)==0){
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($contrato);
+                $em->flush();
+                $this->addFlash(
+                    'notice',
+                    'Los datos fueron guardados satisfactoriamente'
+                );
+                return $this->redirectToRoute('contrato_new');
+            }else{
+                $this->addFlash(
+                    'notice',
+                    'Debe especificar un número diferente al contrato'
+                );
+            }
         }
 
         return $this->render('contrato/new.html.twig', [
+            'anno_actual'=>$anno_actual,
+            'cantidad_de_contratos_del_anno_actual'=>$cantidad_de_contratos_del_anno_actual,
             'contrato' => $contrato,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="contrato_show", methods="GET")
+     * @Route("/{id}/{destino}", name="contrato_show", methods="GET")
      */
-    public function show(Contrato $contrato): Response
+    public function show(Contrato $contrato, string $destino): Response
     {
         $estados = array( 1 =>'Activo' , 0 => 'Inactivo');
         $proveedor = $this->getDoctrine()->getRepository(NomProveedor::class)->findOneBy(array('id'=>$contrato->getProveedor()));
@@ -110,8 +128,10 @@ class ContratoController extends Controller
         $tipo_de_persona = $this->getDoctrine()->getRepository(NomTipoPersona::class)->findOneBy(array('id'=>$contrato->getTipoDePersona()));
         $banco = $this->getDoctrine()->getRepository(NomBanco::class)->findOneBy(array('id'=>$contrato->getBanco()));
         $areaAdministraContrato = $this->getDoctrine()->getRepository(NomArea::class)->findOneBy(array('id'=>$contrato->getAreaAdministraContrato()));
-
+        $cantidad_suplementos = $this->getDoctrine()->getRepository(Contrato::class)->getCantidadSuplentosDadoIdContrato($contrato->getId());
+        $cantidad_facturas = $this->getDoctrine()->getRepository(Contrato::class)->getCantidadFacturasDadoIdContrato($contrato->getId());
         return $this->render('contrato/show.html.twig', [
+            'id_contrato'=>$contrato->getId(),
             'contrato' => $contrato,
             'proveedor' => $proveedor->getNombre(),
             'provincia' => $provincia->getNombre(),
@@ -119,7 +139,10 @@ class ContratoController extends Controller
             'tipo_de_persona' => $tipo_de_persona->getNombre(),
             'banco' => $banco->getNombre(),
             'areaAdministraContrato' => $areaAdministraContrato->getNombre(),
-            'estado' => $estados[$contrato->getEstado()]
+            'estado' => $estados[$contrato->getEstado()],
+            'destino'=>$destino,
+            'cantidad_suplementos'=>$cantidad_suplementos,
+            'cantidad_facturas' => $cantidad_facturas
         ]);
     }
 
@@ -156,6 +179,11 @@ class ContratoController extends Controller
             ->getRepository(NomArea::class)
             ->getParsedFieldFromSelect();
 
+        $anno_actual = date('Y');
+        $cantidad_de_contratos_del_anno_actual = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getCantidadContratosPorAnno($anno_actual);
+
         $form = $this->createForm(ContratoType::class, $contrato, [
             'ultimos_annos_hasta_actual'=>$ultimos_annos_hasta_actual,
             'proveedores'=>$proveedores,
@@ -178,6 +206,8 @@ class ContratoController extends Controller
         }
 
         return $this->render('contrato/edit.html.twig', [
+            'anno_actual'=>$anno_actual,
+            'cantidad_de_contratos_del_anno_actual'=>$cantidad_de_contratos_del_anno_actual,
             'contrato' => $contrato,
             'form' => $form->createView(),
         ]);
@@ -377,6 +407,190 @@ class ContratoController extends Controller
         }else{
             //No es ajax
             return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor2','encontrado'=>'No'));
+        }
+    }
+
+    /**
+     * @Route("/suplemento/modal", name="suplemento_modal", methods="GET|POST")
+     */
+    public function suplemento_modal(Request $request): Response
+    {
+        $ultimos_annos_hasta_actual = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getUltimosNAnnosHastaActual(10);
+        $servicios = $this->getDoctrine()
+            ->getRepository(NomTipoServicio::class)
+            ->findAll();
+
+        return $this->render('contrato/suplemento.html.twig', [
+            'ultimos_annos_hasta_actual'=>$ultimos_annos_hasta_actual,
+            'servicios'=>$servicios,
+        ]);
+    }
+    /**
+     * @Route("/suplemento/modal/ajax", name="suplemento_modal_ajax", methods="POST")
+     */
+    public function suplemento_modal_ajax(Request $request): JsonResponse
+    {
+        if ($request->isXMLHttpRequest()) {
+            $token = $request->request->get('_token');
+            if ($this->isCsrfTokenValid('suplemento_modal', $request->request->get('_token_form_suplemento_modal'))) {
+                $numero_form_suplemento_modal = $request->request->get('numero_form_suplemento_modal');
+                $anno_form_suplemento_modal = $request->request->get('anno_form_suplemento_modal');
+                $proveedor_form_suplemento_modal = $request->request->get('proveedor_form_suplemento_modal');
+                $servicio_form_suplemento_modal = $request->request->get('servicio_form_suplemento_modal');
+
+                $resultado = array();
+
+                if($numero_form_suplemento_modal != "" && $anno_form_suplemento_modal != "No filtrar"){
+                    if($proveedor_form_suplemento_modal != "" && $servicio_form_suplemento_modal != "No filtrar"){
+                        //proceso los de alante y los de atras
+                        $resultado = $this->getDoctrine()
+                            ->getRepository(Contrato::class)
+                            ->getParsedFiltradosPorNumeroAnnoProveedor(
+                                $numero_form_suplemento_modal,
+                                $anno_form_suplemento_modal,
+                                $proveedor_form_suplemento_modal,
+                                $servicio_form_suplemento_modal
+                            );
+                    }else{
+                        //proceso los dos de alante y
+                        $resultado = $this->getDoctrine()
+                            ->getRepository(Contrato::class)
+                            ->getParsedFiltradosPorNumeroAnnoProveedor(
+                                $numero_form_suplemento_modal,
+                                $anno_form_suplemento_modal,
+                                "",
+                                ""
+                            );
+                    }
+                }else{
+                    if($proveedor_form_suplemento_modal != "" && $servicio_form_suplemento_modal != "No filtrar"){
+                        //proceso los dos de atras
+                        $resultado = $this->getDoctrine()
+                            ->getRepository(Contrato::class)
+                            ->getParsedFiltradosPorNumeroAnnoProveedor(
+                                0,
+                                0,
+                                $proveedor_form_suplemento_modal,
+                                $servicio_form_suplemento_modal
+                            );
+                    }else{
+                        //error debe llenar campos
+                        return new JsonResponse(array('data' => 'Es requerido completar los campos','encontrado'=>'No'));
+                    }
+                }
+
+                try{
+                    if(count($resultado)==1){
+                        return new JsonResponse(array('data' => $resultado[0]['id'],'encontrado'=>'Si'));
+                    }else{
+                        return new JsonResponse(array('data' => 'No ha sido encontrado el contrato','encontrado'=>'No'));
+                    }
+
+                }catch (ORMInvalidArgumentException $orme){
+                    return new JsonResponse(array('data' => $orme->getMessage(),'encontrado'=>'No'));
+                }
+            }
+            else{
+                //Ataque Csrf
+                return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
+            }
+        }else{
+            //No es ajax
+            return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
+        }
+    }
+
+    /**
+     * @Route("/factura/modal", name="factura_modal", methods="GET|POST")
+     */
+    public function factura_modal(Request $request): Response
+    {
+        $ultimos_annos_hasta_actual = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getUltimosNAnnosHastaActual(10);
+        $servicios = $this->getDoctrine()
+            ->getRepository(NomTipoServicio::class)
+            ->findAll();
+
+        return $this->render('contrato/factura.html.twig', [
+            'ultimos_annos_hasta_actual'=>$ultimos_annos_hasta_actual,
+            'servicios'=>$servicios,
+        ]);
+    }
+    /**
+     * @Route("/factura/modal/ajax", name="factura_modal_ajax", methods="POST")
+     */
+    public function factura_modal_ajax(Request $request): JsonResponse
+    {
+        if ($request->isXMLHttpRequest()) {
+            $token = $request->request->get('_token_form_factura_modal');
+            if ($this->isCsrfTokenValid('factura_modal', $request->request->get('_token_form_factura_modal'))) {
+                $numero_form_factura_modal = $request->request->get('numero_form_factura_modal');
+                $anno_form_factura_modal = $request->request->get('anno_form_factura_modal');
+                $proveedor_form_factura_modal = $request->request->get('proveedor_form_factura_modal');
+                $servicio_form_factura_modal = $request->request->get('servicio_form_factura_modal');
+
+                $resultado = array();
+
+                if($numero_form_factura_modal != "" && $anno_form_factura_modal != "No filtrar"){
+                    if($proveedor_form_factura_modal != "" && $servicio_form_factura_modal != "No filtrar"){
+                        //proceso los de alante y los de atras
+                        $resultado = $this->getDoctrine()
+                            ->getRepository(Contrato::class)
+                            ->getParsedFiltradosPorNumeroAnnoProveedor(
+                                $numero_form_factura_modal,
+                                $anno_form_factura_modal,
+                                $proveedor_form_factura_modal,
+                                $servicio_form_factura_modal
+                            );
+                    }else{
+                        //proceso los dos de alante y
+                        $resultado = $this->getDoctrine()
+                            ->getRepository(Contrato::class)
+                            ->getParsedFiltradosPorNumeroAnnoProveedor(
+                                $numero_form_factura_modal,
+                                $anno_form_factura_modal,
+                                "",
+                                ""
+                            );
+                    }
+                }else{
+                    if($proveedor_form_factura_modal != "" && $servicio_form_factura_modal != "No filtrar"){
+                        //proceso los dos de atras
+                        $resultado = $this->getDoctrine()
+                            ->getRepository(Contrato::class)
+                            ->getParsedFiltradosPorNumeroAnnoProveedor(
+                                0,
+                                0,
+                                $proveedor_form_factura_modal,
+                                $servicio_form_factura_modal
+                            );
+                    }else{
+                        //error debe llenar campos
+                        return new JsonResponse(array('data' => 'Es requerido completar los campos','encontrado'=>'No'));
+                    }
+                }
+
+                try{
+                    if(count($resultado)==1){
+                        return new JsonResponse(array('data' => $resultado[0]['id'],'encontrado'=>'Si'));
+                    }else{
+                        return new JsonResponse(array('data' => 'No ha sido encontrado el contrato','encontrado'=>'No'));
+                    }
+
+                }catch (ORMInvalidArgumentException $orme){
+                    return new JsonResponse(array('data' => $orme->getMessage(),'encontrado'=>'No'));
+                }
+            }
+            else{
+                //Ataque Csrf
+                return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
+            }
+        }else{
+            //No es ajax
+            return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
         }
     }
 }
