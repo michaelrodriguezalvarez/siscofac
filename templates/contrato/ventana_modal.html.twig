@@ -125,3 +125,67 @@
         </div>
     </div>
 </div>
+
+{% if app.request.attributes.get('_route') != 'contrato_new' %}
+    {% if app.request.attributes.get('_route') != 'contrato_index' %}
+    <div id="modal_buscar_suplemento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_buscar_suplementoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_buscar_suplementoLabel">{% trans %}Buscar{% endtrans %} {% trans %}Suplemento{% endtrans %} </h5>
+                    <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller(
+                        'App\\Controller\\SuplementoController::suplemento_buscar_modal'
+                        ,{'id_contrato':contrato.id}
+                    )) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+
+{% if app.request.attributes.get('_route') != 'contrato_new' %}
+    {% if app.request.attributes.get('_route') != 'contrato_index' %}
+        <div id="modal_modificar_suplemento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_modificar_suplementoLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_modificar_suplementoLabel">{% trans %}Modificar{% endtrans %} {% trans %}Suplemento{% endtrans %} </h5>
+                        <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ render(controller(
+                            'App\\Controller\\SuplementoController::suplemento_modificar_modal'
+                            ,{'id_contrato':contrato.id}
+                        )) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+
+<div id="modal_acceso_denegado_adicionar_factura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_acceso_denegado_adicionar_facturaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_acceso_denegado_adicionar_facturaLabel">{% trans %}Acceso{% endtrans %} {% trans %}Denegado{% endtrans %} </h5>
+                <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <p class="text-danger">El contrato no se encuentra activo.</p>
+            </div>
+        </div>
+    </div>
+</div>

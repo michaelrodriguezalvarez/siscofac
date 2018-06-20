@@ -26,11 +26,9 @@ class SuplementoType extends AbstractType
             ))
             ->add('valorSuplementoCup',MoneyType::class,array(
                 'currency'=>'CUP',
-                //'data'=>0,
             ))
             ->add('valorSuplementoCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                //'data'=>0,
             ))
             ->add('fechaInicio')
             ->add('fechaTerminacion')

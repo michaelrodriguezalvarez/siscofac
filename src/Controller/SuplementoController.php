@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/suplemento")
@@ -45,9 +46,7 @@ class SuplementoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $numero_suplemento = $request->request->get('suplemento')["numero"];
-
             $suplementos_encontrados = $this->getDoctrine()
                 ->getRepository(Contrato::class)
                 ->getSuplementoDadoNumeroYContrato($numero_suplemento,$id_contrato);
@@ -162,5 +161,81 @@ class SuplementoController extends Controller
         }
 
         return $this->redirectToRoute('suplemento_index',array('id_contrato'=>$id_contrato));
+    }
+
+    /**
+     * @Route("/{id_contrato}/buscar/modal", name="suplemento_buscar_modal", methods="GET|POST")
+     */
+    public function suplemento_buscar_modal(Request $request,int $id_contrato): Response
+    {
+        return $this->render('suplemento/buscar.html.twig', [
+            'id_contrato'=>$id_contrato,
+        ]);
+    }
+
+    /**
+     * @Route("/buscar/modal/ajax", name="suplemento_buscar_modal_ajax", methods="POST")
+     */
+    public function suplemento_buscar_modal_ajax(Request $request): JsonResponse
+    {
+        if ($request->isXMLHttpRequest()) {
+            $token = $request->request->get('_token');
+            if ($this->isCsrfTokenValid('suplemento_buscar_modal', $request->request->get('_token'))) {
+                $numero_form_suplemento_buscar_modal = $request->request->get('numero_form_suplemento_buscar_modal');
+                $id_contrato = $request->request->get('id_contrato_suplemento_buscar_modal');
+                $resultado = $this->getDoctrine()->getRepository(Suplemento::class)->findOneBy(array('numero'=>$numero_form_suplemento_buscar_modal,'contrato'=>$id_contrato));
+
+                if ($resultado!=null){
+                    return new JsonResponse(array('data' => $resultado->getId(),'encontrado'=>'Si'));
+                }else{
+                    return new JsonResponse(array('data' => 'No ha sido encontrado el suplemento','encontrado'=>'No'));
+                }
+            }
+            else{
+                //Ataque Csrf
+                return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
+            }
+        }else{
+            //No es ajax
+            return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
+        }
+    }
+
+    /**
+     * @Route("/{id_contrato}/modificar/modal", name="suplemento_modificar_modal", methods="GET|POST")
+     */
+    public function suplemento_modificar_modal(Request $request,int $id_contrato): Response
+    {
+        return $this->render('suplemento/modificar.html.twig', [
+            'id_contrato'=>$id_contrato,
+        ]);
+    }
+
+    /**
+     * @Route("/modificar/modal/ajax", name="suplemento_modificar_modal_ajax", methods="POST")
+     */
+    public function suplemento_modificar_modal_ajax(Request $request): JsonResponse
+    {
+        if ($request->isXMLHttpRequest()) {
+            $token = $request->request->get('_token');
+            if ($this->isCsrfTokenValid('suplemento_modificar_modal', $request->request->get('_token'))) {
+                $numero_form_suplemento_modificar_modal = $request->request->get('numero_form_suplemento_modificar_modal');
+                $id_contrato = $request->request->get('id_contrato_suplemento_modificar_modal');
+                $resultado = $this->getDoctrine()->getRepository(Suplemento::class)->findOneBy(array('numero'=>$numero_form_suplemento_modificar_modal,'contrato'=>$id_contrato));
+
+                if ($resultado!=null){
+                    return new JsonResponse(array('data' => $resultado->getId(),'encontrado'=>'Si'));
+                }else{
+                    return new JsonResponse(array('data' => 'No ha sido encontrado el suplemento','encontrado'=>'No'));
+                }
+            }
+            else{
+                //Ataque Csrf
+                return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
+            }
+        }else{
+            //No es ajax
+            return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
+        }
     }
 }

@@ -29,10 +29,4 @@
 {% block javascripts %}
     <script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('build/contrato.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#div_contrato_botones').append('<a class="btn-sm btn-primary" href="{{ path('suplemento_index',{'id_contrato':contrato.id}) }}">Suplemento</a>');
-            $('#div_contrato_botones').append('<a class="btn-sm btn-primary" href="{{ path('factura_index',{'id_contrato':contrato.id}) }}">Ejecución</a>');
-        });
-    </script>
 {% endblock %}

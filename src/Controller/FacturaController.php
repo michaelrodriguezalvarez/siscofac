@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Factura;
+use App\Entity\Contrato;
+use App\Entity\NomProveedor;
+use App\Entity\NomProvincia;
+use App\Entity\NomTipoServicio;
 use App\Form\FacturaType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,36 +23,106 @@ class FacturaController extends Controller
      */
     public function index(int $id_contrato): Response
     {
-        /*$facturas = $this->getDoctrine()
-            ->getRepository(Factura::class)
-            ->findAll();*/
+        $tipos_de_servicios = $this->getDoctrine()
+            ->getRepository(NomTipoServicio::class)
+            ->getParsedFieldFromSelect();
 
-         $facturas = $this->getDoctrine()
+        $tipos_de_servicios = array_flip($tipos_de_servicios);
+
+        $facturas = $this->getDoctrine()
             ->getRepository(Factura::class)
             ->findBy(array('contrato'=>$id_contrato));
+        $contrato = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->findOneBy(array('id'=>$id_contrato));
+        $proveedor = $this->getDoctrine()
+            ->getRepository(NomProveedor::class)
+            ->find($contrato->getProveedor());
 
+        $provincia = $this->getDoctrine()
+            ->getRepository(NomProvincia::class)
+            ->find($proveedor->getProvincia());
 
-        return $this->render('factura/index.html.twig', ['facturas' => $facturas]);
+        $estados = array( 1 =>'Activo' , 0 => 'Inactivo');
+
+        return $this->render('factura/index.html.twig', ['facturas' => $facturas, 'id_contrato'=>$id_contrato,'contrato'=>$contrato,'proveedor'=>$proveedor,'provincia'=>$provincia,'estado'=>$estados[$contrato->getEstado()],'tipos_de_servicios'=>$tipos_de_servicios]);
     }
 
     /**
-     * @Route("/new", name="factura_new", methods="GET|POST")
+     * @Route("/{id_contrato}/new", name="factura_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request,int $id_contrato): Response
     {
+        $contrato = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->find($id_contrato);
+        $estados = array( 1 =>'Activo' , 0 => 'Inactivo');
+
+        $proveedor = $this->getDoctrine()
+            ->getRepository(NomProveedor::class)
+            ->find($contrato->getProveedor());
+
+        $provincia = $this->getDoctrine()
+            ->getRepository(NomProvincia::class)
+            ->find($proveedor->getProvincia());
+        $tipos_de_servicios = $this->getDoctrine()
+            ->getRepository(NomTipoServicio::class)
+            ->getParsedFieldFromSelect();
+        $estados_factura = array( 'Pagado' => 1 , 'No Pagado' => 0);
         $factura = new Factura();
-        $form = $this->createForm(FacturaType::class, $factura);
+
+        $form = $this->createForm(FacturaType::class, $factura,
+            [
+                'id_contrato'=>$id_contrato,
+                'contrato_datos'=>$contrato,
+                'proveedor'=>$proveedor.' - '.$provincia,
+                'tipos_de_servicios'=>$tipos_de_servicios,
+                'estados_factura'=>$estados_factura,
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($factura);
-            $em->flush();
+            $numero_factura = $request->request->get('factura')["numero_registro"];
 
-            return $this->redirectToRoute('factura_index');
+            $facturas_encontrados = $this->getDoctrine()
+                ->getRepository(Contrato::class)
+                ->getFacturaDadoNumeroYContrato($numero_factura,$id_contrato);
+            if (count($facturas_encontrados)==0){
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($factura);
+                $pagado = $request->request->get('factura')["estado"];
+                if($pagado==1){
+                    $this->getDoctrine()
+                        ->getRepository(Contrato::class)
+                        ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),true);
+
+                    $this->getDoctrine()
+                        ->getRepository(Contrato::class)
+                        ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),true);
+                }
+
+
+
+                $em->flush();
+                $this->addFlash(
+                    'notice',
+                    'Los datos fueron guardados satisfactoriamente'
+                );
+                return $this->redirectToRoute( 'factura_new',array('id_contrato'=>$id_contrato));
+            }
+            else{
+
+                $this->addFlash(
+                    'notice',
+                    'Debe especificar otro número para la factura'
+                );
+            }
         }
 
         return $this->render('factura/new.html.twig', [
+            'estado'=> $estados[ $contrato->getEstado()],
+            'id_contrato'=>$id_contrato,
+            'contrato'=>$contrato,
             'factura' => $factura,
             'form' => $form->createView(),
         ]);

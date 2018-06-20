@@ -6,8 +6,19 @@
     <div class="container small">
 
     <h5>{% trans %}Listar{% endtrans %} {% trans %}Facturas{% endtrans %}</h5>
-
     <br>
+    <br>
+
+    {% include 'contrato/botones_factura.html.twig' %}
+    {% include 'contrato/ventana_modal.html.twig' %}
+
+    {% for message in app.flashes('notice') %}
+        <div class="alert-info">
+            {{ message |trans}}
+        </div>
+    {% endfor %}
+
+
     <br>
 
     {% if facturas | length == 0%}
@@ -19,9 +30,10 @@
         <table id="table_facturas_index" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>{% trans %}Contrato{% endtrans %}</th>
-                <th>{% trans %}Numero{% endtrans %}</th>
+                <th>{% trans %}Proveedor{% endtrans %}</th>
+                <th>{% trans %}Numero de registro{% endtrans %}</th>
+                <th>{% trans %}No. de Factura del Proveedor{% endtrans %}</th>
                 <th>{% trans %}Fecha{% endtrans %}</th>
                 <th>{% trans %}Tipo Servicio{% endtrans %}</th>
                 <th>{% trans %}Concepto{% endtrans %}</th>
@@ -36,17 +48,24 @@
         <tbody>
         {% for factura in facturas %}
             <tr>
-                <td>{{ factura.id }}</td>
-                <td>{{ factura.contrato }}</td>
-                <td>{{ factura.numero }}</td>
-                <td>{{ factura.fecha ? factura.fecha|date('Y-m-d') : '' }}</td>
-                <td>{{ factura.tipoServicio }}</td>
+                <td>{{ contrato }}</td>
+                <td>{{ proveedor }} - {{ provincia }}</td>
+                <td>{{ factura.numeroRegistro }}</td>
+                <td>{{ factura.numeroDelProveedor }}</td>
+                <td>{{ factura.fecha ? factura.fecha|date('d-m-Y') : '' }}</td>
+                <td>{{ tipos_de_servicios[factura.tipoServicio] }}</td>
                 <td>{{ factura.concepto }}</td>
                 <td>{{ factura.valorCup }}</td>
                 <td>{{ factura.valorCuc }}</td>
-                <td>{{ factura.estado }}</td>
+                <td>
+                    {% if factura.estado == 0 %}
+                        <span>No Pagado</span>
+                    {% else %}
+                        <span>Pagado</span>
+                    {% endif %}
+                </td>
                 <td>{{ factura.numeroCheque }}</td>
-                <td>{{ factura.fechaCheque ? factura.fechaCheque|date('Y-m-d') : '' }}</td>
+                <td>{{ factura.fechaCheque ? factura.fechaCheque|date('d-m-Y') : '' }}</td>
                 <td>
                     <a href="{{ path('factura_show', {'id': factura.id}) }}">show</a>
                     <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>

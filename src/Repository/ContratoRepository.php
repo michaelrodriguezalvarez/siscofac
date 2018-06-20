@@ -199,5 +199,39 @@ class ContratoRepository extends EntityRepository
             return count($this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult());
         }
 
+    public function getFacturaDadoNumeroYContrato(int $numero_factura,int $id_contrato):array
+    {
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->select('fac.id')
+            ->from('App\Entity\Factura','fac')
+            ->where($this->getEntityManager()->createQueryBuilder()->expr()->eq('fac.numero_registro',$numero_factura))
+            ->andWhere($this->getEntityManager()->createQueryBuilder()->expr()->eq('fac.contrato',$id_contrato));
+        return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
+    }
+
+    public function updateEjecucionContratoCUPYSaldoCUP(int $id_contrato, float $monto, bool $incremento):int{
+        $signo_ejecucion = $incremento == true ? '+' : '-';
+        $signo_saldo = $incremento == false ? '+' : '-';
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->update('App\Entity\Contrato','con')
+            ->set('con.ejecucionContratoCup', 'con.ejecucionContratoCup '.$signo_ejecucion.' :monto')
+            ->set('con.saldoCup', 'con.saldoCup '.$signo_saldo.' :monto')
+            ->where('con.id = :id_contrato')
+            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
+            ->getQuery();
+        return $consulta->execute();
+    }
+    public function updateEjecucionContratoCUCYSaldoCUC(int $id_contrato, float $monto, bool $incremento):int{
+        $signo_ejecucion = $incremento == true ? '+' : '-';
+        $signo_saldo = $incremento == false ? '+' : '-';
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->update('App\Entity\Contrato','con')
+            ->set('con.ejecucionContratoCuc', 'con.ejecucionContratoCuc '.$signo_ejecucion.' :monto')
+            ->set('con.saldoCuc', 'con.saldoCuc '.$signo_saldo.' :monto')
+            ->where('con.id = :id_contrato')
+            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
+            ->getQuery();
+        return $consulta->execute();
+    }
 
 }

@@ -117,7 +117,7 @@ class ContratoController extends Controller
     }
 
     /**
-     * @Route("/{id}/{destino}", name="contrato_show", methods="GET")
+     * @Route("/{id}/{destino}/show", name="contrato_show", methods="GET")
      */
     public function show(Contrato $contrato, string $destino): Response
     {
@@ -147,7 +147,7 @@ class ContratoController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="contrato_edit", methods="GET|POST")
+     * @Route("/edit/{id}", name="contrato_edit", methods="GET|POST")
      */
     public function edit(Request $request, Contrato $contrato): Response
     {
