@@ -61,6 +61,22 @@ class FacturaType extends AbstractType
             ))
             ->add('numeroCheque')
             ->add('fechaCheque')
+            ->add('pagado_anteriormente',HiddenType::class,array(
+                'data'=>$options['pagado_anteriormente'],
+                'mapped'=>false,
+            ))
+            ->add('pagado_anteriormente',HiddenType::class,array(
+                'data'=>$options['pagado_anteriormente'],
+                'mapped'=>false,
+            ))
+            ->add('valor_anterior_cup',HiddenType::class,array(
+                'data'=>$options['valor_anterior_cup'],
+                'mapped'=>false,
+            ))
+            ->add('valor_anterior_cuc',HiddenType::class,array(
+                'data'=>$options['valor_anterior_cuc'],
+                'mapped'=>false,
+            ))
         ;
     }
 
@@ -72,7 +88,10 @@ class FacturaType extends AbstractType
             'contrato_datos'=>null,
             'proveedor'=>null,
             'tipos_de_servicios'=>null,
-            'estados_factura'=>null
+            'estados_factura'=>null,
+            'pagado_anteriormente'=>null,
+            'valor_anterior_cup'=>null,
+            'valor_anterior_cuc'=>null
         ]);
     }
 }

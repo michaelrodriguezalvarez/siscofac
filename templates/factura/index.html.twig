@@ -11,6 +11,7 @@
 
     {% include 'contrato/botones_factura.html.twig' %}
     {% include 'contrato/ventana_modal.html.twig' %}
+    {% include 'factura/div_informacion_saldo.html.twig' %}
 
     {% for message in app.flashes('notice') %}
         <div class="alert-info">
@@ -67,16 +68,20 @@
                 <td>{{ factura.numeroCheque }}</td>
                 <td>{{ factura.fechaCheque ? factura.fechaCheque|date('d-m-Y') : '' }}</td>
                 <td>
-                    <a href="{{ path('factura_show', {'id': factura.id}) }}">show</a>
-                    <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>
+                    <a class="btn-sm btn-primary" href="{{ path('factura_show', {'id_contrato':contrato.id,'id': factura.id}) }}">{% trans %}Detalles{% endtrans %}</a>
+                    <a class="btn-sm btn-primary" href="{{ path('factura_edit', {'id_contrato':contrato.id,'id': factura.id}) }}">{% trans %}Modificar{% endtrans %}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="12">no records found</td>
+                <td colspan="12">{% trans %}No se encontraron registros{% endtrans %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/factura.js') }}"></script>
 {% endblock %}

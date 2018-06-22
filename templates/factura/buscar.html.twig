@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="col-lg-12">
+        <div id="div_respuesta_servidor_factura_buscar_modal" class="alert-info">
+            <label id="label_respuesta_servidor_factura_buscar_modal"></label>
+        </div>
+    </div>
+    <div class="row col-lg-12">
+        <div class="col-lg-12">
+            <label for="">{% trans %}Numero{% endtrans %}</label><input id="numero_form_factura_buscar_modal" name="numero_form_factura_buscar_modal" type="text" size="6" placeholder="{% trans %}No filtrar{% endtrans %}">
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <br>
+        <input type="hidden" id="_token_factura_buscar_modal" name="_token_factura_buscar_modal" value="{{ csrf_token('factura_buscar_modal') }}">
+        <input type="hidden" id="id_contrato_factura_buscar_modal" name="id_contrato_factura_buscar_modal" value="{{ id_contrato }}">
+        <button id="btn_form_factura_buscar_modal" class="btn btn-sm btn-primary border">{% trans %}Buscar{% endtrans %}</button>
+        <label id="label_indicador_btn_form_factura_buscar_modal" for=""></label>
+        <br>
+        <br>
+    </div>
+</div>
+
+<script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#div_respuesta_servidor_factura_buscar_modal').hide();
+        $('#btn_form_factura_buscar_modal').click(function () {
+            $('#div_respuesta_servidor_factura_buscar_modal').hide();
+            $('#btn_form_factura_buscar_modal').prop('disabled',true);
+            $('#label_indicador_btn_form_factura_buscar_modal').text("Buscando...");
+            $.ajax({
+                type: "POST",
+                url: "{{ path('factura_buscar_modal_ajax') }}",
+                data: {
+                    numero_form_factura_buscar_modal: $('#numero_form_factura_buscar_modal').val(),
+                    id_contrato_factura_buscar_modal: $('#id_contrato_factura_buscar_modal').val(),
+                    _token: $('#_token_factura_buscar_modal').val(),
+                },
+                dataType: "json",
+                success: function(data) {
+                    var respuesta_factura_buscar_modal = data['data'];
+                    var encontrado_factura_buscar_modal = data['encontrado'];
+
+                    if(encontrado_factura_buscar_modal == "Si"){
+                        var ruta_factura_buscar_modal =  '{{ path('factura_show', {'id_contrato': id_contrato, 'id': 'identificador_del_factura'}) }}';
+                        ruta_factura_buscar_modal = ruta_factura_buscar_modal.replace("identificador_del_factura", respuesta_factura_buscar_modal);
+                        location.href = ruta_factura_buscar_modal;
+                    }else{
+                        $('#div_respuesta_servidor_factura_buscar_modal').show();
+                        $("#label_respuesta_servidor_factura_buscar_modal").text(respuesta_factura_buscar_modal);
+                    }
+                },
+                error: function() {
+                    alert("Error al procesar");
+                },
+                complete: function() {
+                    $('#btn_form_factura_buscar_modal').prop('disabled',false);
+                    $('#label_indicador_btn_form_factura_buscar_modal').text("");
+                }
+            });
+        });
+
+
+    })
+</script>

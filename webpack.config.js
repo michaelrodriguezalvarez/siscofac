@@ -15,6 +15,7 @@ Encore
      .addEntry('proveedor', ['./assets/js/proveedor.js'])
      .addEntry('contrato', ['./assets/js/contrato.js'])
      .addEntry('suplemento', ['./assets/js/suplemento.js'])
+    .addEntry('factura', ['./assets/js/factura.js'])
      //.addStyleEntry('css/app', './assets/css/*.css')
      // this creates a 'vendor.js' file with jquery and the bootstrap JS module
      .createSharedEntry('vendor',[

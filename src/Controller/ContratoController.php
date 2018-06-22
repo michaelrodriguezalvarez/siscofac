@@ -593,4 +593,9 @@ class ContratoController extends Controller
             return new JsonResponse(array('data' => 'No es válida la forma en solicitar la respuesta del servidor','encontrado'=>'No'));
         }
     }
+
+    public function updateEstado($id_contrato)
+    {
+        
+    }
 }

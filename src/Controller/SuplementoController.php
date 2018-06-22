@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Suplemento;
 use App\Entity\Contrato;
+use App\Entity\Factura;
 use App\Form\SuplementoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,6 +62,24 @@ class SuplementoController extends Controller
                     ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc(),true);
 
                 $em->flush();
+
+                $valor_ejecutado_facturas_cup = $this->getDoctrine()
+                    ->getRepository(Factura::class)
+                    ->getSumatoriaSaldoCup($id_contrato);
+                $valor_ejecutado_facturas_cuc = $this->getDoctrine()
+                    ->getRepository(Factura::class)
+                    ->getSumatoriaSaldoCuc($id_contrato);
+
+                if ($valor_ejecutado_facturas_cup == $contrato->getValorContratoTotalCup() && $valor_ejecutado_facturas_cuc == $contrato->getValorContratoTotalCuc()){
+                    $this->getDoctrine()
+                        ->getRepository(Contrato::class)
+                        ->updateEstado($id_contrato, false);
+                }else{
+                    $this->getDoctrine()
+                        ->getRepository(Contrato::class)
+                        ->updateEstado($id_contrato, true);
+                }
+
                 $this->addFlash(
                     'notice',
                     'Los datos fueron guardados satisfactoriamente'
@@ -129,6 +148,23 @@ class SuplementoController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
 
+            $valor_ejecutado_facturas_cup = $this->getDoctrine()
+                ->getRepository(Factura::class)
+                ->getSumatoriaSaldoCup($id_contrato);
+            $valor_ejecutado_facturas_cuc = $this->getDoctrine()
+                ->getRepository(Factura::class)
+                ->getSumatoriaSaldoCuc($id_contrato);
+
+            if ($valor_ejecutado_facturas_cup == $contrato->getValorContratoTotalCup() && $valor_ejecutado_facturas_cuc == $contrato->getValorContratoTotalCuc()){
+                $this->getDoctrine()
+                    ->getRepository(Contrato::class)
+                    ->updateEstado($id_contrato, false);
+            }else{
+                $this->getDoctrine()
+                    ->getRepository(Contrato::class)
+                    ->updateEstado($id_contrato, true);
+            }
+
             $this->addFlash(
                 'notice',
                 'Los datos fueron guardados satisfactoriamente'
@@ -148,7 +184,7 @@ class SuplementoController extends Controller
     /**
      * @Route("/{id_contrato}/{id}", name="suplemento_delete", methods="DELETE")
      */
-    public function delete(Request $request, Suplemento $suplemento,$id_contrato): Response
+    public function delete(Request $request, Suplemento $suplemento, int $id_contrato): Response
     {
         if ($this->isCsrfTokenValid('delete'.$suplemento->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getRepository(Contrato::class)
@@ -158,6 +194,26 @@ class SuplementoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($suplemento);
             $em->flush();
+
+            $contrato = $this->getDoctrine()
+                ->getRepository(Contrato::class)
+                ->find($id_contrato);
+            $valor_ejecutado_facturas_cup = $this->getDoctrine()
+                ->getRepository(Factura::class)
+                ->getSumatoriaSaldoCup($id_contrato);
+            $valor_ejecutado_facturas_cuc = $this->getDoctrine()
+                ->getRepository(Factura::class)
+                ->getSumatoriaSaldoCuc($id_contrato);
+
+            if ($valor_ejecutado_facturas_cup == $contrato->getValorContratoTotalCup() && $valor_ejecutado_facturas_cuc == $contrato->getValorContratoTotalCuc()){
+                $this->getDoctrine()
+                    ->getRepository(Contrato::class)
+                    ->updateEstado($id_contrato, false);
+            }else{
+                $this->getDoctrine()
+                    ->getRepository(Contrato::class)
+                    ->updateEstado($id_contrato, true);
+            }
         }
 
         return $this->redirectToRoute('suplemento_index',array('id_contrato'=>$id_contrato));

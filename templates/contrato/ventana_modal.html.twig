@@ -189,3 +189,51 @@
         </div>
     </div>
 </div>
+
+{% if app.request.attributes.get('_route') != 'contrato_new' %}
+    {% if app.request.attributes.get('_route') != 'contrato_index' %}
+        <div id="modal_buscar_factura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_buscar_facturaLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_buscar_facturaLabel">{% trans %}Buscar{% endtrans %} {% trans %}Factura{% endtrans %} </h5>
+                        <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ render(controller(
+                            'App\\Controller\\FacturaController::factura_buscar_modal'
+                            ,{'id_contrato':contrato.id}
+                        )) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+
+{% if app.request.attributes.get('_route') != 'contrato_new' %}
+    {% if app.request.attributes.get('_route') != 'contrato_index' %}
+        <div id="modal_modificar_factura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_modificar_facturaLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_modificar_facturaLabel">{% trans %}Modificar{% endtrans %} {% trans %}Factura{% endtrans %} </h5>
+                        <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ render(controller(
+                            'App\\Controller\\FacturaController::factura_modificar_modal'
+                            ,{'id_contrato':contrato.id}
+                        )) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

@@ -204,7 +204,7 @@ class ContratoRepository extends EntityRepository
         $consulta = $this->getEntityManager()->createQueryBuilder()
             ->select('fac.id')
             ->from('App\Entity\Factura','fac')
-            ->where($this->getEntityManager()->createQueryBuilder()->expr()->eq('fac.numero_registro',$numero_factura))
+            ->where($this->getEntityManager()->createQueryBuilder()->expr()->eq('fac.numeroRegistro',$numero_factura))
             ->andWhere($this->getEntityManager()->createQueryBuilder()->expr()->eq('fac.contrato',$id_contrato));
         return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
     }
@@ -232,6 +232,44 @@ class ContratoRepository extends EntityRepository
             ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
             ->getQuery();
         return $consulta->execute();
+    }
+
+    public function updateEstado(int $id_contrato, bool $activo):int
+    {
+        $estado = $activo == true ? 1 : 0;
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->update('App\Entity\Contrato','con')
+            ->set('con.estado', ':estado')           
+            ->where('con.id = :id_contrato')
+            ->setParameters(array('id_contrato'=>$id_contrato,'estado'=>$estado))
+            ->getQuery();
+        return $consulta->execute();
+    }
+
+    public function removeContratoYDependecias($id_contrato):int
+    {
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->delete('App\Entity\Contrato','con')
+            ->where('con.id = :id_contrato')
+            ->setParameters(array('id_contrato'=>$id_contrato))
+            ->getQuery();
+
+        if ($consulta->execute() == 1){
+            $consulta = $this->getEntityManager()->createQueryBuilder()
+                ->delete('App\Entity\Factura','fac')
+                ->where('fac.contrato = :id_contrato')
+                ->setParameters(array('id_contrato'=>$id_contrato))
+                ->getQuery();
+            $consulta->execute();
+            $consulta = $this->getEntityManager()->createQueryBuilder()
+                ->delete('App\Entity\Suplemento','sup')
+                ->where('sup.id = :id_contrato')
+                ->setParameters(array('id_contrato'=>$id_contrato))
+                ->getQuery();
+            $consulta->execute();
+            return 1;
+        }
+        return 0;
     }
 
 }

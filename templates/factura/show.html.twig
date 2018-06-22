@@ -1,62 +1,76 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Factura{% endblock %}
+{% block title %}{% trans %}Mostrar{% endtrans %} {% trans %}Factura{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Factura</h1>
+    <div class="container small">
+        <h5>{% trans %}Mostrar{% endtrans %} {% trans %}Factura{% endtrans %}</h5>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ factura.id }}</td>
-            </tr>
-            <tr>
-                <th>Numero</th>
-                <td>{{ factura.numero }}</td>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <td>{{ factura.fecha ? factura.fecha|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>TipoServicio</th>
-                <td>{{ factura.tipoServicio }}</td>
-            </tr>
-            <tr>
-                <th>Concepto</th>
-                <td>{{ factura.concepto }}</td>
-            </tr>
-            <tr>
-                <th>ValorCup</th>
-                <td>{{ factura.valorCup }}</td>
-            </tr>
-            <tr>
-                <th>ValorCuc</th>
-                <td>{{ factura.valorCuc }}</td>
-            </tr>
-            <tr>
-                <th>Contrato</th>
-                <td>{{ factura.contrato }}</td>
-            </tr>
-            <tr>
-                <th>Estado</th>
-                <td>{{ factura.estado }}</td>
-            </tr>
-            <tr>
-                <th>NumeroCheque</th>
-                <td>{{ factura.numeroCheque }}</td>
-            </tr>
-            <tr>
-                <th>FechaCheque</th>
-                <td>{{ factura.fechaCheque ? factura.fechaCheque|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        {% include 'contrato/botones_factura.html.twig' %}
+        {% include 'contrato/ventana_modal.html.twig' %}
+        <br>
 
-    <a href="{{ path('factura_index') }}">back to list</a>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
 
-    <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>
+                <tr>
+                    <th>{% trans %}Contrato{% endtrans %}</th>
+                    <td>{{ contrato }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Proveedor{% endtrans %}</th>
+                    <td>{{ proveedor }} - {{ provincia }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Numero de registro{% endtrans %}</th>
+                    <td>{{ factura.numeroRegistro }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}No. de Factura del Proveedor{% endtrans %}</th>
+                    <td>{{ factura.numeroDelProveedor }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Fecha{% endtrans %}</th>
+                    <td>{{ factura.fecha ? factura.fecha|date('d-m-Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Tipo Servicio{% endtrans %}</th>
+                    <td>{{ tipos_de_servicios[factura.tipoServicio] }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Concepto{% endtrans %}</th>
+                    <td>{{ factura.concepto }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Valor Cup{% endtrans %}</th>
+                    <td>{{ factura.valorCup }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Valor Cuc{% endtrans %}</th>
+                    <td>{{ factura.valorCuc }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Estado{% endtrans %}</th>
+                    <td>
+                        {% if factura.estado == 0 %}
+                            <span>No Pagado</span>
+                        {% else %}
+                            <span>Pagado</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Numero Cheque{% endtrans %}</th>
+                    <td>{{ factura.numeroCheque }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Fecha Cheque{% endtrans %}</th>
+                    <td>{{ factura.fechaCheque ? factura.fechaCheque|date('d-m-Y') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
 
-    {{ include('factura/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

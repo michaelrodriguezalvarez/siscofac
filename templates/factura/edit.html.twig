@@ -1,13 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Factura{% endblock %}
+{% block title %}{% trans %}Modificar{% endtrans %} {% trans %}Factura{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Edit Factura</h1>
+    <div class="container small">
+    <h5>{% trans %}Modificar{% endtrans %} {% trans %}Factura{% endtrans %}</h5>
 
-    {{ include('factura/_form.html.twig', {'button_label': 'Update'}) }}
+    {% include 'contrato/botones_factura.html.twig' %}
+    {% include 'contrato/ventana_modal.html.twig' %}
+    {% include 'factura/div_informacion_saldo.html.twig' %}
 
-    <a href="{{ path('factura_index') }}">back to list</a>
+    {% for message in app.flashes('notice') %}
+        <div class="alert-info">
+            {{ message |trans}}
+        </div>
+    {% endfor %}
+
+    <br>
+
+    {{ include('factura/_form.html.twig') }}
 
     {{ include('factura/_delete_form.html.twig') }}
 {% endblock %}
