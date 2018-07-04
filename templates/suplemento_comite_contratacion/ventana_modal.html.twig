@@ -1,0 +1,18 @@
+<!--Modal dinamica-->
+<div id="modal_modificar_suplemento_comite_contratacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_modificar_suplemento_comite_contratacionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_modificar_suplemento_comite_contratacionLabel">{% trans %}Modificar{% endtrans %} {% trans %}Suplemento{% endtrans %} {% trans %}Comite de contratacion{% endtrans %}</h5>
+                <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ render(controller(
+                    'App\\Controller\\SuplementoComiteContratacionController::suplemento_comite_contratacion_modificar_modal'
+                )) }}
+            </div>
+        </div>
+    </div>
+</div>

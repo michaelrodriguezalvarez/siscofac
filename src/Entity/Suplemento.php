@@ -64,9 +64,9 @@ class Suplemento
     private $fechaTerminacion;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="numero_acuerdo", type="integer", nullable=false)
+     * @ORM\Column(name="numero_acuerdo", type="string", length=255, nullable=false)
      */
     private $numeroAcuerdo;
 
@@ -161,12 +161,12 @@ class Suplemento
         return $this;
     }
 
-    public function getNumeroAcuerdo(): ?int
+    public function getNumeroAcuerdo(): ?string
     {
         return $this->numeroAcuerdo;
     }
 
-    public function setNumeroAcuerdo(int $numeroAcuerdo): self
+    public function setNumeroAcuerdo(string $numeroAcuerdo): self
     {
         $this->numeroAcuerdo = $numeroAcuerdo;
 
@@ -196,5 +196,6 @@ class Suplemento
 
         return $this;
     }
+
 
 }

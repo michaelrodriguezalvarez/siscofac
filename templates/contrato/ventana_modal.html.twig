@@ -128,6 +128,7 @@
 
 {% if app.request.attributes.get('_route') != 'contrato_new' %}
     {% if app.request.attributes.get('_route') != 'contrato_index' %}
+        {% if app.request.attributes.get('_route') != 'contrato_comite_contratacion_aprobar' %}
     <div id="modal_buscar_suplemento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_buscar_suplementoLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -147,11 +148,13 @@
             </div>
         </div>
     </div>
+        {% endif %}
     {% endif %}
 {% endif %}
 
 {% if app.request.attributes.get('_route') != 'contrato_new' %}
     {% if app.request.attributes.get('_route') != 'contrato_index' %}
+        {% if app.request.attributes.get('_route') != 'contrato_comite_contratacion_aprobar' %}
         <div id="modal_modificar_suplemento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_modificar_suplementoLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -171,6 +174,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     {% endif %}
 {% endif %}
 
@@ -192,6 +196,7 @@
 
 {% if app.request.attributes.get('_route') != 'contrato_new' %}
     {% if app.request.attributes.get('_route') != 'contrato_index' %}
+        {% if app.request.attributes.get('_route') != 'contrato_comite_contratacion_aprobar' %}
         <div id="modal_buscar_factura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_buscar_facturaLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -211,11 +216,13 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     {% endif %}
 {% endif %}
 
 {% if app.request.attributes.get('_route') != 'contrato_new' %}
     {% if app.request.attributes.get('_route') != 'contrato_index' %}
+        {% if app.request.attributes.get('_route') != 'contrato_comite_contratacion_aprobar' %}
         <div id="modal_modificar_factura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_modificar_facturaLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -235,5 +242,6 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     {% endif %}
 {% endif %}

@@ -122,6 +122,9 @@ class ContratoType extends AbstractType
                     'Activo' => 1 ,
                     'Inactivo' => 0, )
             ))
+            ->add('motivoEstado',TextareaType::class, array(
+                'attr' => array('class' => 'form-control'),
+            ))
         ;
     }
 

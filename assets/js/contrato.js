@@ -54,7 +54,11 @@ $(document).ready(function(){
             if(ruta.indexOf("edit") >= 0){
                 return "Modificar";
             }else{
-                return "Otro";
+                if(ruta.indexOf("aprobar")>=0){
+                    return "Modificar";
+                }else{
+                    return "Otro";
+                }
             }
         }
     }

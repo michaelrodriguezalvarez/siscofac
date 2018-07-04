@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Suplemento;
-use App\Entity\Acuerdo;
-use App\Entity\Contrato;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;

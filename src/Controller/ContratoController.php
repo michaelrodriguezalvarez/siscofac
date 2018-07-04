@@ -12,6 +12,7 @@ use App\Entity\NomArea;
 use App\Entity\NomProvincia;
 use App\Form\ContratoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -40,7 +41,7 @@ class ContratoController extends Controller
      */
     public function new(Request $request): Response
     {
-        $session = new Session();
+        $session = $request->getSession();
         $session->set('escenario','contrato_new');
 
         $ultimos_annos_hasta_actual = $this->getDoctrine()
@@ -151,7 +152,7 @@ class ContratoController extends Controller
      */
     public function edit(Request $request, Contrato $contrato): Response
     {
-        $session = new Session();
+        $session = $request->getSession();
         $session->set('escenario','contrato_edit');
         $session->set('escenario_parametros',array('id'=>$contrato->getId()));
 
@@ -219,12 +220,26 @@ class ContratoController extends Controller
     public function delete(Request $request, Contrato $contrato): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contrato->getId(), $request->request->get('_token'))) {
+
+            $cantidad_dependencias_contrato = $contratos_para_listar = $this->getDoctrine()
+                ->getRepository(Contrato::class)
+                ->getCantidadDependencias($contrato->getId());
+
+            if ($cantidad_dependencias_contrato > 0){
+                $this->addFlash(
+                    'notice',
+                    'El contrato tiene ejecución y no puede ser eliminado'
+                );
+                return $this->redirectToRoute('contrato_edit', ['id' => $contrato->getId()]);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->remove($contrato);
             $em->flush();
+
         }
 
-        return $this->redirectToRoute('contrato_index');
+        return $this->redirectToRoute('contrato_new');
     }
 
     /**
@@ -594,8 +609,21 @@ class ContratoController extends Controller
         }
     }
 
-    public function updateEstado($id_contrato)
+    /**
+     * @Route("/encontrar/proveedor/ajax", name="encontrar_proveedor_contrato_ajax", methods="POST")
+     */
+    public function encontrar_proveedor_contrato_ajax(Request $request): JsonResponse
     {
-        
+        $numero = $request->request->get('numero_contrato');
+        $anno = $request->request->get('anno_contrato');
+        $consulta = $this->getDoctrine()
+            ->getRepository(Contrato::class)
+            ->getIdContratoYProveedorDadoNumeroYAnno($numero, $anno);
+
+        if ($consulta!=null){
+            return new JsonResponse(array('encontrado'=>'Si','id_contrato'=>$consulta[0]['id'],'proveedor'=>$consulta[0]['proveedor']));
+        }else{
+            return new JsonResponse(array('encontrado'=>'No','id_contrato'=>0,'proveedor'=>""));
+        }
     }
 }

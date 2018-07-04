@@ -54,6 +54,7 @@ class ContratoRepository extends EntityRepository
             ->addSelect('con.fechaAprobContratoComiteAdministracion')
             ->addSelect('are.nombre AS areaAdministraContrato')
             ->addSelect('con.estado')
+            ->addSelect('con.motivoEstado')
             ->from('App\Entity\Contrato','con')
             ->innerJoin('App\Entity\NomProveedor','pro',Expr\Join::WITH,'con.proveedor = pro.id')
             ->innerJoin('App\Entity\NomProvincia','prv', Expr\Join::WITH, 'pro.provincia = prv.id')
@@ -134,6 +135,7 @@ class ContratoRepository extends EntityRepository
                 ->addSelect('con.fechaAprobContratoComiteAdministracion')
                 ->addSelect('are.nombre AS areaAdministraContrato')
                 ->addSelect('con.estado')
+                ->addSelect('con.motivoEstado')
                 ->from('App\Entity\Contrato','con')
                 ->innerJoin('App\Entity\NomProveedor','pro',Expr\Join::WITH,'con.proveedor = pro.id')
                 ->innerJoin('App\Entity\NomProvincia','prv', Expr\Join::WITH, 'pro.provincia = prv.id')
@@ -270,6 +272,42 @@ class ContratoRepository extends EntityRepository
             return 1;
         }
         return 0;
+    }
+
+    public function getCantidadDependencias(int $id_contrato):int
+    {
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->select('COUNT(fac.id) AS cantidad')
+            ->from('App\Entity\Factura','fac')
+            ->where($this->getEntityManager()->createQueryBuilder()->expr()->eq('fac.contrato',$id_contrato));
+        $resultado = $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
+        return $resultado[0]["cantidad"];
+    }
+
+    public function getIdContratoYProveedorDadoNumeroYAnno(int $numero, int $anno):array{
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->select('con.id')
+            ->addSelect('CONCAT(pro.nombre, \'-\' ,prv.nombre) AS proveedor')
+            ->from('App\Entity\Contrato','con')
+            ->innerJoin('App\Entity\NomProveedor','pro',Expr\Join::WITH,'con.proveedor = pro.id')
+            ->innerJoin('App\Entity\NomProvincia','prv', Expr\Join::WITH, 'pro.provincia = prv.id');
+             $consulta->where($consulta->expr()->eq('con.numero',$numero));
+            $consulta->andWhere($consulta->expr()->eq('con.anno',$anno));
+        return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
+    }
+
+    public function getNumeroAnnoProveedorContratoDadoIdContrato(int $id):array
+    {
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->select('con.numero')
+            ->addSelect('CONCAT(pro.nombre, \'-\' ,prv.nombre) AS proveedor')
+            ->addSelect('con.anno')
+            ->from('App\Entity\Contrato','con')
+            ->innerJoin('App\Entity\NomProveedor','pro',Expr\Join::WITH,'con.proveedor = pro.id')
+            ->innerJoin('App\Entity\NomProvincia','prv', Expr\Join::WITH, 'pro.provincia = prv.id');
+        ;
+        $consulta->where($consulta->expr()->eq('con.id',$id));
+        return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
     }
 
 }

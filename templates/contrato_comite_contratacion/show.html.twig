@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ContratoComiteContratacion{% endblock %}
+
+{% block body %}
+    <h1>ContratoComiteContratacion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contrato_comite_contratacion.id }}</td>
+            </tr>
+            <tr>
+                <th>Proveedor</th>
+                <td>{{ contrato_comite_contratacion.proveedor }}</td>
+            </tr>
+            <tr>
+                <th>TipoDeServicio</th>
+                <td>{{ contrato_comite_contratacion.tipoDeServicio }}</td>
+            </tr>
+            <tr>
+                <th>Objeto</th>
+                <td>{{ contrato_comite_contratacion.objeto }}</td>
+            </tr>
+            <tr>
+                <th>ValorContratoInicialCup</th>
+                <td>{{ contrato_comite_contratacion.valorContratoInicialCup }}</td>
+            </tr>
+            <tr>
+                <th>ValorContratoInicialCuc</th>
+                <td>{{ contrato_comite_contratacion.valorContratoInicialCuc }}</td>
+            </tr>
+            <tr>
+                <th>AreaAdministraContrato</th>
+                <td>{{ contrato_comite_contratacion.areaAdministraContrato }}</td>
+            </tr>
+            <tr>
+                <th>Orden</th>
+                <td>{{ contrato_comite_contratacion.orden }}</td>
+            </tr>
+            <tr>
+                <th>FechaDeReunion</th>
+                <td>{{ contrato_comite_contratacion.fechaDeReunion ? contrato_comite_contratacion.fechaDeReunion|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('contrato_comite_contratacion_index') }}">back to list</a>
+
+    <a href="{{ path('contrato_comite_contratacion_edit', {'id': contrato_comite_contratacion.id}) }}">edit</a>
+
+    {{ include('contrato_comite_contratacion/_delete_form.html.twig') }}
+{% endblock %}

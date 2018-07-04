@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SuplementoComiteContratacion{% endblock %}
+
+{% block body %}
+    <h1>SuplementoComiteContratacion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ suplemento_comite_contratacion.id }}</td>
+            </tr>
+            <tr>
+                <th>Contrato</th>
+                <td>{{ suplemento_comite_contratacion.contrato }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ suplemento_comite_contratacion.numero }}</td>
+            </tr>
+            <tr>
+                <th>Objeto</th>
+                <td>{{ suplemento_comite_contratacion.objeto }}</td>
+            </tr>
+            <tr>
+                <th>ValorCup</th>
+                <td>{{ suplemento_comite_contratacion.valorCup }}</td>
+            </tr>
+            <tr>
+                <th>ValorCuc</th>
+                <td>{{ suplemento_comite_contratacion.valorCuc }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('suplemento_comite_contratacion_index') }}">back to list</a>
+
+    <a href="{{ path('suplemento_comite_contratacion_edit', {'id': suplemento_comite_contratacion.id}) }}">edit</a>
+
+    {{ include('suplemento_comite_contratacion/_delete_form.html.twig') }}
+{% endblock %}

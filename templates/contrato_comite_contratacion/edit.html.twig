@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Editar{% endtrans %} {% trans %}Contrato{% endtrans %} {% trans %}Comite de contratacion{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="container small">
+        <h5>{% trans %}Editar{% endtrans %} {% trans %}Contrato{% endtrans %} {% trans %}Comite de contratacion{% endtrans %}</h5>
+
+        {% include 'contrato_comite_contratacion/botones_contrato_comite_contratacion.html.twig' %}
+        {% include 'contrato_comite_contratacion/ventana_modal.html.twig' %}
+
+        {% for message in app.flashes('notice') %}
+            <div class="alert-info">
+                {{ message |trans}}
+            </div>
+        {% endfor %}
+
+
+        <br>
+        {% include 'contrato_comite_contratacion/_form.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('build/contrato_comite_contratacion.js') }}"></script>
+{% endblock %}

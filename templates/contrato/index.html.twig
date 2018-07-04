@@ -49,6 +49,7 @@
                 <th>{% trans %}Aprob contrato comite administracion{% endtrans %}</th>
                 <th>{% trans %}Area administra contrato{% endtrans %}</th>
                 <th>{% trans %}Estado{% endtrans %}</th>
+                <th>{% trans %}Motivo del estado{% endtrans %}</th>
                 <th>{% trans %}Acciones{% endtrans %}</th>
             </tr>
         </thead>
@@ -88,6 +89,7 @@
                     <span class="bg-success"> Activo</span>
                 {% endif %}
                 </td>
+                <td>{{ contrato["motivoEstado"] }}</td>
                 <td>
                     <a class="btn-sm btn-primary" href="{{ path('contrato_show', {'id': contrato["id"],'destino':'contrato'}) }}">{% trans %}Detalles{% endtrans %}</a>
                     <a class="btn-sm btn-primary" href="{{ path('contrato_edit', {'id': contrato["id"]}) }}">{% trans %}Modificar{% endtrans %}</a>
@@ -101,6 +103,7 @@
         </tbody>
     </table>
     {% endif %}
+ </div>
 {% endblock %}
 
 {% block javascripts %}

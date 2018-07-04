@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('contrato_comite_contratacion_delete', {'id': contrato_comite_contratacion.id}) }}" onsubmit="return confirm('{{ 'Usted desea eliminar este elemento'|trans}}');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrato_comite_contratacion.id) }}">
+    <button class="btn btn-sm btn-danger">{% trans %}Denegar{% endtrans %}</button>
+</form>

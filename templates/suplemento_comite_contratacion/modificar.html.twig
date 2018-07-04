@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="col-lg-12">
+        <div id="div_respuesta_servidor_suplemento_modificar_modal" class="alert-info">
+            <label id="label_respuesta_servidor_suplemento_modificar_modal"></label>
+        </div>
+    </div>
+    <div class="row col-lg-12">
+        <div class="col-lg-4">
+            <label for="">{% trans %}Numero{% endtrans %} {% trans %}Contrato{% endtrans %}</label><input id="numero_contrato_form_suplemento_modificar_modal" name="numero_contrato_form_suplemento_modificar_modal" type="text" size="6" placeholder="{% trans %}No filtrar{% endtrans %}">
+        </div>
+        <div class="col-lg-4">
+            <label for="">{% trans %}Anno{% endtrans %}</label>
+            <br>
+            <select id="anno_form_contrato_buscar_modal" name="anno_form_contrato_buscar_modal">
+                <option value="No filtrar">{% trans %}No filtrar{% endtrans %}</option>
+                {% for ultimo_anno in ultimos_annos_hasta_actual %}
+                    <option value="{{ ultimo_anno }}">{{ ultimo_anno }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <label for="">{% trans %}Numero{% endtrans %} {% trans %}Suplemento{% endtrans %}</label><input id="numero_form_suplemento_modificar_modal" name="numero_form_suplemento_modificar_modal" type="text" size="6" placeholder="{% trans %}No filtrar{% endtrans %}">
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <br>
+        <input type="hidden" id="_token_suplemento_modificar_modal" name="_token_suplemento_modificar_modal" value="{{ csrf_token('suplemento_modificar_modal') }}">
+
+        <button id="btn_form_suplemento_modificar_modal" class="btn btn-sm btn-primary border">{% trans %}Modificar{% endtrans %}</button>
+        <label id="label_indicador_btn_form_suplemento_modificar_modal" for=""></label>
+        <br>
+        <br>
+    </div>
+</div>
+
+<script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#div_respuesta_servidor_suplemento_modificar_modal').hide();
+        $('#btn_form_suplemento_modificar_modal').click(function () {
+            $('#div_respuesta_servidor_suplemento_modificar_modal').hide();
+            $('#btn_form_suplemento_modificar_modal').prop('disabled',true);
+            $('#label_indicador_btn_form_suplemento_modificar_modal').text("Buscando...");
+            $.ajax({
+                type: "POST",
+                url: "{{ path('suplemento_comite_contratacion_modificar_modal_ajax') }}",
+                data: {
+                    numero_contrato_form_suplemento_modificar_modal: $('#numero_contrato_form_suplemento_modificar_modal').val(),
+                    anno_form_contrato_buscar_modal: $('#anno_form_contrato_buscar_modal').val(),
+                    numero_form_suplemento_modificar_modal: $('#numero_form_suplemento_modificar_modal').val(),
+                    _token: $('#_token_suplemento_modificar_modal').val(),
+                },
+                dataType: "json",
+                success: function(data) {
+                    var respuesta_suplemento_modificar_modal = data['data'];
+                    var encontrado_suplemento_modificar_modal = data['encontrado'];
+
+                    if(encontrado_suplemento_modificar_modal == "Si"){
+                        var ruta_suplemento_modificar_modal =  '{{ path('suplemento_comite_contratacion_edit', {'id': 'identificador_del_suplemento'}) }}';
+                        ruta_suplemento_modificar_modal = ruta_suplemento_modificar_modal.replace("identificador_del_suplemento", respuesta_suplemento_modificar_modal);
+                        location.href = ruta_suplemento_modificar_modal;
+                    }else{
+                        $('#div_respuesta_servidor_suplemento_modificar_modal').show();
+                        $("#label_respuesta_servidor_suplemento_modificar_modal").text(respuesta_suplemento_modificar_modal);
+                    }
+                },
+                error: function() {
+                    alert("Error al procesar");
+                },
+                complete: function() {
+                    $('#btn_form_suplemento_modificar_modal').prop('disabled',false);
+                    $('#label_indicador_btn_form_suplemento_modificar_modal').text("");
+                }
+            });
+        });
+
+
+    })
+</script>

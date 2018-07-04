@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="col-lg-12">
+        <div id="div_respuesta_servidor_contrato_modificar_modal" class="alert-info">
+            <label id="label_respuesta_servidor_contrato_modificar_modal"></label>
+        </div>
+    </div>
+    <div class="row col-lg-12">
+        <div class="col-lg-3">
+            <label for="">{% trans %}Orden{% endtrans %}</label><input id="numero_form_contrato_modificar_modal" name="numero_form_contrato_modificar_modal" type="text" size="6" placeholder="{% trans %}No filtrar{% endtrans %}">
+        </div>
+        <div class="col-lg-3">
+            <label for="">Proveedor</label><input id="proveedor_form_contrato_modificar_modal" name="proveedor_form_contrato_modificar_modal" type="text" placeholder="{% trans %}No filtrar{% endtrans %}">
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <br>
+        <input type="hidden" id="_token_modificar" name="_token_modificar" value="{{ csrf_token('contrato_modificar_modal') }}">
+        <button id="btn_form_contrato_modificar_modal" class="btn btn-sm btn-primary border">{% trans %}Modificar{% endtrans %}</button>
+        <label id="label_indicador_btn_form_contrato_modificar_modal" for=""></label>
+        <br>
+        <br>
+    </div>
+</div>
+
+<script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#div_respuesta_servidor_contrato_modificar_modal').hide();
+        $('#btn_form_contrato_modificar_modal').click(function () {
+            $('#div_respuesta_servidor_contrato_modificar_modal').hide();
+            $('#btn_form_contrato_modificar_modal').prop('disabled',true);
+            $('#label_indicador_btn_form_contrato_modificar_modal').text("Buscando...");
+            $.ajax({
+                type: "POST",
+                url: "{{ path('contrato_comite_contratacion_modificar_modal_ajax') }}",
+                data: {
+                    numero_form_contrato_modificar_modal: $('#numero_form_contrato_modificar_modal').val(),
+                    proveedor_form_contrato_modificar_modal: $('#proveedor_form_contrato_modificar_modal').val(),
+                    _token: $('#_token_modificar').val(),
+                },
+                dataType: "json",
+                success: function(data) {
+                    var respuesta = data['data'];
+                    var encontrado = data['encontrado'];
+
+                    if(encontrado == "Si"){
+                        var ruta =  '{{ path('contrato_comite_contratacion_edit', {'id': 'identificador_del_contrato'}) }}';
+                        ruta = ruta.replace("identificador_del_contrato", respuesta);
+                        location.href = ruta;
+                    }else{
+                        $('#div_respuesta_servidor_contrato_modificar_modal').show();
+                        $("#label_respuesta_servidor_contrato_modificar_modal").text(respuesta);
+                    }
+                },
+                error: function() {
+                    alert("Error al procesar");
+                },
+                complete: function() {
+                    $('#btn_form_contrato_modificar_modal').prop('disabled',false);
+                    $('#label_indicador_btn_form_contrato_modificar_modal').text("");
+                }
+            });
+        });
+
+
+    })
+</script>

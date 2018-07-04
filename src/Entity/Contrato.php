@@ -80,14 +80,14 @@ class Contrato
     /**
      * @var string
      *
-     * @ORM\Column(name="reeup", type="string", nullable=false)
+     * @ORM\Column(name="reeup", type="string", length=255, nullable=false)
      */
     private $reeup;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="carnet_identidad", type="string", nullable=false)
+     * @ORM\Column(name="carnet_identidad", type="string", length=255, nullable=false)
      */
     private $carnetIdentidad;
 
@@ -101,14 +101,14 @@ class Contrato
     /**
      * @var string
      *
-     * @ORM\Column(name="cuenta_bancaria_cup", type="string", nullable=false)
+     * @ORM\Column(name="cuenta_bancaria_cup", type="string", length=255, nullable=false)
      */
     private $cuentaBancariaCup;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cuenta_bancaria_cuc", type="string", nullable=false)
+     * @ORM\Column(name="cuenta_bancaria_cuc", type="string", length=255, nullable=false)
      */
     private $cuentaBancariaCuc;
 
@@ -176,9 +176,9 @@ class Contrato
     private $banco;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="numero_aprob_contrato_comite_contratacion", type="integer", nullable=false)
+     * @ORM\Column(name="numero_aprob_contrato_comite_contratacion", type="string", length=255, nullable=false)
      */
     private $numeroAprobContratoComiteContratacion;
 
@@ -190,9 +190,9 @@ class Contrato
     private $fechaAprobContratoComiteContratacion;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="numero_aprob_contrato_comite_administracion", type="integer", nullable=false)
+     * @ORM\Column(name="numero_aprob_contrato_comite_administracion", type="string", length=255, nullable=false)
      */
     private $numeroAprobContratoComiteAdministracion;
 
@@ -216,6 +216,13 @@ class Contrato
      * @ORM\Column(name="estado", type="integer", nullable=false)
      */
     private $estado;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="motivo_estado", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     */
+    private $motivoEstado = 'NULL';
 
     public function getId(): ?int
     {
@@ -486,12 +493,12 @@ class Contrato
         return $this;
     }
 
-    public function getNumeroAprobContratoComiteContratacion(): ?int
+    public function getNumeroAprobContratoComiteContratacion(): ?string
     {
         return $this->numeroAprobContratoComiteContratacion;
     }
 
-    public function setNumeroAprobContratoComiteContratacion(int $numeroAprobContratoComiteContratacion): self
+    public function setNumeroAprobContratoComiteContratacion(string $numeroAprobContratoComiteContratacion): self
     {
         $this->numeroAprobContratoComiteContratacion = $numeroAprobContratoComiteContratacion;
 
@@ -510,12 +517,12 @@ class Contrato
         return $this;
     }
 
-    public function getNumeroAprobContratoComiteAdministracion(): ?int
+    public function getNumeroAprobContratoComiteAdministracion(): ?string
     {
         return $this->numeroAprobContratoComiteAdministracion;
     }
 
-    public function setNumeroAprobContratoComiteAdministracion(int $numeroAprobContratoComiteAdministracion): self
+    public function setNumeroAprobContratoComiteAdministracion(string $numeroAprobContratoComiteAdministracion): self
     {
         $this->numeroAprobContratoComiteAdministracion = $numeroAprobContratoComiteAdministracion;
 
@@ -558,15 +565,21 @@ class Contrato
         return $this;
     }
 
-    /**
-     * @param int $id
-     */
-    public function __toString(): string
+    public function getMotivoEstado(): ?string
     {
-        return $this->numero ."/" . $this->anno;
+        return $this->motivoEstado;
     }
 
+    public function setMotivoEstado(?string $motivoEstado): self
+    {
+        $this->motivoEstado = $motivoEstado;
 
+        return $this;
+    }
 
+    public function __toString(): string
+    {
+       return $this->numero ." / ".$this->anno;
+    }
 
 }

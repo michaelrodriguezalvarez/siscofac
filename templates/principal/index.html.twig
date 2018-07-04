@@ -3,7 +3,10 @@
 {% block title %}Pantalla Principal{% endblock %}
 
 {% block body %}
-
-    <a href="{{ path('contrato_new') }}">Nuevo Contrato</a>
-
+    <div class="container">
+        <h5>Pantalla Principal</h5>
+        <a class="btn-sm btn-primary" href="{{ path('contrato_new') }}">Nuevo Contrato</a>
+        <a class="btn-sm btn-success" href="{{ path('contrato_comite_contratacion_index') }}">Gestionar Contrato Comite Contratacion</a>
+        <a class="btn-sm btn-warning" href="{{ path('suplemento_comite_contratacion_index') }}">Gestionar Suplemento Comite Contratacion</a>
+    </div>
 {% endblock %}
