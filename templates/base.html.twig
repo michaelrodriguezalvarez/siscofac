@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <!--The responsive viewport meta tag-->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}SISCOFAC{% endblock %}</title>
+        <title>{% block title %}{{ getNombreAplicacion() }}{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
         {% block stylesheets %}{% endblock %}
     </head>

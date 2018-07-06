@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light form-control ">
-    <a id="menu-nombre-app" class="navbar-brand" href="#">SISCOFAC</a>
+    <a id="menu-nombre-app" class="navbar-brand" href="#">{{ getNombreAplicacion() }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,7 +32,7 @@
                     {% trans %}Usuario{% endtrans %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a href="{{ path('login')}}">Entrar</a>
+                    <a href="#">Entrar</a>
                     <a class="dropdown-item" href="#">{% trans %}Detalles{% endtrans %}</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">{% trans %}Modificar{% endtrans %}</a>

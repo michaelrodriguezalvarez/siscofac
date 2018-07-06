@@ -31,7 +31,7 @@ class Factura
     /**
      * @var string
      *
-     * @ORM\Column(name="numero_del_proveedor", type="text", length=255, nullable=false)
+     * @ORM\Column(name="numero_del_proveedor", type="string", length=255, nullable=false)
      */
     private $numeroDelProveedor;
 
