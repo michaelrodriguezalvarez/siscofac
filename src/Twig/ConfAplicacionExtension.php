@@ -33,7 +33,7 @@ class ConfAplicacionExtension extends AbstractExtension
 
     public function getSlogan():string
     {
-        return $this->configuracion_aplicacion->getSlogan()();
+        return $this->configuracion_aplicacion->getSlogan();
     }
 
     public function getIdiomaPorDefecto():string
