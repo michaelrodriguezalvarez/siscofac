@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\ConfNotificacion;
 use App\Form\ConfNotificacionType;
+//use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use App\Entity\Contrato;
+use App\Twig\ConfAplicacionExtension;
 use App\Twig\ConfNotificacionExtension;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,7 +19,7 @@ class ConfNotificacionController extends Controller
     /**
      * @Route("/conf/notificacion", name="conf_notificacion")
      */
-    public function index(Request $request)
+    public function index(Request $request):Response
     {
         $configuracion_notificacion = new ConfNotificacion();
         $configuracion_notificacion_guardado = $this->getDoctrine()
@@ -61,13 +63,18 @@ class ConfNotificacionController extends Controller
             'form' => $form->createView(),
         ]);
     }
-    /**
-     * @Route("/conf/notificacion/enviar/correo", name="conf_notificacion_enviar_correo")
-     */
-    public function enviar_correo(Request $request,RegistryInterface $doctrine):Response
+
+    public function enviar_correo_notificacion(Contrato $contrato, RegistryInterface $doctrine):string
     {
+        $nomArea = $doctrine->getRepository(Contrato::class)
+                            ->getNombreCorreoDeAreaDadoIdContrato($contrato->getId());
+        $confAplicacionExtension = new ConfAplicacionExtension($doctrine);
         $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
-        $respuesta = $confNotificacionExtension->enviarCorreo(array('michael@localhost' => 'Michael'),5452,"Inhabilitado","SISCOFAC");
-        return new Response($respuesta);
+        $respuesta = $confNotificacionExtension->enviarCorreo(
+            array($nomArea[0]["correo"] => $nomArea[0]["nombre"]),
+            $contrato,
+            $contrato->getMotivoEstado(),
+            $confAplicacionExtension->getNombreAplicacion());
+        return $respuesta;
     }
 }

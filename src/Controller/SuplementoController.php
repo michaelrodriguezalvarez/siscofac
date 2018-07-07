@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Controller\ConfNotificacionController;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @Route("/suplemento")
@@ -36,7 +38,7 @@ class SuplementoController extends Controller
     /**
      * @Route("/{id_contrato}/new", name="suplemento_new", methods="GET|POST")
      */
-    public function new(Request $request,int $id_contrato): Response
+    public function new(Request $request,int $id_contrato, RegistryInterface $doctrine): Response
     {
         $contrato = $this->getDoctrine()
             ->getRepository(Contrato::class)
@@ -71,13 +73,19 @@ class SuplementoController extends Controller
                     ->getSumatoriaSaldoCuc($id_contrato);
 
                 if ($valor_ejecutado_facturas_cup == $contrato->getValorContratoTotalCup() && $valor_ejecutado_facturas_cuc == $contrato->getValorContratoTotalCuc()){
+                    $contrato->setMotivoEstado("Por poseer un saldo insuficiente");
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)
-                        ->updateEstado($id_contrato, false);
+                        ->updateEstado($id_contrato, $contrato->getMotivoEstado(), false);
+                    $confNotificacionController = new ConfNotificacionController();
+                    $this->addFlash(
+                        'notice',
+                        $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                    );
                 }else{
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)
-                        ->updateEstado($id_contrato, true);
+                        ->updateEstado($id_contrato, "", true);
                 }
 
                 $this->addFlash(
@@ -124,7 +132,7 @@ class SuplementoController extends Controller
     /**
      * @Route("/{id_contrato}/{id}/edit", name="suplemento_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Suplemento $suplemento,int $id_contrato): Response
+    public function edit(Request $request, Suplemento $suplemento,int $id_contrato, RegistryInterface $doctrine): Response
     {
         $contrato = $this->getDoctrine()
             ->getRepository(Contrato::class)
@@ -156,13 +164,19 @@ class SuplementoController extends Controller
                 ->getSumatoriaSaldoCuc($id_contrato);
 
             if ($valor_ejecutado_facturas_cup == $contrato->getValorContratoTotalCup() && $valor_ejecutado_facturas_cuc == $contrato->getValorContratoTotalCuc()){
+                $contrato->setMotivoEstado("Por poseer un saldo insuficiente");
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateEstado($id_contrato, false);
+                    ->updateEstado($id_contrato, $contrato->getMotivoEstado(), false);
+                $confNotificacionController = new ConfNotificacionController();
+                $this->addFlash(
+                    'notice',
+                    $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                );
             }else{
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateEstado($id_contrato, true);
+                    ->updateEstado($id_contrato, "", true);
             }
 
             $this->addFlash(
@@ -184,7 +198,7 @@ class SuplementoController extends Controller
     /**
      * @Route("/{id_contrato}/{id}", name="suplemento_delete", methods="DELETE")
      */
-    public function delete(Request $request, Suplemento $suplemento, int $id_contrato): Response
+    public function delete(Request $request, Suplemento $suplemento, int $id_contrato, RegistryInterface $doctrine): Response
     {
         if ($this->isCsrfTokenValid('delete'.$suplemento->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getRepository(Contrato::class)
@@ -206,13 +220,19 @@ class SuplementoController extends Controller
                 ->getSumatoriaSaldoCuc($id_contrato);
 
             if ($valor_ejecutado_facturas_cup == $contrato->getValorContratoTotalCup() && $valor_ejecutado_facturas_cuc == $contrato->getValorContratoTotalCuc()){
+                $contrato->setMotivoEstado("Por poseer un saldo insuficiente");
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateEstado($id_contrato, false);
+                    ->updateEstado($id_contrato, $contrato->getMotivoEstado(), false);
+                $confNotificacionController = new ConfNotificacionController();
+                $this->addFlash(
+                    'notice',
+                    $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                );
             }else{
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateEstado($id_contrato, true);
+                    ->updateEstado($id_contrato, "", true);
             }
         }
 

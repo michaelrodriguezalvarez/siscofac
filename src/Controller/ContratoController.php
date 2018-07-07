@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Controller\ConfNotificacionController;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @Route("/contrato")
@@ -39,7 +41,7 @@ class ContratoController extends Controller
     /**
      * @Route("/new", name="contrato_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, RegistryInterface $doctrine): Response
     {
         $session = $request->getSession();
         $session->set('escenario','contrato_new');
@@ -100,6 +102,15 @@ class ContratoController extends Controller
                     'notice',
                     'Los datos fueron guardados satisfactoriamente'
                 );
+
+                if($contrato->getEstado()==0){
+                    $confNotificacionController = new ConfNotificacionController();
+                    $this->addFlash(
+                        'notice',
+                        $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                    );
+                }
+
                 return $this->redirectToRoute('contrato_new');
             }else{
                 $this->addFlash(
@@ -150,7 +161,7 @@ class ContratoController extends Controller
     /**
      * @Route("/edit/{id}", name="contrato_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Contrato $contrato): Response
+    public function edit(Request $request, Contrato $contrato, RegistryInterface $doctrine): Response
     {
         $session = $request->getSession();
         $session->set('escenario','contrato_edit');
@@ -203,6 +214,15 @@ class ContratoController extends Controller
                 'notice',
                 'Los datos fueron guardados satisfactoriamente'
             );
+
+            if($contrato->getEstado()==0){
+                $confNotificacionController = new ConfNotificacionController();
+                $this->addFlash(
+                    'notice',
+                    $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                );
+            }
+
             return $this->redirectToRoute('contrato_edit', ['id' => $contrato->getId()]);
         }
 

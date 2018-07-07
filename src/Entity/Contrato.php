@@ -579,7 +579,7 @@ class Contrato
 
     public function __toString(): string
     {
-       return $this->numero ." / ".$this->anno;
+       return $this->numero ."/".$this->anno;
     }
 
 }

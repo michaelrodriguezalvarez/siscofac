@@ -33,12 +33,12 @@ class ConfNotificacionExtension extends AbstractExtension
         if (count($configuraciones)>0){
             $configuracion = clone $configuraciones[0];
         }else{
-            throw new \Exception("Es necesario configurar el correo");
+            throw new \Exception("Error: Es necesario configurar el correo");
         }
         return $configuracion;
     }
 
-    public function enviarCorreo(array $destinatarios, int $identificador, string $motivo, string $aplicacion):string{
+    public function enviarCorreo(array $destinatarios, string $identificador, string $motivo, string $aplicacion):string{
         try{
             $this->configuracion = $this->getConfNotificacion();
             $transport = (new \Swift_SmtpTransport($this->configuracion->getCorreoServidor(), $this->configuracion->getCorreoPuerto()))
@@ -61,10 +61,10 @@ class ConfNotificacionExtension extends AbstractExtension
             return $ex->getMessage();
         }
 
-        return "Mensaje Enviado";
+        return "Notificación Enviada Satisfactoriamente";
     }
 
-    protected function getCorreoTextoConDatos(string $texto, int $identificador, string $motivo, string $aplicacion):string{
+    protected function getCorreoTextoConDatos(string $texto, string $identificador, string $motivo, string $aplicacion):string{
         $texto = str_replace("--identificador--",$identificador,$texto);
         $texto = str_replace("--motivo--",$motivo,$texto);
         $texto = str_replace("--aplicacion--",$aplicacion,$texto);

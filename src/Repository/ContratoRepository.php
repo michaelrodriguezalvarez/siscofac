@@ -236,14 +236,15 @@ class ContratoRepository extends EntityRepository
         return $consulta->execute();
     }
 
-    public function updateEstado(int $id_contrato, bool $activo):int
+    public function updateEstado(int $id_contrato, string $motivo, bool $activo):int
     {
         $estado = $activo == true ? 1 : 0;
         $consulta = $this->getEntityManager()->createQueryBuilder()
             ->update('App\Entity\Contrato','con')
-            ->set('con.estado', ':estado')           
+            ->set('con.estado', ':estado')
+            ->set('con.motivoEstado',':motivo')
             ->where('con.id = :id_contrato')
-            ->setParameters(array('id_contrato'=>$id_contrato,'estado'=>$estado))
+            ->setParameters(array('id_contrato'=>$id_contrato,'motivo'=>$motivo,'estado'=>$estado))
             ->getQuery();
         return $consulta->execute();
     }
@@ -306,6 +307,16 @@ class ContratoRepository extends EntityRepository
             ->innerJoin('App\Entity\NomProveedor','pro',Expr\Join::WITH,'con.proveedor = pro.id')
             ->innerJoin('App\Entity\NomProvincia','prv', Expr\Join::WITH, 'pro.provincia = prv.id');
         ;
+        $consulta->where($consulta->expr()->eq('con.id',$id));
+        return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
+    }
+
+    public function getNombreCorreoDeAreaDadoIdContrato(int $id):array{
+        $consulta = $this->getEntityManager()->createQueryBuilder()
+            ->select('are.nombre')
+            ->addSelect('are.correo')
+            ->from('App\Entity\Contrato','con')
+            ->innerJoin('App\Entity\NomArea','are',Expr\Join::WITH,'con.areaAdministraContrato = are.id');
         $consulta->where($consulta->expr()->eq('con.id',$id));
         return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
     }
