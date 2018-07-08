@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ConfNotificacion;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -35,12 +36,45 @@ class ConfNotificacionType extends AbstractType
             ->add('correoAsunto',TextType::class,array(
                 'attr'=>array('placeholder'=>'Asunto')
             ))
-            ->add('correoTexto',TextareaType::class, array(
+            ->add('correoTextoContratoInhabilitado',TextareaType::class, array(
                 'attr' => array(
                     'class' => 'form-control',
-                    'placeholder'=>'Texto del correo'
+                    'placeholder'=>'Texto del correo del contrato inhabilitado'
+                ),
+            ))
+            ->add('ayudaCorreoTextoContratoInhabilitado',ButtonType::class, array(
+                'attr' => array(
+                    'class' => 'btn btn-sm btn-warning',
+                    'data-toggle'=>'modal',
+                    'data-target'=>'#modalAyudaCorreoTextoContratoInhabilitado'
+                ),
+            ))
+            ->add('correoTextoSaldoMinimo',TextareaType::class, array(
+                'attr' => array(
+                    'class' => 'form-control',
+                    'placeholder'=>'Texto del correo del contrato con saldo minimo'
                 ),
 
+            ))
+            ->add('ayudaCorreoTextoSaldoMinimo',ButtonType::class, array(
+                'attr' => array(
+                    'class' => 'btn btn-sm btn-warning',
+                    'data-toggle'=>'modal',
+                    'data-target'=>'#modalAyudaCorreoTextoSaldoMinimo'
+                ),
+            ))
+            ->add('correoTextoTiempoMinimo',TextareaType::class, array(
+                'attr' => array(
+                    'class' => 'form-control',
+                    'placeholder'=>'Texto del correo del contrato con tiempo minimo'
+                ),
+            ))
+            ->add('ayudaCorreoTextoTiempoMinimo',ButtonType::class, array(
+                'attr' => array(
+                    'class' => 'btn btn-sm btn-warning',
+                    'data-toggle'=>'modal',
+                    'data-target'=>'#modalAyudaCorreoTextoTiempoMinimo'
+                ),
             ))
             ->add('diasMinimoNotificacion',IntegerType::class,array(
                 'attr'=>array('placeholder'=>'30')

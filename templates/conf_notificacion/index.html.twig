@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container small">
         <h5>{% trans %}Configurar{% endtrans %} {% trans %}Notificacion{% endtrans %}</h5>
-
+        {% include 'conf_notificacion/ventana_modal.html.twig' %}
         {% for message in app.flashes('notice') %}
             <div class="alert-info">
                 {{ message |trans}}

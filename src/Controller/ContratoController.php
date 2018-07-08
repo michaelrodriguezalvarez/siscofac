@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Controller\ConfNotificacionController;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Twig\ConfNotificacionExtension;
 
 /**
  * @Route("/contrato")
@@ -104,10 +104,10 @@ class ContratoController extends Controller
                 );
 
                 if($contrato->getEstado()==0){
-                    $confNotificacionController = new ConfNotificacionController();
+                    $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
                     $this->addFlash(
                         'notice',
-                        $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                        $confNotificacionExtension->enviarCorreoNotificacion('definido_por_usuario', $contrato)
                     );
                 }
 
@@ -216,10 +216,10 @@ class ContratoController extends Controller
             );
 
             if($contrato->getEstado()==0){
-                $confNotificacionController = new ConfNotificacionController();
+                $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
                 $this->addFlash(
                     'notice',
-                    $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                    $confNotificacionExtension->enviarCorreoNotificacion('definido_por_usuario', $contrato)
                 );
             }
 

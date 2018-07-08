@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Controller\ConfNotificacionController;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Twig\ConfNotificacionExtension;
 
 /**
  * @Route("/factura")
@@ -137,10 +137,10 @@ class FacturaController extends Controller
                            $this->getDoctrine()
                                ->getRepository(Contrato::class)
                                ->updateEstado($id_contrato, $contrato->getMotivoEstado(), false);
-                           $confNotificacionController = new ConfNotificacionController();
+                           $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
                            $this->addFlash(
                                'notice',
-                               $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                               $confNotificacionExtension->enviarCorreoNotificacion('saldo_insuficiente', $contrato)
                            );
                        }
 
@@ -303,10 +303,10 @@ class FacturaController extends Controller
                         $this->getDoctrine()
                             ->getRepository(Contrato::class)
                             ->updateEstado($id_contrato, $contrato->getMotivoEstado(), false);
-                        $confNotificacionController = new ConfNotificacionController();
+                        $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
                         $this->addFlash(
                             'notice',
-                            $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                            $confNotificacionExtension->enviarCorreoNotificacion('saldo_insuficiente', $contrato)
                         );
                     }else{
                         $this->getDoctrine()
@@ -368,10 +368,10 @@ class FacturaController extends Controller
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
                     ->updateEstado($id_contrato, $contrato->getMotivoEstado(), false);
-                $confNotificacionController = new ConfNotificacionController();
+                $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
                 $this->addFlash(
                     'notice',
-                    $confNotificacionController->enviar_correo_notificacion($contrato, $doctrine)
+                    $confNotificacionExtension->enviarCorreoNotificacion('saldo_insuficiente', $contrato)
                 );
             }else{
                 $this->getDoctrine()

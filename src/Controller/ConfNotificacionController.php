@@ -4,15 +4,10 @@ namespace App\Controller;
 
 use App\Entity\ConfNotificacion;
 use App\Form\ConfNotificacionType;
-//use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\Contrato;
-use App\Twig\ConfAplicacionExtension;
-use App\Twig\ConfNotificacionExtension;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class ConfNotificacionController extends Controller
 {
@@ -34,8 +29,9 @@ class ConfNotificacionController extends Controller
             $configuracion_notificacion->setCorreoServidor("localhost");
             $configuracion_notificacion->setCorreoPuerto(25);
             $configuracion_notificacion->setCorreoAsunto("Notificación");
-            $configuracion_notificacion->setCorreoTexto(
-                                "Cordiales saludos.\nSe le notifica que el contrato --identificador-- ha sido inhabilitado por el siguiente motivo: --motivo--.\nAtentamente, el administrador de --aplicacion--.");
+            $configuracion_notificacion->setCorreoTextoContratoInhabilitado("Cordiales saludos.\nSe le notifica que el contrato --identificador-- ha sido inhabilitado por el siguiente motivo: --motivo--.\nAtentamente, el administrador de --aplicacion--.");
+            $configuracion_notificacion->setCorreoTextoSaldoMinimo("Cordiales saludos.\nSe le notifica que el contrato --identificador-- cuenta con un saldo disponible de --saldo-- --moneda--.\nEl límite mínimo establecido es de --limite-- --moneda--.\nAtentamente, el administrador de --aplicacion--.");
+            $configuracion_notificacion->setCorreoTextoTiempoMinimo("Cordiales saludos.\nSe le notifica que el contrato --identificador-- cuenta con menos de --tiempo-- días para que llegue a su finalización cuya fecha es el --fecha--.\nAtentamente, el administrador de --aplicacion--.");
             $configuracion_notificacion->setDiasMinimoNotificacion(30);
             $configuracion_notificacion->setSaldoMinimoNotificacionCup(100);
             $configuracion_notificacion->setSaldoMinimoNotificacionCuc(100);
@@ -62,19 +58,5 @@ class ConfNotificacionController extends Controller
             'configuracion_notificacion' => $configuracion_notificacion,
             'form' => $form->createView(),
         ]);
-    }
-
-    public function enviar_correo_notificacion(Contrato $contrato, RegistryInterface $doctrine):string
-    {
-        $nomArea = $doctrine->getRepository(Contrato::class)
-                            ->getNombreCorreoDeAreaDadoIdContrato($contrato->getId());
-        $confAplicacionExtension = new ConfAplicacionExtension($doctrine);
-        $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
-        $respuesta = $confNotificacionExtension->enviarCorreo(
-            array($nomArea[0]["correo"] => $nomArea[0]["nombre"]),
-            $contrato,
-            $contrato->getMotivoEstado(),
-            $confAplicacionExtension->getNombreAplicacion());
-        return $respuesta;
     }
 }

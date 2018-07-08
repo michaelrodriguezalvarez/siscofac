@@ -66,9 +66,9 @@ class ConfNotificacion
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_texto", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="correo_texto_contrato_inhabilitado", type="text", length=65535, nullable=false)
      */
-    private $correoTexto;
+    private $correoTextoContratoInhabilitado;
 
     /**
      * @var int
@@ -90,6 +90,20 @@ class ConfNotificacion
      * @ORM\Column(name="saldo_minimo_notificacion_cuc", type="float", precision=255, scale=0, nullable=false)
      */
     private $saldoMinimoNotificacionCuc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correo_texto_saldo_minimo", type="text", length=65535, nullable=false)
+     */
+    private $correoTextoSaldoMinimo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correo_texto_tiempo_minimo", type="text", length=65535, nullable=false)
+     */
+    private $correoTextoTiempoMinimo;
 
     public function getId(): ?int
     {
@@ -168,14 +182,14 @@ class ConfNotificacion
         return $this;
     }
 
-    public function getCorreoTexto(): ?string
+    public function getCorreoTextoContratoInhabilitado(): ?string
     {
-        return $this->correoTexto;
+        return $this->correoTextoContratoInhabilitado;
     }
 
-    public function setCorreoTexto(string $correoTexto): self
+    public function setCorreoTextoContratoInhabilitado(string $correoTextoContratoInhabilitado): self
     {
-        $this->correoTexto = $correoTexto;
+        $this->correoTextoContratoInhabilitado = $correoTextoContratoInhabilitado;
 
         return $this;
     }
@@ -212,6 +226,30 @@ class ConfNotificacion
     public function setSaldoMinimoNotificacionCuc(float $saldoMinimoNotificacionCuc): self
     {
         $this->saldoMinimoNotificacionCuc = $saldoMinimoNotificacionCuc;
+
+        return $this;
+    }
+
+    public function getCorreoTextoSaldoMinimo(): ?string
+    {
+        return $this->correoTextoSaldoMinimo;
+    }
+
+    public function setCorreoTextoSaldoMinimo(string $correoTextoSaldoMinimo): self
+    {
+        $this->correoTextoSaldoMinimo = $correoTextoSaldoMinimo;
+
+        return $this;
+    }
+
+    public function getCorreoTextoTiempoMinimo(): ?string
+    {
+        return $this->correoTextoTiempoMinimo;
+    }
+
+    public function setCorreoTextoTiempoMinimo(string $correoTextoTiempoMinimo): self
+    {
+        $this->correoTextoTiempoMinimo = $correoTextoTiempoMinimo;
 
         return $this;
     }
