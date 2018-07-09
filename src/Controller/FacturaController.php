@@ -117,11 +117,11 @@ class FacturaController extends Controller
 
                            $this->getDoctrine()
                                ->getRepository(Contrato::class)
-                               ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),true, $doctrine);
+                               ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),true);
 
                            $this->getDoctrine()
                                ->getRepository(Contrato::class)
-                               ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),true, $doctrine);
+                               ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),true);
 
                        $em->flush();
 
@@ -143,6 +143,10 @@ class FacturaController extends Controller
                                $confNotificacionExtension->enviarCorreoNotificacion('saldo_insuficiente', $contrato)
                            );
                        }
+
+                       $this->getDoctrine()
+                           ->getRepository(Contrato::class)
+                           ->chequearSaldo($id_contrato, $doctrine);
 
                        $this->addFlash(
                            'notice',
@@ -274,19 +278,19 @@ class FacturaController extends Controller
 
                     //if ($pagado_anteriormente == 1) {
                         $this->getDoctrine()->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUPYSaldoCUP($id_contrato, $valor_anterior_factura_cup, false, $doctrine);
+                            ->updateEjecucionContratoCUPYSaldoCUP($id_contrato, $valor_anterior_factura_cup, false);
                         $this->getDoctrine()->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUCYSaldoCUC($id_contrato, $valor_anterior_factura_cuc, false, $doctrine);
+                            ->updateEjecucionContratoCUCYSaldoCUC($id_contrato, $valor_anterior_factura_cuc, false);
                     //}
 
                     //if ($pagado == 1) {
                         $this->getDoctrine()
                             ->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(), true, $doctrine);
+                            ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(), true);
 
                         $this->getDoctrine()
                             ->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(), true, $doctrine);
+                            ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(), true);
                     //}
 
                     $this->getDoctrine()->getManager()->flush();
@@ -313,6 +317,10 @@ class FacturaController extends Controller
                             ->getRepository(Contrato::class)
                             ->updateEstado($id_contrato, "", true);
                     }
+
+                    $this->getDoctrine()
+                        ->getRepository(Contrato::class)
+                        ->chequearSaldo($id_contrato, $doctrine);
 
             $this->addFlash(
                 'notice',
@@ -344,11 +352,11 @@ class FacturaController extends Controller
                 //if($factura->getEstado()==1){
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)
-                        ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),false, $doctrine);
+                        ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),false);
 
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)
-                        ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),false, $doctrine);
+                        ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),false);
                 //    }
             $em->remove($factura);
             $em->flush();
@@ -378,6 +386,10 @@ class FacturaController extends Controller
                     ->getRepository(Contrato::class)
                     ->updateEstado($id_contrato, "", true);
             }
+
+            $this->getDoctrine()
+                ->getRepository(Contrato::class)
+                ->chequearSaldo($id_contrato, $doctrine);
         }
 
         return $this->redirectToRoute('factura_index',array('id_contrato'=>$id_contrato));

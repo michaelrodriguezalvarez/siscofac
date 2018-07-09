@@ -38,30 +38,30 @@ class NomProveedor
     /**
      * @var string|null
      *
-     * @ORM\Column(name="direccion", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="direccion", type="text", length=65535, nullable=true, options={"default"="N/A"})
      */
-    private $direccion = 'NULL';
+    private $direccion = 'N/A';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="telefono", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="telefono", type="string", length=255, nullable=true, options={"default"="N/A"})
      */
-    private $telefono = 'NULL';
+    private $telefono = 'N/A';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="correo", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="correo", type="string", length=255, nullable=true, options={"default"="N/A"})
      */
-    private $correo = 'NULL';
+    private $correo = 'N/A';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="organismo", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="organismo", type="string", length=255, nullable=true, options={"default"="N/A"})
      */
-    private $organismo = 'NULL';
+    private $organismo = 'N/A';
 
     public function getId(): ?int
     {

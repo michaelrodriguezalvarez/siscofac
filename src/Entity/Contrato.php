@@ -220,9 +220,9 @@ class Contrato
     /**
      * @var string|null
      *
-     * @ORM\Column(name="motivo_estado", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="motivo_estado", type="text", length=65535, nullable=true, options={"default"="N/A"})
      */
-    private $motivoEstado = 'NULL';
+    private $motivoEstado = 'N/A';
 
     public function getId(): ?int
     {

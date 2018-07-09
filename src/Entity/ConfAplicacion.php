@@ -31,9 +31,9 @@ class ConfAplicacion
     /**
      * @var string|null
      *
-     * @ORM\Column(name="slogan", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="slogan", type="string", length=255, nullable=true, options={"default"="N/A"})
      */
-    private $slogan = 'NULL';
+    private $slogan = 'N/A';
 
     /**
      * @var string
