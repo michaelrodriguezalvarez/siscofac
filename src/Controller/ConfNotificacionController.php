@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Contrato;
+use App\Twig\ConfNotificacionExtension;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class ConfNotificacionController extends Controller
 {
@@ -58,5 +61,33 @@ class ConfNotificacionController extends Controller
             'configuracion_notificacion' => $configuracion_notificacion,
             'form' => $form->createView(),
         ]);
+    }
+
+    public function chequearTiempo(RegistryInterface $doctrine):string {
+        $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
+        $configuracion = $confNotificacionExtension->getConfNotificacion();
+
+        $contratos = $doctrine->getEntityManager()
+                        ->getRepository(Contrato::class)
+                        ->getContratosLimiteFechaTerminacion($configuracion->getDiasMinimoNotificacion());
+        $reporte = "No se encontraron contratos fuera del limite de tiempo establecido";
+        $cantidad_contratos_encontrados = count($contratos);
+        if($cantidad_contratos_encontrados>0){
+            $tipo = 'tiempo_minimo';
+            $cantidad_notificaciones_enviadas = 0;
+            foreach ($contratos  as $contrato){
+                $confNotificacionExtension->enviarCorreoNotificacion($tipo, $contrato) == "Notificación Enviada Satisfactoriamente" ? $cantidad_notificaciones_enviadas += 1 : "" ;
+            }
+            if ($cantidad_notificaciones_enviadas == $cantidad_contratos_encontrados){
+                if($cantidad_contratos_encontrados==1){
+                    $reporte = "Se encontraró ".$cantidad_contratos_encontrados." contrato fuera del limite de tiempo establecido y ya se ha notificado";
+                }else{
+                    $reporte = "Se encontraron ".$cantidad_contratos_encontrados." contratos fuera del limite de tiempo establecido y ya se ha notificado";
+                }
+            }else{
+                $reporte = "No todas las notificaciones fueron enviadas. Revise la configuración del correo";
+            }
+        }
+        return $reporte;
     }
 }

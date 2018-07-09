@@ -83,9 +83,8 @@ class ConfNotificacionExtension extends AbstractExtension
             $mensaje = (new \Swift_Message($this->configuracion->getCorreoAsunto()))
                 ->setFrom([$this->configuracion->getCorreoDireccion() => $this->configuracion->getCorreoNombre()])
                 ->setTo($destinatarios)
-                ->setBody($this->getCorreoTextoConDatos($texto, $contrato, $confAplicacionExtension->getNombreAplicacion(), $saldo_minimo, $this->configuracion->getCorreoTextoTiempoMinimo(),$moneda));
+                ->setBody($this->getCorreoTextoConDatos($texto, $contrato, $confAplicacionExtension->getNombreAplicacion(), $saldo_minimo, $this->configuracion->getDiasMinimoNotificacion(),$moneda));
             ;
-
             $this->swiftMailer->send($mensaje);
 
         }catch(\Swift_TransportException $swfex){

@@ -211,9 +211,9 @@ class ContratoComiteContratacionController extends Controller
     }
 
     /**
-     * @Route("/aprobar/{id_contrato_comite_contratacion}", name="contrato_comite_contratacion_aprobar", methods="GET|POST")
+     * @Route("/aprobar/{id}", name="contrato_comite_contratacion_aprobar", methods="GET|POST")
      */
-    public function aprobar(int $id_contrato_comite_contratacion, Request $request, RegistryInterface $doctrine):Response{
+    public function aprobar(int $id, Request $request, RegistryInterface $doctrine):Response{
 
         $session = $request->getSession();
         $session->set('escenario','contrato_new');
@@ -249,7 +249,7 @@ class ContratoComiteContratacionController extends Controller
 
         $contrato = new Contrato();
 
-        $contratoComiteContratacion = $this->getDoctrine()->getRepository(ContratoComiteContratacion::class)->find($id_contrato_comite_contratacion);        $contrato = new Contrato();
+        $contratoComiteContratacion = $this->getDoctrine()->getRepository(ContratoComiteContratacion::class)->find($id);        $contrato = new Contrato();
         $contrato->setProveedor($contratoComiteContratacion->getProveedor());
         $contrato->setTipoDeServicio($contratoComiteContratacion->getTipoDeServicio());
         $contrato->setObjeto($contratoComiteContratacion->getObjeto());
@@ -272,7 +272,7 @@ class ContratoComiteContratacionController extends Controller
             'bancos'=>$bancos,
             'areas_administra_contrato'=>$areas_administra_contrato,
         ],
-            array('action' => $this->generateUrl('contrato_comite_contratacion_aprobar',array('id_contrato_comite_contratacion'=>$id_contrato_comite_contratacion)))
+            array('action' => $this->generateUrl('contrato_comite_contratacion_aprobar',array('id'=>$id)))
         );
 
         $form->handleRequest($request);
@@ -320,10 +320,10 @@ class ContratoComiteContratacionController extends Controller
     }
 
         /**
-     * @Route("/denegar/{id_contrato_comite_contratacion}", name="contrato_comite_contratacion_denegar", methods="GET|POST")
+     * @Route("/denegar/{id}", name="contrato_comite_contratacion_denegar", methods="GET|POST")
      */
-    public function denegar($id_contrato_comite_contratacion):Response{
-        $contratoComiteContratacion = $this->getDoctrine()->getRepository(ContratoComiteContratacion::class)->find($id_contrato_comite_contratacion);
+    public function denegar($id):Response{
+        $contratoComiteContratacion = $this->getDoctrine()->getRepository(ContratoComiteContratacion::class)->find($id);
         if ($contratoComiteContratacion != null){
             $em = $this->getDoctrine()->getManager();
             $em->remove($contratoComiteContratacion);

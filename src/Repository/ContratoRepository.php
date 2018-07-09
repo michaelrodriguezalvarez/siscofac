@@ -7,8 +7,10 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Doctrine\ORM\Query\Expr;
 use App\Twig\ConfNotificacionExtension;
+use function Sodium\add;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\Contrato;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ContratoRepository extends EntityRepository
 {
@@ -339,4 +341,19 @@ class ContratoRepository extends EntityRepository
         }
     }
 
+    public function getContratosLimiteFechaTerminacion(int $tiempo_limite):array {
+        $limite_inferior = new \DateTime();
+        $fecha_hoy = new \DateTime();
+        $limite_superior = date_create($fecha_hoy->format('Y').'-'.$fecha_hoy->format('m').'-'.$fecha_hoy->format('d'));
+        date_add($limite_superior, date_interval_create_from_date_string($tiempo_limite.' days'));
+        $limite_inferior = date_format($limite_inferior, '\'Y-m-d\'');
+        $limite_superior = date_format($limite_superior, '\'Y-m-d\'');
+
+        $qb = $this->createQueryBuilder('c')
+            ->andWhere('c.fechaTerminacion >= '.$limite_inferior)
+            ->andWhere('c.fechaTerminacion <= '.$limite_superior)
+            ->getQuery();
+
+        return $qb->execute();
+    }
 }
