@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Twig\ConfNotificacionExtension;
 
 /**
  * @Route("/suplemento/comite/contratacion")
@@ -202,101 +204,7 @@ class SuplementoComiteContratacionController extends Controller
     /**
      * @Route("/aprobar/{id}", name="suplemento_comite_contratacion_aprobar", methods="GET|POST")
      */
-    public function aprobar(int $id, Request $request):Response{
-
-        /*$session = $request->getSession();
-        $session->set('escenario','suplemento_new');
-
-        $ultimos_annos_hasta_actual = $this->getDoctrine()
-            ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
-
-        $proveedores = $this->getDoctrine()
-            ->getRepository(NomProveedor::class)
-            ->getParsedFieldFromSelect();
-
-        $tipos_de_servicios = $this->getDoctrine()
-            ->getRepository(NomTipoServicio::class)
-            ->getParsedFieldFromSelect();
-
-        $tipos_de_persona = $this->getDoctrine()
-            ->getRepository(NomTipoPersona::class)
-            ->getParsedFieldFromSelect();
-
-        $bancos = $this->getDoctrine()
-            ->getRepository(NomBanco::class)
-            ->getParsedFieldFromSelect();
-
-        $areas_administra_contrato = $this->getDoctrine()
-            ->getRepository(NomArea::class)
-            ->getParsedFieldFromSelect();
-
-        $anno_actual = date('Y');
-        $cantidad_de_contratos_del_anno_actual = $this->getDoctrine()
-            ->getRepository(Contrato::class)
-            ->getCantidadContratosPorAnno($anno_actual);
-
-        $contrato = new Contrato();
-
-        $contratoComiteContratacion = $this->getDoctrine()->getRepository(ContratoComiteContratacion::class)->find($id);        $contrato = new Contrato();
-        $contrato->setProveedor($contratoComiteContratacion->getProveedor());
-        $contrato->setTipoDeServicio($contratoComiteContratacion->getTipoDeServicio());
-        $contrato->setObjeto($contratoComiteContratacion->getObjeto());
-        $contrato->setValorContratoInicialCup($contratoComiteContratacion->getValorContratoInicialCup());
-        $contrato->setValorContratoInicialCuc($contratoComiteContratacion->getValorContratoInicialCuc());
-        $contrato->setValorContratoTotalCup($contrato->getValorContratoInicialCup());
-        $contrato->setValorContratoTotalCuc($contrato->getValorContratoInicialCuc());
-        $contrato->setEjecucionContratoCup(0);
-        $contrato->setEjecucionContratoCuc(0);
-        $contrato->setSaldoCup($contrato->getValorContratoInicialCup());
-        $contrato->setSaldoCuc($contrato->getValorContratoInicialCuc());
-
-        $contrato->setAreaAdministraContrato($contratoComiteContratacion->getAreaAdministraContrato());
-
-        $form = $this->createForm(ContratoType::class, $contrato,[
-            "ultimos_annos_hasta_actual"=>$ultimos_annos_hasta_actual,
-            'proveedores'=>$proveedores,
-            'tipos_de_servicios'=>$tipos_de_servicios,
-            'tipos_de_persona'=>$tipos_de_persona,
-            'bancos'=>$bancos,
-            'areas_administra_contrato'=>$areas_administra_contrato,
-        ],
-            array('action' => $this->generateUrl('contrato_comite_contratacion_aprobar',array('id_contrato_comite_contratacion'=>$id)))
-        );
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $contratos_encontrados = $this->getDoctrine()
-                ->getRepository(Contrato::class)
-                ->getContratoPorNumeroYAnno($contrato->getNumero(), $contrato->getAnno());
-            if (count($contratos_encontrados)==0){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($contrato);
-                $em->remove($contratoComiteContratacion);
-                $em->flush();
-                $this->addFlash(
-                    'notice',
-                    'Los datos fueron guardados satisfactoriamente'
-                );
-                return $this->redirectToRoute('contrato_comite_contratacion_index');
-            }else{
-                $this->addFlash(
-                    'notice',
-                    'Debe especificar un número diferente al contrato'
-                );
-            }
-        }
-
-        return $this->render('suplemento/new.html.twig', [
-            'anno_actual'=>$anno_actual,
-            'cantidad_de_contratos_del_anno_actual'=>$cantidad_de_contratos_del_anno_actual,
-            'contrato' => $contrato,
-            'form' => $form->createView(),
-        ]);*/
-
-        /****************************************************/
+    public function aprobar(int $id, Request $request, RegistryInterface $doctrine):Response{
         $suplementoComiteContratacion = $this->getDoctrine()
             ->getRepository(SuplementoComiteContratacion::class)
             ->find($id);
@@ -329,10 +237,10 @@ class SuplementoComiteContratacionController extends Controller
                 $em->persist($suplemento);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUPYSaldoCUP($suplemento->getContrato(), $suplemento->getValorSuplementoCup(),true);
+                    ->updateValorTotalCUPYSaldoCUP($suplemento->getContrato(), $suplemento->getValorSuplementoCup(),true, $doctrine);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc(),true);
+                    ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc(),true, $doctrine);
 
                 $em->flush();
 
@@ -344,9 +252,16 @@ class SuplementoComiteContratacionController extends Controller
                     ->getSumatoriaSaldoCuc($id_contrato);
 
                 if ($valor_ejecutado_facturas_cup == $contrato->getValorContratoTotalCup() && $valor_ejecutado_facturas_cuc == $contrato->getValorContratoTotalCuc()){
+                    $contrato->setMotivoEstado("Por poseer un saldo insuficiente");
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)
                         ->updateEstado($id_contrato, false);
+
+                        $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
+                        $this->addFlash(
+                        'notice',
+                        $confNotificacionExtension->enviarCorreoNotificacion('saldo_insuficiente', $contrato)
+                    );
                 }else{
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)

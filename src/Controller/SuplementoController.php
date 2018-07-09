@@ -58,10 +58,10 @@ class SuplementoController extends Controller
                 $em->persist($suplemento);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUPYSaldoCUP($suplemento->getContrato(), $suplemento->getValorSuplementoCup(),true);
+                    ->updateValorTotalCUPYSaldoCUP($suplemento->getContrato(), $suplemento->getValorSuplementoCup(),true, $doctrine);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc(),true);
+                    ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc(),true, $doctrine);
 
                 $em->flush();
 
@@ -146,13 +146,13 @@ class SuplementoController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUPYSaldoCUP($id_contrato, $valor_anterior_suplemento_cup, false);
+                ->updateValorTotalCUPYSaldoCUP($id_contrato, $valor_anterior_suplemento_cup, false, $doctrine);
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUCYSaldoCUC($id_contrato, $valor_anterior_suplemento_cuc, false);
+                ->updateValorTotalCUCYSaldoCUC($id_contrato, $valor_anterior_suplemento_cuc, false, $doctrine);
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUPYSaldoCUP($id_contrato, $suplemento->getValorSuplementoCup(), true);
+                ->updateValorTotalCUPYSaldoCUP($id_contrato, $suplemento->getValorSuplementoCup(), true, $doctrine);
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUCYSaldoCUC($id_contrato, $suplemento->getValorSuplementoCuc(), true);
+                ->updateValorTotalCUCYSaldoCUC($id_contrato, $suplemento->getValorSuplementoCuc(), true, $doctrine);
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -202,9 +202,9 @@ class SuplementoController extends Controller
     {
         if ($this->isCsrfTokenValid('delete'.$suplemento->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUPYSaldoCUP($id_contrato, $suplemento->getValorSuplementoCup(), false);
+                ->updateValorTotalCUPYSaldoCUP($id_contrato, $suplemento->getValorSuplementoCup(), false, $doctrine);
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUCYSaldoCUC($id_contrato, $suplemento->getValorSuplementoCuc(), false);
+                ->updateValorTotalCUCYSaldoCUC($id_contrato, $suplemento->getValorSuplementoCuc(), false, $doctrine);
             $em = $this->getDoctrine()->getManager();
             $em->remove($suplemento);
             $em->flush();

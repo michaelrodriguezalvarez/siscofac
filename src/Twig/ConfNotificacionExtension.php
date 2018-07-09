@@ -22,7 +22,7 @@ class ConfNotificacionExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getConfNotificacion', [$this, 'getConfNotificacion']),
-            new TwigFunction('enviarCorreo', [$this, 'enviarCorreo']),
+            new TwigFunction('enviarCorreoSimple', [$this, 'enviarCorreoSimple']),
         ];
     }
 
@@ -61,7 +61,10 @@ class ConfNotificacionExtension extends AbstractExtension
             $saldo_minimo = 0.0;
 
             switch ($tipo){
-                case 'saldo_insuficiente' || 'definido_por_usuario':
+                case 'saldo_insuficiente':
+                    $texto = $this->configuracion->getCorreoTextoContratoInhabilitado();
+                    break;
+                case 'definido_por_usuario':
                     $texto = $this->configuracion->getCorreoTextoContratoInhabilitado();
                     break;
                 case 'saldo_minimo':
@@ -110,5 +113,30 @@ class ConfNotificacionExtension extends AbstractExtension
         $texto = str_replace("--tiempo--",$tiempo,$texto);
         $texto = str_replace("--fecha--",$contrato->getFechaTerminacion()->format('d-m-Y'),$texto);
         return $texto;
+    }
+    public function enviarCorreoSimple(array $destinatarios, string $texto):string {
+        try{
+            $this->configuracion = $this->getConfNotificacion();
+            $transport = (new \Swift_SmtpTransport($this->configuracion->getCorreoServidor(), $this->configuracion->getCorreoPuerto()))
+                ->setUsername($this->configuracion->getCorreoDireccion())
+                ->setPassword($this->configuracion->getCorreoClave())
+            ;
+            $this->swiftMailer = new \Swift_Mailer($transport);
+
+            $mensaje = (new \Swift_Message($this->configuracion->getCorreoAsunto()))
+                ->setFrom([$this->configuracion->getCorreoDireccion() => $this->configuracion->getCorreoNombre()])
+                ->setTo($destinatarios)
+                ->setBody($texto);
+            ;
+
+            $this->swiftMailer->send($mensaje);
+
+        }catch(\Swift_TransportException $swfex){
+            return "Error: Corrija la configuración para el correo";
+        }catch(\Exception $ex){
+            return $ex->getMessage();
+        }
+
+        return "Notificación Enviada Satisfactoriamente";
     }
 }

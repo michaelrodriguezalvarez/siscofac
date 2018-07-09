@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Twig\ConfNotificacionExtension;
 
 /**
  * @Route("/contrato/comite/contratacion")
@@ -211,7 +213,7 @@ class ContratoComiteContratacionController extends Controller
     /**
      * @Route("/aprobar/{id_contrato_comite_contratacion}", name="contrato_comite_contratacion_aprobar", methods="GET|POST")
      */
-    public function aprobar(int $id_contrato_comite_contratacion, Request $request):Response{
+    public function aprobar(int $id_contrato_comite_contratacion, Request $request, RegistryInterface $doctrine):Response{
 
         $session = $request->getSession();
         $session->set('escenario','contrato_new');
@@ -289,6 +291,15 @@ class ContratoComiteContratacionController extends Controller
                     'notice',
                     'Los datos fueron guardados satisfactoriamente'
                 );
+
+                if($contrato->getEstado()==0){
+                    $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
+                    $this->addFlash(
+                        'notice',
+                        $confNotificacionExtension->enviarCorreoNotificacion('definido_por_usuario', $contrato)
+                    );
+                }
+
                 return $this->redirectToRoute('contrato_comite_contratacion_index');
             }else{
                 $this->addFlash(

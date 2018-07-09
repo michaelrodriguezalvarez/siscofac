@@ -117,11 +117,11 @@ class FacturaController extends Controller
 
                            $this->getDoctrine()
                                ->getRepository(Contrato::class)
-                               ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),true);
+                               ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),true, $doctrine);
 
                            $this->getDoctrine()
                                ->getRepository(Contrato::class)
-                               ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),true);
+                               ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),true, $doctrine);
 
                        $em->flush();
 
@@ -274,19 +274,19 @@ class FacturaController extends Controller
 
                     //if ($pagado_anteriormente == 1) {
                         $this->getDoctrine()->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUPYSaldoCUP($id_contrato, $valor_anterior_factura_cup, false);
+                            ->updateEjecucionContratoCUPYSaldoCUP($id_contrato, $valor_anterior_factura_cup, false, $doctrine);
                         $this->getDoctrine()->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUCYSaldoCUC($id_contrato, $valor_anterior_factura_cuc, false);
+                            ->updateEjecucionContratoCUCYSaldoCUC($id_contrato, $valor_anterior_factura_cuc, false, $doctrine);
                     //}
 
                     //if ($pagado == 1) {
                         $this->getDoctrine()
                             ->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(), true);
+                            ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(), true, $doctrine);
 
                         $this->getDoctrine()
                             ->getRepository(Contrato::class)
-                            ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(), true);
+                            ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(), true, $doctrine);
                     //}
 
                     $this->getDoctrine()->getManager()->flush();
@@ -344,11 +344,11 @@ class FacturaController extends Controller
                 //if($factura->getEstado()==1){
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)
-                        ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),false);
+                        ->updateEjecucionContratoCUPYSaldoCUP($factura->getContrato(), $factura->getValorCup(),false, $doctrine);
 
                     $this->getDoctrine()
                         ->getRepository(Contrato::class)
-                        ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),false);
+                        ->updateEjecucionContratoCUCYSaldoCUC($factura->getContrato(), $factura->getValorCuc(),false, $doctrine);
                 //    }
             $em->remove($factura);
             $em->flush();
