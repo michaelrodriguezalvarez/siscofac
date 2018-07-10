@@ -1,13 +1,42 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    #providers:
+    #    in_memory: { memory: ~ }
+
+    encoders:
+    #    Symfony\Component\Security\Core\User\User: plaintext
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+
     providers:
-        in_memory: { memory: ~ }
+        siscofac_db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            #anonymous: true
+
+        #default:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: /login
+                check_path: /login
+                default_target_path: /principal
+                csrf_token_generator: security.csrf.token_manager
+                csrf_parameter: _csrf_token
+                csrf_token_id: siscofac_authenticate
+            logout:
+                path:   /logout
+                target: /login  
+
+            provider: siscofac_db_provider
 
             # activate different ways to authenticate
 
@@ -22,3 +51,6 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /user/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }

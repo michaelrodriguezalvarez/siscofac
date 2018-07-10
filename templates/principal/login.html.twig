@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h5>Entrar al sistema</h5>
+    {% if error %}
+        <div class="alert-info">
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        </div>
+    {% endif %}
+
+    <form action="{{ path('login') }}" method="post" role="form">
+        <div class="form-group">
+            <label for="username">Usuario</label>
+            <input type="text" class="form-control" id="Username" placeholder="Especifique el usuario" name="_username" value="{{ lastUsername }}"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Clave</label>
+            <input type="password" class="form-control" id="password" placeholder="Especifique la clave" name="_password">
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('siscofac_authenticate') }}">
+        <button type="submit" class="btn btn-sm btn-primary">Entrar</button>
+    </form>
+{% endblock %}
