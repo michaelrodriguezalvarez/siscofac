@@ -58,10 +58,10 @@ class SuplementoController extends Controller
                 $em->persist($suplemento);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUPYSaldoCUP($suplemento->getContrato(), $suplemento->getValorSuplementoCup(),true);
+                    ->updateValorTotalCUPYSaldoCUP($contrato, $suplemento->getValorSuplementoCup(),true);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc(),true);
+                    ->updateValorTotalCUCYSaldoCUC($contrato, $suplemento->getValorSuplementoCuc(),true);
 
                 $em->flush();
 
@@ -87,10 +87,6 @@ class SuplementoController extends Controller
                         ->getRepository(Contrato::class)
                         ->updateEstado($id_contrato, "", true);
                 }
-
-                $this->getDoctrine()
-                    ->getRepository(Contrato::class)
-                    ->chequearSaldo($id_contrato, $doctrine);
 
                 $this->addFlash(
                     'notice',
@@ -148,13 +144,13 @@ class SuplementoController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUPYSaldoCUP($id_contrato, $valor_anterior_suplemento_cup, false);
+                ->updateValorTotalCUPYSaldoCUP($contrato, $valor_anterior_suplemento_cup, false);
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUCYSaldoCUC($id_contrato, $valor_anterior_suplemento_cuc, false);
+                ->updateValorTotalCUCYSaldoCUC($contrato, $valor_anterior_suplemento_cuc, false);
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUPYSaldoCUP($id_contrato, $suplemento->getValorSuplementoCup(), true);
+                ->updateValorTotalCUPYSaldoCUP($contrato, $suplemento->getValorSuplementoCup(), true);
             $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUCYSaldoCUC($id_contrato, $suplemento->getValorSuplementoCuc(), true);
+                ->updateValorTotalCUCYSaldoCUC($contrato, $suplemento->getValorSuplementoCuc(), true);
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -181,10 +177,6 @@ class SuplementoController extends Controller
                     ->updateEstado($id_contrato, "", true);
             }
 
-            $this->getDoctrine()
-                ->getRepository(Contrato::class)
-                ->chequearSaldo($id_contrato, $doctrine);
-
             $this->addFlash(
                 'notice',
                 'Los datos fueron guardados satisfactoriamente'
@@ -207,11 +199,13 @@ class SuplementoController extends Controller
     public function delete(Request $request, Suplemento $suplemento, int $id_contrato, RegistryInterface $doctrine): Response
     {
         if ($this->isCsrfTokenValid('delete'.$suplemento->getId(), $request->request->get('_token'))) {
-            $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUPYSaldoCUP($id_contrato, $suplemento->getValorSuplementoCup(), false);
-            $this->getDoctrine()->getRepository(Contrato::class)
-                ->updateValorTotalCUCYSaldoCUC($id_contrato, $suplemento->getValorSuplementoCuc(), false);
             $em = $this->getDoctrine()->getManager();
+            $contrato = $em->getRepository(Contrato::class)->find($id_contrato);
+            $this->getDoctrine()->getRepository(Contrato::class)
+                ->updateValorTotalCUPYSaldoCUP($contrato, $suplemento->getValorSuplementoCup(), false);
+            $this->getDoctrine()->getRepository(Contrato::class)
+                ->updateValorTotalCUCYSaldoCUC($contrato, $suplemento->getValorSuplementoCuc(), false);
+
             $em->remove($suplemento);
             $em->flush();
 
@@ -240,10 +234,6 @@ class SuplementoController extends Controller
                     ->getRepository(Contrato::class)
                     ->updateEstado($id_contrato, "", true);
             }
-
-            $this->getDoctrine()
-                ->getRepository(Contrato::class)
-                ->chequearSaldo($id_contrato, $doctrine);
         }
 
         return $this->redirectToRoute('suplemento_index',array('id_contrato'=>$id_contrato));

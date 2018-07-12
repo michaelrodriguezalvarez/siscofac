@@ -85,27 +85,33 @@ class ContratoRepository extends EntityRepository
         return array_combine($resultado_nombres,$resultado_ids);
     }
 
-    public function updateValorTotalCUPYSaldoCUP(int $id_contrato, float $monto, bool $incremento):int{
-        $signo = $incremento == true ? '+' : '-';
-        $consulta = $this->getEntityManager()->createQueryBuilder()
-            ->update('App\Entity\Contrato','con')
-            ->set('con.valorContratoTotalCup', 'con.valorContratoTotalCup '.$signo.' :monto')
-            ->set('con.saldoCup', 'con.saldoCup '.$signo.' :monto')
-            ->where('con.id = :id_contrato')
-            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
-            ->getQuery();
-        return $consulta->execute();
+    public function updateValorTotalCUPYSaldoCUP(Contrato $contrato, float $monto, bool $incremento):int{
+        try{
+            if ($incremento==true){
+                $contrato->setValorContratoTotalCup($contrato->getValorContratoTotalCup() + $monto);
+                $contrato->setSaldoCup($contrato->getSaldoCup() + $monto);
+            }else{
+                $contrato->setValorContratoTotalCup($contrato->getValorContratoTotalCup() - $monto);
+                $contrato->setSaldoCup($contrato->getSaldoCup() - $monto);
+            }
+            return 1;
+        }catch (\Exception $e){
+            return 0;
+        }
     }
-    public function updateValorTotalCUCYSaldoCUC(int $id_contrato, float $monto, bool $incremento):int{
-        $signo = $incremento == true ? '+' : '-';
-        $consulta = $this->getEntityManager()->createQueryBuilder()
-            ->update('App\Entity\Contrato','con')
-            ->set('con.valorContratoTotalCuc', 'con.valorContratoTotalCuc '.$signo.' :monto')
-            ->set('con.saldoCuc', 'con.saldoCuc '.$signo.' :monto')
-            ->where('con.id = :id_contrato')
-            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
-            ->getQuery();
-        return $consulta->execute();;
+    public function updateValorTotalCUCYSaldoCUC(Contrato $contrato, float $monto, bool $incremento):int{
+        try{
+            if ($incremento==true){
+                $contrato->setValorContratoTotalCuc($contrato->getValorContratoTotalCuc() + $monto);
+                $contrato->setSaldoCuc($contrato->getSaldoCuc() + $monto);
+            }else{
+                $contrato->setValorContratoTotalCuc($contrato->getValorContratoTotalCuc() - $monto);
+                $contrato->setSaldoCuc($contrato->getSaldoCuc() - $monto);
+            }
+            return 1;
+        }catch (\Exception $e){
+            return 0;
+        }
     }
     public function getParsedFiltradosPorNumeroAnnoProveedor(int $numero,int $anno,string $proveedor,string $tipo_de_servicio):array {
 
@@ -215,29 +221,33 @@ class ContratoRepository extends EntityRepository
         return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
     }
 
-    public function updateEjecucionContratoCUPYSaldoCUP(int $id_contrato, float $monto, bool $incremento):int{
-        $signo_ejecucion = $incremento == true ? '+' : '-';
-        $signo_saldo = $incremento == false ? '+' : '-';
-        $consulta = $this->getEntityManager()->createQueryBuilder()
-            ->update('App\Entity\Contrato','con')
-            ->set('con.ejecucionContratoCup', 'con.ejecucionContratoCup '.$signo_ejecucion.' :monto')
-            ->set('con.saldoCup', 'con.saldoCup '.$signo_saldo.' :monto')
-            ->where('con.id = :id_contrato')
-            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
-            ->getQuery();
-        return $consulta->execute();;
+    public function updateEjecucionContratoCUPYSaldoCUP(Contrato $contrato, float $monto, bool $incremento):int{
+        try{
+            if ($incremento==true){
+                $contrato->setEjecucionContratoCup($contrato->getEjecucionContratoCup() + $monto);
+                $contrato->setSaldoCup($contrato->getSaldoCup() - $monto);
+            }else{
+                $contrato->setEjecucionContratoCup($contrato->getEjecucionContratoCup() - $monto);
+                $contrato->setSaldoCup($contrato->getSaldoCup() + $monto);
+            }
+            return 1;
+        }catch (\Exception $e){
+            return 0;
+        }
     }
-    public function updateEjecucionContratoCUCYSaldoCUC(int $id_contrato, float $monto, bool $incremento):int{
-        $signo_ejecucion = $incremento == true ? '+' : '-';
-        $signo_saldo = $incremento == false ? '+' : '-';
-        $consulta = $this->getEntityManager()->createQueryBuilder()
-            ->update('App\Entity\Contrato','con')
-            ->set('con.ejecucionContratoCuc', 'con.ejecucionContratoCuc '.$signo_ejecucion.' :monto')
-            ->set('con.saldoCuc', 'con.saldoCuc '.$signo_saldo.' :monto')
-            ->where('con.id = :id_contrato')
-            ->setParameters(array('id_contrato'=>$id_contrato,'monto'=>$monto))
-            ->getQuery();
-        return $consulta->execute();
+    public function updateEjecucionContratoCUCYSaldoCUC(Contrato $contrato, float $monto, bool $incremento):int{
+        try{
+            if ($incremento==true){
+                $contrato->setEjecucionContratoCuc($contrato->getEjecucionContratoCuc() + $monto);
+                $contrato->setSaldoCuc($contrato->getSaldoCuc() - $monto);
+            }else{
+                $contrato->setEjecucionContratoCuc($contrato->getEjecucionContratoCuc() - $monto);
+                $contrato->setSaldoCuc($contrato->getSaldoCuc() + $monto);
+            }
+            return 1;
+        }catch (\Exception $e){
+            return 0;
+        }
     }
 
     public function updateEstado(int $id_contrato, string $motivo, bool $activo):int
@@ -323,22 +333,6 @@ class ContratoRepository extends EntityRepository
             ->innerJoin('App\Entity\NomArea','are',Expr\Join::WITH,'con.areaAdministraContrato = are.id');
         $consulta->where($consulta->expr()->eq('con.id',$id));
         return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
-    }
-
-    public function chequearSaldo(int $id_contrato, RegistryInterface $doctrine){
-        $contrato = $this->find($id_contrato);
-        $confNotificacionExtension = new ConfNotificacionExtension($doctrine);
-        $configuracion = $confNotificacionExtension->getConfNotificacion();
-        $insuficiente_cup = $contrato->getSaldoCup() <= $configuracion->getSaldoMinimoNotificacionCup() ? true : false ;
-        $insuficiente_cuc = $contrato->getSaldoCuc() <= $configuracion->getSaldoMinimoNotificacionCuc() ? true : false ;
-
-        if($insuficiente_cup){
-            $confNotificacionExtension->enviarCorreoNotificacion('saldo_minimo', $contrato, "CUP");
-        }
-
-        if($insuficiente_cuc){
-            $confNotificacionExtension->enviarCorreoNotificacion('saldo_minimo', $contrato, "CUC");
-        }
     }
 
     public function getContratosLimiteFechaTerminacion(int $tiempo_limite):array {

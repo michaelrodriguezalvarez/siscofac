@@ -237,10 +237,10 @@ class SuplementoComiteContratacionController extends Controller
                 $em->persist($suplemento);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUPYSaldoCUP($suplemento->getContrato(), $suplemento->getValorSuplementoCup(),true);
+                    ->updateValorTotalCUPYSaldoCUP($contrato, $suplemento->getValorSuplementoCup(),true);
                 $this->getDoctrine()
                     ->getRepository(Contrato::class)
-                    ->updateValorTotalCUCYSaldoCUC($suplemento->getContrato(), $suplemento->getValorSuplementoCuc(),true);
+                    ->updateValorTotalCUCYSaldoCUC($contrato, $suplemento->getValorSuplementoCuc(),true);
 
                 $em->flush();
 
@@ -271,10 +271,6 @@ class SuplementoComiteContratacionController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($suplementoComiteContratacion);
                 $em->flush();
-
-                $this->getDoctrine()
-                    ->getRepository(Contrato::class)
-                    ->chequearSaldo($id_contrato, $doctrine);
 
                 $this->addFlash(
                     'notice',
