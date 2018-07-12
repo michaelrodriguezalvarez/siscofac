@@ -2,14 +2,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal_ayuda_inicioLabel">{% trans %}Ayuda{% endtrans %}</h5>
+                <h5 class="modal-title" id="modal_ayuda_inicioLabel">{% trans %}Consejos{% endtrans %}</h5>
                 <button id="btn_cerrar_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 {{ render(controller(
-                    'App\\Controller\\PrincipalController::new_modal'
+                    'App\\Controller\\PrincipalController::ayuda_inicio'
                 )) }}
             </div>
         </div>

@@ -28,6 +28,15 @@ class PrincipalController extends Controller
 
     public function ayuda_inicio()
     {
-        return new Response("<p>Hola mundo</p>");
+        //array("Titulo"=>"Contenido")
+        $consejos = array(
+            array("Titulo"=>"Eliminar Contrato", "Contenido"=>"Los contratos una vez creados no pueden ser eliminados"),
+            array("Titulo"=>"Eliminar Factura", "Contenido"=>"Las facturas una vez creadas no pueden ser eliminadas"),
+        );
+        $seleccion = mt_rand(0, count($consejos)-1);
+        return new Response(
+            "<h4>".$consejos[$seleccion]["Titulo"]."</h4>".
+            "<p>".$consejos[$seleccion]["Contenido"]."</p>"
+        );
     }
 }

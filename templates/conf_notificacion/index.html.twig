@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
 {% block title %}{% trans %}Configurar{% endtrans %} {% trans %}Notificacion{% endtrans %}{% endblock %}
 
+{% block  header %}
+    {% trans %}Configurar{% endtrans %} {% trans %}Notificacion{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Configuraciones{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Configurar{% endtrans %} {% trans %}Notificacion{% endtrans %}</div>
+{% endblock %}
+
 {% block body %}
-    <div class="container small">
-        <h5>{% trans %}Configurar{% endtrans %} {% trans %}Notificacion{% endtrans %}</h5>
-        {% include 'conf_notificacion/ventana_modal.html.twig' %}
+    {% include 'conf_notificacion/ventana_modal.html.twig' %}
+    <div class="row">
+    <div class="form-control">
         {% for message in app.flashes('notice') %}
             <div class="alert-info">
                 {{ message |trans}}
@@ -18,6 +27,7 @@
         <br>
         <button class="btn btn-sm btn-success">{{ button_label|default('Guardar')|trans}}</button>
         {{ form_end(form) }}
+    </div>
     </div>
 
 {% endblock %}

@@ -5,15 +5,23 @@
 {% block  header %}
     {% trans %}Pantalla de Inicio{% endtrans %}
 {% endblock %}
+
 {% block  breadscrum %}{% endblock %}
 
 {% block body %}
+    {% include 'principal/ventana_modal.html.twig' %}
+    <div class="alert-info col-sm-12 col-lg-12">
+        <p id="p_purgar_contratos"></p>
+    </div>
     <div class="row">
         <div class="col-sm-12 col-lg-4 form-control">
             <label>Contratos</label><br>
             <a class="btn-sm btn-primary" href="{{ path('contrato_new') }}">Nuevo Contrato</a>
             <br><br>
             <a class="btn-sm btn-primary" href="{{ path('contrato_index') }}">Listar Contratos</a>
+            <br><br>
+            <button id="btn_purgar_contratos" class="btn btn-sm btn-primary" type="button">Purgar</button>
+            <input id="_token_contrato_purgar" type="hidden" value="{{ csrf_token('contrato_purgar') }}">
             <br><br>
         </div>
         <div class="col-sm-12 col-lg-4 form-control">
@@ -26,11 +34,57 @@
         <br><br>
         <div class="col-sm-12 col-lg-4 form-control">
             <label>Ayuda</label><br>
-            <a class="btn-sm btn-primary" href="#">Consejos</a>
             <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_ayuda_inicio">
                 {% trans %}Consejos{% endtrans %}
             </button>
             <br><br>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+
+            $('#p_purgar_contratos').hide();
+            $('#btn_purgar_contratos').prop('disabled',false);
+            $("#btn_purgar_contratos").text("Purgar");
+
+            $('#btn_purgar_contratos').click(function () {
+
+                $('#p_purgar_contratos').hide();
+                $('#btn_purgar_contratos').prop('disabled',true);
+                $("#btn_purgar_contratos").text("Purgando");
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('contrato_purgar') }}",
+                    data: {
+                        _token_contrato_purgar: $('#_token_contrato_purgar').val(),
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        var respuesta = data;
+
+                        if(respuesta == "No existen contratos obsoletos" || respuesta == "Fueron purgados los contratos satisfactoriamente"){
+                            $("#btn_purgar_contratos").text("Purgado");
+                        }else{
+                            $('#btn_purgar_contratos').prop('disabled',false);
+                            $("#btn_purgar_contratos").text("Purgar");
+                        }
+                        $('#p_purgar_contratos').show();
+                        $("#p_purgar_contratos").text(respuesta);
+                    },
+                    error: function() {
+                        alert("Error al procesar");
+                    },
+                    complete: function() {
+                        $('#btn_form_contrato_buscar_modal').prop('disabled',false);
+                        $('#label_indicador_btn_form_contrato_buscar_modal').text("");
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

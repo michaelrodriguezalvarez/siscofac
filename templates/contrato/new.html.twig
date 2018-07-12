@@ -1,12 +1,29 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
-{% block title %}{% trans %}Adicionar{% endtrans %} {% trans %}Nuevo{% endtrans %} {% trans %}Contrato{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Adicionar{% endtrans %} {% trans %}Contrato{% endtrans %}{% endblock %}
+
+{% block  header %}
+    {% trans %}Adicionar{% endtrans %} {% trans %}Contrato{% endtrans %}
+    <span class="text-info">{% trans %}Anno{% endtrans %}  {{ anno_actual }} ({{ cantidad_de_contratos_del_anno_actual }})</span>
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Contrato{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Adicionar{% endtrans %} {% trans %}Contrato{% endtrans %}</div>
+{% endblock %}
+
 
 {% block body %}
-    <div class="container small">
-        <h5>{% trans %}Adicionar{% endtrans %} {% trans %}Nuevo{% endtrans %} {% trans %}Contrato{% endtrans %}</h5>
+    <div class="row">
+    <div class="form-control">
 
-        {% include 'contrato/botones_adicionar.html.twig' %}
+        <div class="container">
+             <div class="row">
+                {% include 'contrato/botones_adicionar.html.twig' %}
+                {% include 'contrato/botones_contrato.html.twig' %}
+             </div>
+        </div>
+
         {% include 'contrato/ventana_modal.html.twig' %}
 
         {% for message in app.flashes('notice') %}
@@ -20,7 +37,7 @@
         
         {% include 'contrato/formulario.html.twig' %}
 
-        {#{ include('contrato/_form.html.twig') }#}
+    </div>
     </div>
 
 

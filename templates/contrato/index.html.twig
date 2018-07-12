@@ -1,13 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
-{% block title %}{% trans %}Listar{% endtrans %} {% trans %}Contratos{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Listar{% endtrans %} {% trans %}Contrato{% endtrans %}{% endblock %}
+
+{% block  header %}
+    {% trans %}Listar{% endtrans %} {% trans %}Contrato{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Contrato{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Listar{% endtrans %} {% trans %}Contrato{% endtrans %}</div>
+{% endblock %}
+
 
 {% block body %}
+    <div class="row">
+    <div class="form-control">
 
- <div class="container small">
-
-    <h5>{% trans %}Listar{% endtrans %} {% trans %}Contratos{% endtrans %}</h5>
-    
         {% include 'contrato/botones_contrato.html.twig' %}
         {% include 'contrato/ventana_modal.html.twig' %}
 
@@ -103,6 +111,7 @@
         </tbody>
     </table>
     {% endif %}
+    </div>
  </div>
 {% endblock %}
 

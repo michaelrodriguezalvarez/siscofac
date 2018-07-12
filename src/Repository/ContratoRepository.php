@@ -265,28 +265,28 @@ class ContratoRepository extends EntityRepository
 
     public function removeContratoYDependecias($id_contrato):int
     {
+        $error = 0;
         $consulta = $this->getEntityManager()->createQueryBuilder()
             ->delete('App\Entity\Contrato','con')
             ->where('con.id = :id_contrato')
             ->setParameters(array('id_contrato'=>$id_contrato))
             ->getQuery();
-
         if ($consulta->execute() == 1){
+            $error = 1;
             $consulta = $this->getEntityManager()->createQueryBuilder()
                 ->delete('App\Entity\Factura','fac')
                 ->where('fac.contrato = :id_contrato')
                 ->setParameters(array('id_contrato'=>$id_contrato))
                 ->getQuery();
-            $consulta->execute();
+            $consulta->execute() == 1 ? $error = 1 : $error = 0;
             $consulta = $this->getEntityManager()->createQueryBuilder()
                 ->delete('App\Entity\Suplemento','sup')
                 ->where('sup.id = :id_contrato')
                 ->setParameters(array('id_contrato'=>$id_contrato))
                 ->getQuery();
-            $consulta->execute();
-            return 1;
+            $consulta->execute() == 1 ? $error = 1 : $error = 0;
         }
-        return 0;
+        return $error;
     }
 
     public function getCantidadDependencias(int $id_contrato):int
@@ -349,5 +349,19 @@ class ContratoRepository extends EntityRepository
             ->getQuery();
 
         return $qb->execute();
+    }
+
+    public function getContratosObsoletosPorCantidadAnnos(int $annos):array{
+        $fecha_hoy = new \DateTime();
+        $limite_superior = date_create($fecha_hoy->format('Y').'-'.$fecha_hoy->format('m').'-'.$fecha_hoy->format('d'));
+        date_sub($limite_superior, date_interval_create_from_date_string($annos.' years'));
+        $limite_superior = date_format($limite_superior, '\'Y-m-d\'');
+
+        $qb = $this->createQueryBuilder('c')
+            ->andWhere('c.fechaInicio <= '.$limite_superior)
+            ->getQuery();
+
+        return $qb->execute();
+
     }
 }

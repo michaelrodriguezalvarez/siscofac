@@ -30,7 +30,9 @@ class ContratoController extends Controller
      * @Route("/index", name="contrato_index", methods="GET")
      */
     public function index(): Response
-    {
+    {    $contratos_para_listar1 = $this->getDoctrine()
+             ->getRepository(Contrato::class)
+            ->getContratosObsoletosPorCantidadAnnos(5);
         $contratos_para_listar = $this->getDoctrine()
             ->getRepository(Contrato::class)
             ->getDatosParaListar();
@@ -645,5 +647,35 @@ class ContratoController extends Controller
         }else{
             return new JsonResponse(array('encontrado'=>'No','id_contrato'=>0,'proveedor'=>""));
         }
+    }
+
+    /**
+     * @Route("/purgar", name="contrato_purgar", methods="POST")
+     */
+    public function purgar(Request $request):JsonResponse{
+        if ($request->isXMLHttpRequest()) {
+            $token = $request->request->get('_token_contrato_purgar');
+            if ($this->isCsrfTokenValid('contrato_purgar', $token)) {
+                $annos = 5;
+                try{
+                $contratos_obsoletos = $this->getDoctrine()
+                    ->getRepository(Contrato::class)
+                    ->getContratosObsoletosPorCantidadAnnos($annos);
+
+                if (count($contratos_obsoletos)==0){
+                    return new JsonResponse("No existen contratos obsoletos");
+                }
+                foreach($contratos_obsoletos as $contrato_obsoleto){
+                    $this->getDoctrine()->getRepository(Contrato::class)
+                        ->removeContratoYDependecias($contrato_obsoleto->getId());
+                }
+                    return new JsonResponse("Fueron purgados los contratos satisfactoriamente");
+                }
+                catch(\Exception $e){
+                    return new JsonResponse("Error: No fueron purgados los contratos");
+                }
+            }
+        }
+        return new JsonResponse("Error: No fueron purgados los contratos");
     }
 }
