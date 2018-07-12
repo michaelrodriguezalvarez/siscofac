@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityController extends Controller
+class AccesoController extends Controller
 {
     /**
      * @Route("/login", name="login")
@@ -27,7 +26,7 @@ class SecurityController extends Controller
             return $this->redirectToRoute('user_new');
         }
 
-        return $this->render('principal/login.html.twig', array(
+        return $this->render('acceso/login.html.twig', array(
             'error' => $error,
             'lastUsername' => $lastUsername
         ));
@@ -38,7 +37,7 @@ class SecurityController extends Controller
      */
     public function loginCheck()
     {
-        
+
     }
 
     /**
@@ -46,6 +45,6 @@ class SecurityController extends Controller
      */
     public function logout()
     {
-        
+
     }
 }
