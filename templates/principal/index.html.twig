@@ -1,12 +1,36 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
 {% block title %}Pantalla Principal{% endblock %}
 
+{% block  header %}
+    {% trans %}Pantalla de Inicio{% endtrans %}
+{% endblock %}
+{% block  breadscrum %}{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <h5>Pantalla Principal</h5>
-        <a class="btn-sm btn-primary" href="{{ path('contrato_new') }}">Nuevo Contrato</a>
-        <a class="btn-sm btn-success" href="{{ path('contrato_comite_contratacion_index') }}">Gestionar Contrato Comite Contratacion</a>
-        <a class="btn-sm btn-warning" href="{{ path('suplemento_comite_contratacion_index') }}">Gestionar Suplemento Comite Contratacion</a>
+    <div class="row">
+        <div class="col-sm-12 col-lg-4 form-control">
+            <label>Contratos</label><br>
+            <a class="btn-sm btn-primary" href="{{ path('contrato_new') }}">Nuevo Contrato</a>
+            <br><br>
+            <a class="btn-sm btn-primary" href="{{ path('contrato_index') }}">Listar Contratos</a>
+            <br><br>
+        </div>
+        <div class="col-sm-12 col-lg-4 form-control">
+            <label>Comite Contratacion</label><br>
+            <a class="btn-sm btn-primary" href="{{ path('contrato_comite_contratacion_index') }}">Contratos</a>
+            <br><br>
+            <a class="btn-sm btn-primary" href="{{ path('suplemento_comite_contratacion_index') }}">Suplementos</a>
+            <br><br>
+        </div>
+        <br><br>
+        <div class="col-sm-12 col-lg-4 form-control">
+            <label>Ayuda</label><br>
+            <a class="btn-sm btn-primary" href="#">Consejos</a>
+            <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_ayuda_inicio">
+                {% trans %}Consejos{% endtrans %}
+            </button>
+            <br><br>
+        </div>
     </div>
 {% endblock %}

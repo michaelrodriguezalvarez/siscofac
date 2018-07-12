@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!--The responsive viewport meta tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{{ getNombreAplicacion() }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/css/siscofac.css') }}" />
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<!-- Menu de navegacion-->
+{% include 'principal/menu_escritorio.html.twig' %}
+
+<div class="container">
+    <div class="row breadcrumb">
+        <div class="breadcrumb-item">Inicio</div>
+        {% block  breadscrum %}{% endblock %}
+    </div>
+    <div class="row form-text bg-white border-bottom">
+        <h4>{% block  header %}{% endblock %}</h4>
+    </div>
+    <div class="row bg-white">
+
+        <div class="separador_header_y_body container"></div>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+
+
+</div>
+
+<script src="{{ asset('build/manifest.js') }}"></script>
+<script src="{{ asset('build/vendor.js') }}"></script>
+<script src="{{ asset('build/app.js') }}"></script>
+{% block javascripts %}{% endblock %}
+
+</body>
+</html>

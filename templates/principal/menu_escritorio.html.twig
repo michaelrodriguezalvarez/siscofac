@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light form-control ">
+    <a id="menu-nombre-app" class="navbar-brand" href="#">{{ getNombreAplicacion() }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('principal') }}">{% trans %}Inicio{% endtrans %} <span class="sr-only">(current)</span></a>
+            </li>
+
+        {% if is_granted('ROLE_ADMINISTRADOR') %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% trans %}Configuraciones{% endtrans %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('conf_aplicacion') }}">{% trans %}Configurar Aplicacion{% endtrans %}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('conf_notificacion') }}">{% trans %}Configurar Notificacion{% endtrans %}</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% trans %}Nomencladores{% endtrans %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('nom_area_index') }}">{% trans %}Areas{% endtrans %}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('nom_provincia_index') }}">{% trans %}Provincia{% endtrans %}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('nom_proveedor_index') }}">{% trans %}Proveedores{% endtrans %}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('nom_banco_index') }}">{% trans %}Bancos{% endtrans %}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('nom_tipo_persona_index') }}">{% trans %}Tipo de Persona{% endtrans %}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('nom_tipo_servicio_index') }}">{% trans %}Tipo de Servicio{% endtrans %}</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </li>
+        {% endif %}
+
+            <li class="nav-item dropdown my-2 my-lg-0">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% trans %}Usuario{% endtrans %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <p class="text-center"><b>Hola {{ app.user.nombre }}</b></p>
+                        <a class="dropdown-item" href="{{ path('user_show', {id: app.user.id}) }}">{% trans %}Mis Datos{% endtrans %}</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('user_index') }}">{% trans %}Gestionar{% endtrans %}</a>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('logout') }}">{% trans %}Salir{% endtrans %}</a>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class PrincipalController extends Controller
 {
@@ -23,5 +24,10 @@ class PrincipalController extends Controller
     public function redireccion_inicio()
     {
         return $this->redirectToRoute('principal');
+    }
+
+    public function ayuda_inicio()
+    {
+        return new Response("<p>Hola mundo</p>");
     }
 }

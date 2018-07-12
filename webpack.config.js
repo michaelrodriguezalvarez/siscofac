@@ -11,7 +11,6 @@ Encore
     // .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-     .addEntry('app', ['./assets/js/app.js'])
      .addEntry('proveedor', ['./assets/js/proveedor.js'])
      .addEntry('contrato', ['./assets/js/contrato.js'])
      .addEntry('suplemento', ['./assets/js/suplemento.js'])
@@ -19,6 +18,7 @@ Encore
      .addEntry('contrato_comite_contratacion', ['./assets/js/contrato_comite_contratacion.js'])
      .addEntry('suplemento_comite_contratacion', ['./assets/js/suplemento_comite_contratacion.js'])
      //.addStyleEntry('css/app', './assets/css/*.css')
+     .addStyleEntry('css/siscofac', ['./assets/css/siscofac.css'])
      // this creates a 'vendor.js' file with jquery and the bootstrap JS module
      .createSharedEntry('vendor',[
          './vendor/components/jquery/jquery.js',
@@ -31,7 +31,7 @@ Encore
          //'./vendor/components/font-awesome/css/fontawesome-all.css'
      ])
     // uncomment if you use Sass/SCSS files
-    // .enableSassLoader()
+    //.enableSassLoader()
 
     // uncomment for legacy applications that require $/jQuery as a global variable
      .autoProvidejQuery()

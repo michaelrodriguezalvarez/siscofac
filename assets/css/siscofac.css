@@ -1,0 +1,10 @@
+body{
+    background-color: #d1ecf1;
+}
+.formulario_entrada{
+    width: 80%;
+    text-align: center;
+}
+.separador_header_y_body{
+    margin-bottom: 10px;
+}
