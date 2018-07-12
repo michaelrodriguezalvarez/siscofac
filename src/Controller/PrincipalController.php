@@ -16,4 +16,12 @@ class PrincipalController extends Controller
             'controller_name' => 'PrincipalController',
         ]);
     }
+
+    /**
+     * @Route("/", name="redireccion_inicio")
+     */
+    public function redireccion_inicio()
+    {
+        return $this->redirectToRoute('principal');
+    }
 }

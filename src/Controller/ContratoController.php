@@ -27,7 +27,7 @@ use App\Twig\ConfNotificacionExtension;
 class ContratoController extends Controller
 {
     /**
-     * @Route("/", name="contrato_index", methods="GET")
+     * @Route("/index", name="contrato_index", methods="GET")
      */
     public function index(): Response
     {
