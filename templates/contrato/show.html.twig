@@ -144,6 +144,10 @@
                 <td>{{ banco }}</td>
             </tr>
             <tr>
+                <th>{% trans %}Forma de pago{% endtrans %}</th>
+                <td>{{ contrato.formaDePago }}</td>
+            </tr>
+            <tr>
                 <th>{% trans %}Aprob contrato comite contratacion{% endtrans %}</th>
                 <td><span>{% trans %}Numero{% endtrans %} {{ contrato.numeroAprobContratoComiteContratacion }} - {% trans %}Fecha{% endtrans %} {{ contrato.fechaAprobContratoComiteContratacion ? contrato.fechaAprobContratoComiteContratacion | date('d/m/Y') : ''  }}</span></td>
             </tr>

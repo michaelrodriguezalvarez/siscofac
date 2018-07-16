@@ -7,7 +7,6 @@ $(document).ready(function(){
         {
             select: true,
             "columnDefs": [
-                {"targets": 0, "searchable": false, "orderable": false, "visible": false},
                 {"targets": 6, "searchable": false, "orderable": false, "visible": true}
             ],
             "language": {

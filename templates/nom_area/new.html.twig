@@ -1,11 +1,29 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
-{% block title %}New NomArea{% endblock %}
+{% block title %}{% trans %}Adicionar{% endtrans %} {% trans %}Area{% endtrans %}{% endblock %}
+
+{% block  header %}
+    {% trans %}Adicionar{% endtrans %} {% trans %}Area{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Nomencladores{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Nomenclador{% endtrans %} {% trans %}Area{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Adicionar{% endtrans %} {% trans %}Area{% endtrans %}</div>
+{% endblock %}
 
 {% block body %}
-    <h1>Create new NomArea</h1>
+    <div class="row">
+    <div class="form-control">
 
+    {% for message in app.flashes('notice') %}
+        <div class="alert-info">
+            {{ message |trans}}
+        </div>
+    {% endfor %}
+    <br>
     {{ include('nom_area/_form.html.twig') }}
 
-    <a href="{{ path('nom_area_index') }}">back to list</a>
+    </div>
+    </div>
 {% endblock %}

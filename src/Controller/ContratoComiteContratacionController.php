@@ -220,7 +220,7 @@ class ContratoComiteContratacionController extends Controller
 
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
+            ->getUltimosNAnnosHastaActual(5);
 
         $proveedores = $this->getDoctrine()
             ->getRepository(NomProveedor::class)
@@ -319,7 +319,7 @@ class ContratoComiteContratacionController extends Controller
 
     }
 
-        /**
+    /**
      * @Route("/denegar/{id}", name="contrato_comite_contratacion_denegar", methods="GET|POST")
      */
     public function denegar($id):Response{
@@ -340,5 +340,27 @@ class ContratoComiteContratacionController extends Controller
             );
         }
 
+    }
+
+    /**
+     * @Route("/exportar/excel", name="contrato_comite_contratacion_exportar_excel", methods="GET|POST")
+     */
+    public function exportar_excel(){
+
+        $contenido = $this->getDoctrine()
+            ->getRepository(ContratoComiteContratacion::class)
+            ->getContenidoParaExportarExcel();
+
+        return new Response(
+            $contenido,
+            200,
+            array(
+                'Content-Type' => 'application/vnd.ms-excel; name=\'excel\'; charset=utf-8',
+                'Content-Disposition' => 'attachment; filename="contratos_comite_contratacion.xls"',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
+                'Content-Length' => strlen($contenido)
+            )
+        );
     }
 }

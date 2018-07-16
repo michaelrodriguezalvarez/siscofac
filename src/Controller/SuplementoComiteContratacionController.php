@@ -317,4 +317,26 @@ class SuplementoComiteContratacionController extends Controller
         }
 
     }
+
+    /**
+     * @Route("/exportar/excel", name="suplemento_comite_contratacion_exportar_excel", methods="GET|POST")
+     */
+    public function exportar_excel(){
+
+        $contenido = $this->getDoctrine()
+            ->getRepository(SuplementoComiteContratacion::class)
+            ->getContenidoParaExportarExcel();
+
+        return new Response(
+            $contenido,
+            200,
+            array(
+                'Content-Type' => 'application/vnd.ms-excel; name=\'excel\'; charset=utf-8',
+                'Content-Disposition' => 'attachment; filename="suplementos_comite_contratacion.xls"',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
+                'Content-Length' => strlen($contenido)
+            )
+        );
+    }
 }

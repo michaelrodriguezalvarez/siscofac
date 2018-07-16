@@ -1,13 +1,42 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
-{% block title %}Edit NomArea{% endblock %}
+{% block stylesheets %}
+    <style type="text/css">
+        form {
+            display: inline-block;
+        }
+        .correccion_posicion_btn{
+            position: relative;
+            margin-left: -7em;
+            -moz-margin-start: -9em;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% trans %}Editar{% endtrans %} {% trans %}Area{% endtrans %}{% endblock %}
+
+{% block  header %}
+    {% trans %}Editar{% endtrans %} {% trans %}Area{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Nomencladores{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Nomenclador{% endtrans %} {% trans %}Area{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Editar{% endtrans %} {% trans %}Area{% endtrans %}</div>
+{% endblock %}
 
 {% block body %}
-    <h1>Edit NomArea</h1>
+    <div class="row">
+    <div class="form-control">
 
-    {{ include('nom_area/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('nom_area_index') }}">back to list</a>
-
-    {{ include('nom_area/_delete_form.html.twig') }}
+        {% for message in app.flashes('notice') %}
+            <div class="alert-info">
+                {{ message |trans}}
+            </div>
+        {% endfor %}
+        <br>
+    {{ include('nom_area/_form.html.twig') }}
+        {{ include('nom_area/_delete_form.html.twig') }}
+    </div>
+    </div>
 {% endblock %}

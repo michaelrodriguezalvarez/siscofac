@@ -30,9 +30,7 @@ class ContratoController extends Controller
      * @Route("/index", name="contrato_index", methods="GET")
      */
     public function index(): Response
-    {    $contratos_para_listar1 = $this->getDoctrine()
-             ->getRepository(Contrato::class)
-            ->getContratosObsoletosPorCantidadAnnos(5);
+    {    
         $contratos_para_listar = $this->getDoctrine()
             ->getRepository(Contrato::class)
             ->getDatosParaListar();
@@ -50,7 +48,7 @@ class ContratoController extends Controller
 
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
+            ->getUltimosNAnnosHastaActual(5);
 
         $proveedores = $this->getDoctrine()
             ->getRepository(NomProveedor::class)
@@ -171,7 +169,7 @@ class ContratoController extends Controller
 
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
+            ->getUltimosNAnnosHastaActual(5);
 
         $proveedores = $this->getDoctrine()
             ->getRepository(NomProveedor::class)
@@ -271,7 +269,7 @@ class ContratoController extends Controller
     {
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
+            ->getUltimosNAnnosHastaActual(5);
         $servicios = $this->getDoctrine()
             ->getRepository(NomTipoServicio::class)
             ->findAll();
@@ -363,7 +361,7 @@ class ContratoController extends Controller
     {
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
+            ->getUltimosNAnnosHastaActual(5);
         $servicios = $this->getDoctrine()
             ->getRepository(NomTipoServicio::class)
             ->findAll();
@@ -454,7 +452,7 @@ class ContratoController extends Controller
     {
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
+            ->getUltimosNAnnosHastaActual(5);
         $servicios = $this->getDoctrine()
             ->getRepository(NomTipoServicio::class)
             ->findAll();
@@ -546,7 +544,7 @@ class ContratoController extends Controller
     {
         $ultimos_annos_hasta_actual = $this->getDoctrine()
             ->getRepository(Contrato::class)
-            ->getUltimosNAnnosHastaActual(10);
+            ->getUltimosNAnnosHastaActual(5);
         $servicios = $this->getDoctrine()
             ->getRepository(NomTipoServicio::class)
             ->findAll();

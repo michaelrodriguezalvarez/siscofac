@@ -22,7 +22,9 @@ class ContratoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numero')
+            ->add('numero', TextType::class, array(
+                'attr'=>array('size'=>'5')
+            ))
             ->add('anno', ChoiceType::class, array(
                 'choices'  => $options["ultimos_annos_hasta_actual"],
             ))
@@ -70,49 +72,51 @@ class ContratoType extends AbstractType
                 )
             ))
             ->add('valorContratoInicialCup',MoneyType::class,array(
-                'currency'=>'CUP',                
-                //'data'=>0,
+                'currency'=>'CUP',
+                'attr'=>array('size'=>'10')
             ))
             ->add('valorContratoInicialCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                //'data'=>0,
+                'attr'=>array('size'=>'10')
+
             ))
             ->add('valorContratoTotalCup',MoneyType::class,array(
                 'currency'=>'CUP',
-                //'disabled'=>true,
-                //'data'=>0,
+                'attr'=>array('size'=>'10')
             ))
             ->add('valorContratoTotalCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                //'disabled'=>true,
-                //'data'=>0,
+                'attr'=>array('size'=>'10')
             ))
             ->add('ejecucionContratoCup',MoneyType::class,array(
                 'currency'=>'CUP',
-                //'disabled'=>true,
-                //'data'=>0,
+                'attr'=>array('size'=>'10')
             ))
             ->add('ejecucionContratoCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                //'disabled'=>true,
-                //'data'=>0,
+                'attr'=>array('size'=>'10')
             ))
             ->add('saldoCup',MoneyType::class,array(
                 'currency'=>'CUP',
-                //'disabled'=>true,
-                //'data'=>0,
+                'attr'=>array('size'=>'10'),
             ))
             ->add('saldoCuc',MoneyType::class,array(
                 'currency'=>'CUC',
-                //'disabled'=>true,
-                //'data'=>0,
+                'attr'=>array('size'=>'10')
             ))
             ->add('banco',ChoiceType::class, array(
                 'choices' => $options["bancos"],                
             ))
-            ->add('numeroAprobContratoComiteContratacion')
+            ->add('formaDePago', TextType::class, array(
+                'attr'=>array('size'=>'30')
+            ))
+            ->add('numeroAprobContratoComiteContratacion', TextType::class, array(
+                'attr'=>array('size'=>'5')
+            ))
             ->add('fechaAprobContratoComiteContratacion')
-            ->add('numeroAprobContratoComiteAdministracion')
+            ->add('numeroAprobContratoComiteAdministracion', TextType::class, array(
+                'attr'=>array('size'=>'5')
+            ))
             ->add('fechaAprobContratoComiteAdministracion')
             ->add('areaAdministraContrato',ChoiceType::class, array(
                 'choices'  => $options["areas_administra_contrato"],

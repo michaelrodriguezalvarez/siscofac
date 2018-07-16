@@ -1,7 +1,7 @@
 {{ form_start(form) }}
 
-<div>
-    <table class="table table-bordered">
+<div style="font-size: 75%;">
+    <table class="table-bordered">
         <tbody>
         <tr>
             <td colspan="1">{{ form_row(form.numero) }}</td>
@@ -25,10 +25,13 @@
                     </div>
                 {% endfor %}
             </td>
-            <td colspan="3">{{ form_row(form.objeto) }}</td>
+            <td colspan="2">{{ form_row(form.objeto) }}</td>
+            <td colspan="1">
+                {{ form_row(form.formaDePago) }}
+            </td>
         </tr>
         <tr>
-            <td colspan="1">
+            <td colspan="1" rowspan="2">
                 {{ form_label(form.tipoDePersona) }}
                 {{ form_errors(form.tipoDePersona) }}
 
@@ -40,88 +43,91 @@
                     </div>
                 {% endfor %}
             </td>
-            <td colspan="1">
-                {{ form_row(form.nit) }}
-                <hr>
-                {{ form_row(form.reeup) }}
-                <hr>
-                {{ form_row(form.carnetIdentidad) }}
+            <td colspan="1" rowspan="1">
+                {{ form_row(form.nit) }}               
             </td>
-            <td colspan="1">
-                {{ form_row(form.cuentaBancariaCup) }}
-                <hr>
+            <td colspan="1" rowspan="1">                
+                {{ form_row(form.reeup) }}                
+            </td>
+            <td colspan="1" rowspan="1">                
+                {{ form_row(form.carnetIdentidad) }}
+            </td>                        
+        </tr>
+        <tr>
+            <td colspan="1" rowspan="1">
+                {{ form_row(form.cuentaBancariaCup) }}                
+            </td>
+            <td colspan="1" rowspan="1">   
                 {{ form_row(form.cuentaBancariaCuc) }}
             </td>
-            <td colspan="1">{{ form_row(form.banco) }}</td>
+            <td colspan="1" rowspan="1">
+                {{ form_row(form.banco) }}
+            </td>
         </tr>
         <tr>
             <td colspan="1">
                 {{ form_row(form.valorContratoInicialCup) }}
-                <hr>
+                
                 {{ form_row(form.valorContratoInicialCuc) }}
             </td>
             <td colspan="1">
                 {{ form_row(form.valorContratoTotalCup) }}
-                <hr>
+                
                 {{ form_row(form.valorContratoTotalCuc) }}
             </td>
             <td colspan="1">
                 {{ form_row(form.ejecucionContratoCup) }}
-                <hr>
+                
                 {{ form_row(form.ejecucionContratoCuc) }}
             </td>
             <td colspan="1">
                 {{ form_row(form.saldoCup) }}
-                <hr>
+                
                 {{ form_row(form.saldoCuc) }}
             </td>
         </tr>
         <tr>
             <td colspan="1"><span>{% trans %}Comprobacion Contrato{% endtrans %}</span></td>
             <td colspan="1">
-                <p>{% trans %}Comite de Contratacion{% endtrans %}</p>
-                <hr>
-                <p>{% trans %}Acuerdo{% endtrans %}
-                <hr>
+                <label>{% trans %}Acuerdo{% endtrans %}:</label><label>{% trans %}Comite de Contratacion{% endtrans %}</label>
+                <br>
                 <span>
-                        {% trans %}Numero{% endtrans %}
+                    {% trans %}Numero{% endtrans %}
                     {{ form_errors(form.numeroAprobContratoComiteContratacion) }}
                     {{ form_widget(form.numeroAprobContratoComiteContratacion) }}
                     {% trans %}Fecha{% endtrans %}
                     {{ form_errors(form.fechaAprobContratoComiteContratacion) }}
                     {{ form_widget(form.fechaAprobContratoComiteContratacion) }}
-                    </span>
-                </p>
+                </span>
+
             </td>
             <td colspan="1">
-                <p>{% trans %}Comite de Administracion{% endtrans %}</p>
-                <hr>
-                <p>{% trans %}Acuerdo{% endtrans %}
-                <hr>
+                <label>{% trans %}Acuerdo{% endtrans %}:</label><label>{% trans %}Comite de Administracion{% endtrans %}</label>
+                <br>
                 <span>
-                        {% trans %}Numero{% endtrans %}
+                    {% trans %}Numero{% endtrans %}
                     {{ form_errors(form.numeroAprobContratoComiteAdministracion) }}
                     {{ form_widget(form.numeroAprobContratoComiteAdministracion) }}
                     {% trans %}Fecha{% endtrans %}
                     {{ form_errors(form.fechaAprobContratoComiteAdministracion) }}
                     {{ form_widget(form.fechaAprobContratoComiteAdministracion) }}
-                    </span>
-                </p>
+                </span>                
             </td>
             <td colspan="1">
-                {{ form_row(form.areaAdministraContrato) }}
+                {{ form_label(form.areaAdministraContrato) }}
+                {{ form_errors(form.areaAdministraContrato) }}
+                <br>
+                {{ form_widget(form.areaAdministraContrato) }}
             </td>
         </tr>
         <tr>
 
         </tr>
         <tr>
-            <td colspan="4">
+            <td colspan="1">
                 {{ form_row(form.estado) }}
             </td>
-        </tr>
-        <tr>
-            <td colspan="4">
+            <td colspan="3">
                 {{ form_row(form.motivoEstado) }}
             </td>
         </tr>

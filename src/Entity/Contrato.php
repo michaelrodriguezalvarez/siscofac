@@ -178,6 +178,13 @@ class Contrato
     /**
      * @var string
      *
+     * @ORM\Column(name="forma_de_pago", type="string", length=255, nullable=false)
+     */
+    private $formaDePago;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="numero_aprob_contrato_comite_contratacion", type="string", length=255, nullable=false)
      */
     private $numeroAprobContratoComiteContratacion;
@@ -489,6 +496,18 @@ class Contrato
     public function setBanco(int $banco): self
     {
         $this->banco = $banco;
+
+        return $this;
+    }
+
+    public function getFormaDePago(): ?string
+    {
+        return $this->formaDePago;
+    }
+
+    public function setFormaDePago(string $formaDePago): self
+    {
+        $this->formaDePago = $formaDePago;
 
         return $this;
     }

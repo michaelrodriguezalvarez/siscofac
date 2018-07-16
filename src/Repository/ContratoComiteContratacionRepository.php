@@ -76,4 +76,40 @@ class ContratoComiteContratacionRepository extends EntityRepository
         }
         return $this->getEntityManager()->createQuery($consulta->getDQL())->getArrayResult();
     }
+
+    public function getContenidoParaExportarExcel():string
+    {
+        $contratos_comite_contratacion = $this->getDatosParaListar();
+        $contenido = '<table width="50%" border="1" cellpadding="10" cellspacing="0" bordercolor="#666666" style="border-collapse:collapse;">';
+        $contenido .= '<thead>';
+        $contenido .= '<tr>';
+        $contenido .= '<th>Orden</th>';
+        $contenido .= '<th>Proveedor</th>';
+        $contenido .= '<th>Tipo de servicio</th>';
+        $contenido .= '<th>Objeto</th>';
+        $contenido .= '<th>Valor contrato inicial cup CUP</th>';
+        $contenido .= '<th>Valor contrato inicial cuc CUC</th>';
+        $contenido .= '<th>Area administra contrato</th>';
+        $contenido .= '<th>Fecha de reunion</th>';
+        $contenido .= '</tr>';
+        $contenido .= '</thead>';
+        $contenido .= '<tbody>';
+        foreach ($contratos_comite_contratacion as $contrato_comite_contratacion){
+            $contenido .= '
+                    <tr>
+                         <td> '.$contrato_comite_contratacion["orden"].' </td>
+                         <td> '.$contrato_comite_contratacion["proveedor"].' </td>
+                         <td> '.$contrato_comite_contratacion["tipoDeServicio"].' </td>
+                         <td> '.$contrato_comite_contratacion["objeto"].' </td>
+                         <td> '.$contrato_comite_contratacion["valorContratoInicialCup"].' </td>
+                         <td> '.$contrato_comite_contratacion["valorContratoInicialCuc"].' </td>
+                         <td> '.$contrato_comite_contratacion["areaAdministraContrato"].' </td>
+                         <td> '.$contrato_comite_contratacion["fechaDeReunion"]->format("d-m-Y").'</td>
+                     </tr>                           
+            ';
+        }
+        $contenido .= '</tbody>';
+        $contenido .= '</table>';
+        return $contenido;
+    }
 }
