@@ -2,6 +2,10 @@
 
 {% block title %}{% trans %}Modificar{% endtrans %} {% trans %}Contrato{% endtrans %}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('siscofac/vendors/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.min.css') }}" />
+{% endblock %}
+
 {% block  header %}
     {% trans %}Modificar{% endtrans %} {% trans %}Contrato{% endtrans %}
     <span class="text-info">{% trans %}Anno{% endtrans %}  {{ anno_actual }} ({{ cantidad_de_contratos_del_anno_actual }})</span>
@@ -35,14 +39,28 @@
         <br>
 
         {{ include ('contrato/formulario.html.twig') }}
-        {#{ include('contrato/_delete_form.html.twig') }#}
     </div>
     </div>
-
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('build/contrato.js') }}"></script>
+    <script src="{{ asset('siscofac/vendors/eternicode/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('siscofac/vendors/eternicode/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var configuracion_datepicker = {
+                language: "es",
+                format: "dd-mm-yyyy",
+                todayBtn: true,
+                //startDate: "today"
+            };
+            $('#contrato_fechaInicio').datepicker(configuracion_datepicker);
+            $('#contrato_fechaTerminacion').datepicker(configuracion_datepicker);
+            $('#contrato_fechaAprobContratoComiteContratacion').datepicker(configuracion_datepicker);
+            $('#contrato_fechaAprobContratoComiteAdministracion').datepicker(configuracion_datepicker);
+        });
+    </script>
 {% endblock %}

@@ -39,7 +39,9 @@ class ContratoComiteContratacionType extends AbstractType
             ->add('areaAdministraContrato',ChoiceType::class, array(
                 'choices'  => $options["areas_administra_contrato"],
             ))
-            ->add('fechaDeReunion')
+            ->add('fechaDeReunion', TextType::class, array(
+                'attr'=> array('size'=>'8')
+            ))
         ;
     }
 

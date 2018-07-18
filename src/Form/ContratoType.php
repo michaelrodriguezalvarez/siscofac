@@ -28,8 +28,12 @@ class ContratoType extends AbstractType
             ->add('anno', ChoiceType::class, array(
                 'choices'  => $options["ultimos_annos_hasta_actual"],
             ))
-            ->add('fechaInicio')
-            ->add('fechaTerminacion')
+            ->add('fechaInicio', TextType::class, array(
+                'attr'=> array('size'=>'8')
+            ))
+            ->add('fechaTerminacion', TextType::class, array(
+                'attr'=> array('size'=>'8')
+            ))
             ->add('proveedor',ChoiceType::class, array(
                 'choices' => $options["proveedores"],                
             ))
@@ -113,11 +117,15 @@ class ContratoType extends AbstractType
             ->add('numeroAprobContratoComiteContratacion', TextType::class, array(
                 'attr'=>array('size'=>'5')
             ))
-            ->add('fechaAprobContratoComiteContratacion')
+            ->add('fechaAprobContratoComiteContratacion', TextType::class, array(
+                'attr'=> array('size'=>'8')
+            ))
             ->add('numeroAprobContratoComiteAdministracion', TextType::class, array(
                 'attr'=>array('size'=>'5')
             ))
-            ->add('fechaAprobContratoComiteAdministracion')
+            ->add('fechaAprobContratoComiteAdministracion', TextType::class, array(
+                'attr'=> array('size'=>'8')
+            ))
             ->add('areaAdministraContrato',ChoiceType::class, array(
                 'choices'  => $options["areas_administra_contrato"],
             ))

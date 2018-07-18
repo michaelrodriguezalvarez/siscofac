@@ -14,7 +14,7 @@
 {% include 'principal/menu_escritorio.html.twig' %}
 
 <div class="container">
-    <div class="row breadcrumb">
+    <div class="container row breadcrumb">
         <div class="breadcrumb-item">Inicio</div>
         {% block  breadscrum %}{% endblock %}
     </div>
@@ -22,14 +22,11 @@
         <h4>{% block  header %}{% endblock %}</h4>
     </div>
     <div class="row bg-white">
-
         <div class="separador_header_y_body container"></div>
         <div class="container">
             {% block body %}{% endblock %}
         </div>
     </div>
-
-
 </div>
 
 <script src="{{ asset('build/manifest.js') }}"></script>

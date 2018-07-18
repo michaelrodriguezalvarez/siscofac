@@ -1,5 +1,10 @@
 body{
     background-color: #d1ecf1;
+    font-size: small;
+}
+
+body table{
+    font-size: small;
 }
 .formulario_entrada{
     width: 80%;
