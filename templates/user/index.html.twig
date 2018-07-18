@@ -1,47 +1,146 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}{% trans %}Listar{% endtrans %} {% trans %}Usuarios{% endtrans %}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('siscofac/vendors/datatables/datatables/media/css/jquery.dataTables.css') }}" />
+    <style type="text/css">
+        td.details-control {
+            background: url({{ asset('siscofac/vendors/datatables/datatables/examples/resources/details_open.png') }}) no-repeat center center;
+            cursor: pointer;
+        }
+        tr.shown td.details-control {
+            background: url({{ asset('siscofac/vendors/datatables/datatables/examples/resources/details_close.png') }}) no-repeat center center;
+        }
+    </style>
+{% endblock %}
+
+{% block  header %}
+    {% trans %}Listar{% endtrans %} {% trans %}Usuarios{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Usuario{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Listar{% endtrans %} {% trans %}Usuarios{% endtrans %}</div>
+{% endblock %}
+
 
 {% block body %}
-    <h1>User index</h1>
+    <div class="row">
+        <div class="form-control">
+            {% if users | length == 0%}
+                <div class="col-lg-12">
+                    <p class="alert-info">{% trans %}No se encontraron registros{% endtrans %}</p>
+                </div>
+            {% else %}
+                <table id="table_user_index" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Email</th>
+                        <th>Roles</th>
+                        <th>Activo</th>
+                        <th>{% trans %}Acciones{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td class="details-control"></td>
+                            <td>{{ user.nombre }}</td>
+                            <td>{{ user.apellidos }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>••••••••••</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.roles | parsearRol }}</td>
+                            <td>{{ user.isActive ? 'Si' : 'No' }}</td>
+                            <td>
+                                <a class="btn-sm btn-primary" href="{{ path('user_show', {'id': user.id}) }}">{% trans %}Mostrar{% endtrans %}</a>
+                                <a class="btn-sm btn-primary" href="{{ path('user_edit', {'id': user.id}) }}">{% trans %}Modificar{% endtrans %}</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">{% trans %}No se encontraron registros{% endtrans %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            <br>
+            <a class="btn-sm btn-primary" href="{{ path('user_new') }}">{% trans %}Adicionar{% endtrans %}</a>
+        </div>
+    </div>
+{% endblock %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>IsActive</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.nombre }}</td>
-                <td>{{ user.apellidos }}</td>
-                <td>{{ user.username }}</td>
-                <td>••••••••••</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles | parsearRol }}</td>
-                <td>{{ user.isActive ? 'Si' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% block javascripts %}
+    <script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('siscofac/vendors/datatables/datatables/media/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript">
 
-    <a href="{{ path('user_new') }}">Create new</a>
+        $(document).ready(function (){
+            var table = $("#table_user_index").DataTable({
+                select: true,
+                "columnDefs": [
+                    {"targets": 0, "searchable": false, "orderable": false, "visible": true},
+                    {"targets": 8, "searchable": false, "orderable": false, "visible": true},
+                ],
+                "language": {
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+
+            function format ( d ) {
+                // `d` is the original data object for the row
+                return '<table cellpadding="2" cellspacing="0" border="0" style="padding-left:50px;">'+
+                    '<tr>'+
+                    '<td>Prueba</td>'+
+                    '<td>Contenido</td>'+
+                    '</tr>'+
+                    '</table>';
+            }
+
+            // Add event listener for opening and closing details
+            $('#table_user_index').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+
+                if ( row.child.isShown() ) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child( format(row.data()) ).show();
+                    tr.addClass('shown');
+                }
+            });
+        });
+    </script>
 {% endblock %}

@@ -1,35 +1,90 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
-{% block title %}NomTipoPersona index{% endblock %}
+{% block title %}{% trans %}Listar{% endtrans %} {% trans %}Tipo de Persona{% endtrans %}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('siscofac/vendors/datatables/datatables/media/css/jquery.dataTables.css') }}" />
+{% endblock %}
+
+{% block  header %}
+    {% trans %}Listar{% endtrans %} {% trans %}Tipo de Persona{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Nomencladores{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Nomenclador{% endtrans %} {% trans %}Tipo de Persona{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Listar{% endtrans %} {% trans %}Tipo de Persona{% endtrans %}</div>
+{% endblock %}
 
 {% block body %}
-    <h1>NomTipoPersona index</h1>
+    <div class="row">
+        <div class="form-control">
+            {% if nom_tipo_personas | length == 0%}
+                <div class="col-lg-12">
+                    <p class="alert-info">{% trans %}No se encontraron registros{% endtrans %}</p>
+                </div>
+            {% else %}
+                <table id="table_nom_banco_index" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>{% trans %}Nombre{% endtrans %}</th>
+                        <th>{% trans %}Acciones{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for nom_tipo_persona in nom_tipo_personas %}
+                        <tr>
+                            <td>{{ nom_tipo_persona.nombre }}</td>
+                            <td>
+                                <a class="btn-sm btn-primary" href="{{ path('nom_tipo_persona_edit', {'id': nom_tipo_persona.id}) }}">{% trans %}Modificar{% endtrans %}</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">{% trans %}No se encontraron registros{% endtrans %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            <a class="btn-sm btn-primary" href="{{ path('nom_tipo_persona_new') }}">{% trans %}Adicionar{% endtrans %}</a>
+        </div>
+    </div>
+{% endblock %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for nom_tipo_persona in nom_tipo_personas %}
-            <tr>
-                <td>{{ nom_tipo_persona.id }}</td>
-                <td>{{ nom_tipo_persona.nombre }}</td>
-                <td>
-                    <a href="{{ path('nom_tipo_persona_show', {'id': nom_tipo_persona.id}) }}">show</a>
-                    <a href="{{ path('nom_tipo_persona_edit', {'id': nom_tipo_persona.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('nom_tipo_persona_new') }}">Create new</a>
+{% block javascripts %}
+    <script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('siscofac/vendors/datatables/datatables/media/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript">
+        $("#table_nom_banco_index").DataTable({
+            select: true,
+            "columnDefs": [
+                {"targets": 1, "searchable": false, "orderable": false, "visible": true},
+            ],
+            "language": {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    </script>
 {% endblock %}

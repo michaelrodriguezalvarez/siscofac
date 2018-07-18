@@ -1,56 +1,75 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
 {% block title %}{% trans %}Mostrar{% endtrans %} {% trans %}Suplemento{% endtrans %}{% endblock %}
 
+{% block  header %}
+    {% trans %}Mostrar{% endtrans %} {% trans %}Suplemento{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Contrato{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Suplemento{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Mostrar{% endtrans %} {% trans %}Suplemento{% endtrans %}</div>
+{% endblock %}
+
 {% block body %}
-    <div class="container small">
-    <h5>{% trans %}Mostrar{% endtrans %} {% trans %}Suplemento{% endtrans %}</h5>
+    <div class="row">
+        <div class="form-control">
+            {% include 'contrato/botones_suplemento.html.twig' %}
+            {% include 'contrato/ventana_modal.html.twig' %}
+            {% for message in app.flashes('notice') %}
+                <div class="alert-info">
+                    {{ message |trans}}
+                </div>
+            {% endfor %}
+            <br>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>{% trans %}Contrato{% endtrans %}</th>
+                        <td>{{ contrato }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Numero{% endtrans %}</th>
+                        <td>{{ suplemento.numero }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Objeto{% endtrans %}</th>
+                        <td>{{ suplemento.objeto }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Valor suplemento Cup{% endtrans %}</th>
+                        <td>{{ suplemento.valorSuplementoCup }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Valor suplemento Cuc{% endtrans %}</th>
+                        <td>{{ suplemento.valorSuplementoCuc }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Fecha inicio{% endtrans %}</th>
+                        <td>{{ suplemento.fechaInicio ? suplemento.fechaInicio|date('d-m-Y') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Fecha terminacion{% endtrans %}</th>
+                        <td>{{ suplemento.fechaTerminacion ? suplemento.fechaTerminacion|date('d-m-Y') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Numero acuerdo{% endtrans %}</th>
+                        <td>{{ suplemento.numeroAcuerdo }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Fecha acuerdo{% endtrans %}</th>
+                        <td>{{ suplemento.fechaAcuerdo ? suplemento.fechaAcuerdo|date('d-m-Y') : '' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
 
-        {% include 'contrato/botones_suplemento.html.twig' %}
-        {% include 'contrato/ventana_modal.html.twig' %}
-
-    <div class="table-responsive">
-    <table class="table table-bordered">
-        <tbody>
-            <tr>
-                <th>{% trans %}Contrato{% endtrans %}</th>
-                <td>{{ contrato }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Numero{% endtrans %}</th>
-                <td>{{ suplemento.numero }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Objeto{% endtrans %}</th>
-                <td>{{ suplemento.objeto }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Valor suplemento Cup{% endtrans %}</th>
-                <td>{{ suplemento.valorSuplementoCup }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Valor suplemento Cuc{% endtrans %}</th>
-                <td>{{ suplemento.valorSuplementoCuc }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Fecha inicio{% endtrans %}</th>
-                <td>{{ suplemento.fechaInicio ? suplemento.fechaInicio|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Fecha terminacion{% endtrans %}</th>
-                <td>{{ suplemento.fechaTerminacion ? suplemento.fechaTerminacion|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Numero acuerdo{% endtrans %}</th>
-                <td>{{ suplemento.numeroAcuerdo }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Fecha acuerdo{% endtrans %}</th>
-                <td>{{ suplemento.fechaAcuerdo ? suplemento.fechaAcuerdo|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
+            </div>
+        </div>
     </div>
-    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/suplemento.js') }}"></script>
 {% endblock %}

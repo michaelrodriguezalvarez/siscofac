@@ -1,24 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_escritorio.html.twig' %}
 
-{% block title %}{% trans %}Modificar{% endtrans %} {% trans %}Factura{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Editar{% endtrans %} {% trans %}Factura{% endtrans %}{% endblock %}
+
+{% block  header %}
+    {% trans %}Editar{% endtrans %} {% trans %}Factura{% endtrans %}
+{% endblock %}
+
+{% block  breadscrum %}
+    <div class="breadcrumb-item">{% trans %}Contrato{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Factura{% endtrans %}</div>
+    <div class="breadcrumb-item">{% trans %}Editar{% endtrans %} {% trans %}Factura{% endtrans %}</div>
+{% endblock %}
 
 {% block body %}
-    <div class="container small">
-    <h5>{% trans %}Modificar{% endtrans %} {% trans %}Factura{% endtrans %}</h5>
-
-    {% include 'contrato/botones_factura.html.twig' %}
-    {% include 'contrato/ventana_modal.html.twig' %}
-    {% include 'factura/div_informacion_saldo.html.twig' %}
-
-    {% for message in app.flashes('notice') %}
-        <div class="alert-info">
-            {{ message |trans}}
+    <div class="row">
+        <div class="form-control">
+            {% include 'contrato/botones_factura.html.twig' %}
+            {% include 'contrato/ventana_modal.html.twig' %}
+            {% include 'factura/div_informacion_saldo.html.twig' %}
+            {% for message in app.flashes('notice') %}
+                <div class="alert-info">
+                    {{ message |trans}}
+                </div>
+            {% endfor %}
+            <br>
+            {{ include('factura/_form.html.twig') }}
         </div>
-    {% endfor %}
-
-    <br>
-
-    {{ include('factura/_form.html.twig') }}
-
-    {{ include('factura/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
