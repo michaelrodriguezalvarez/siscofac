@@ -29,10 +29,12 @@ class ContratoType extends AbstractType
                 'choices'  => $options["ultimos_annos_hasta_actual"],
             ))
             ->add('fechaInicio', TextType::class, array(
-                'attr'=> array('size'=>'8')
+                'attr'=> array('size'=>'8'),
+                'data'=>$options['fechaInicioEditar']
             ))
             ->add('fechaTerminacion', TextType::class, array(
-                'attr'=> array('size'=>'8')
+                'attr'=> array('size'=>'8'),
+                'data'=>$options['fechaTerminacionEditar']
             ))
             ->add('proveedor',ChoiceType::class, array(
                 'choices' => $options["proveedores"],                
@@ -111,20 +113,22 @@ class ContratoType extends AbstractType
             ->add('banco',ChoiceType::class, array(
                 'choices' => $options["bancos"],                
             ))
-            ->add('formaDePago', TextType::class, array(
-                'attr'=>array('size'=>'30')
+            ->add('formaDePago', TextareaType::class, array(
+                'attr' => array('class' => 'form-control'),
             ))
             ->add('numeroAprobContratoComiteContratacion', TextType::class, array(
                 'attr'=>array('size'=>'5')
             ))
             ->add('fechaAprobContratoComiteContratacion', TextType::class, array(
-                'attr'=> array('size'=>'8')
+                'attr'=> array('size'=>'8'),
+                'data'=>$options['fechaAprobContratoComiteContratacionEditar']
             ))
             ->add('numeroAprobContratoComiteAdministracion', TextType::class, array(
                 'attr'=>array('size'=>'5')
             ))
             ->add('fechaAprobContratoComiteAdministracion', TextType::class, array(
-                'attr'=> array('size'=>'8')
+                'attr'=> array('size'=>'8'),
+                'data'=>$options['fechaAprobContratoComiteAdministracionEditar']
             ))
             ->add('areaAdministraContrato',ChoiceType::class, array(
                 'choices'  => $options["areas_administra_contrato"],
@@ -150,6 +154,10 @@ class ContratoType extends AbstractType
             'tipos_de_persona'=>null,
             'bancos'=>null,
             'areas_administra_contrato'=>null,
+            'fechaInicioEditar'=>null,
+            'fechaTerminacionEditar'=>null,
+            'fechaAprobContratoComiteContratacionEditar'=>null,
+            'fechaAprobContratoComiteAdministracionEditar'=>null
         ]);
     }
 }

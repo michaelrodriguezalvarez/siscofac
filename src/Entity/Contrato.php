@@ -260,26 +260,26 @@ class Contrato
         return $this;
     }
 
-    public function getFechaInicio(): ?string
+    public function getFechaInicio(): ?\DateTimeInterface
     {
-        return $this->fechaInicio->format('d-m-Y');
+        return $this->fechaInicio;
     }
 
-    public function setFechaInicio(string $fechaInicio): self
+    public function setFechaInicio(\DateTimeInterface $fechaInicio): self
     {
-        $this->fechaInicio = \DateTime::createFromFormat('d-m-Y', $fechaInicio);
+        $this->fechaInicio = $fechaInicio;
 
         return $this;
     }
 
-    public function getFechaTerminacion(): ?string
+    public function getFechaTerminacion(): ?\DateTimeInterface
     {
-        return $this->fechaTerminacion->format('d-m-Y');
+        return $this->fechaTerminacion;
     }
 
-    public function setFechaTerminacion(string $fechaTerminacion): self
+    public function setFechaTerminacion(\DateTimeInterface $fechaTerminacion): self
     {
-        $this->fechaTerminacion = \DateTime::createFromFormat('d-m-Y', $fechaTerminacion);
+        $this->fechaTerminacion = $fechaTerminacion;
 
         return $this;
     }
@@ -524,14 +524,14 @@ class Contrato
         return $this;
     }
 
-    public function getFechaAprobContratoComiteContratacion(): ?string
+    public function getFechaAprobContratoComiteContratacion(): ?\DateTimeInterface
     {
-        return $this->fechaAprobContratoComiteContratacion->format('d-m-Y');
+        return $this->fechaAprobContratoComiteContratacion;
     }
 
-    public function setFechaAprobContratoComiteContratacion(string $fechaAprobContratoComiteContratacion): self
+    public function setFechaAprobContratoComiteContratacion(\DateTimeInterface $fechaAprobContratoComiteContratacion): self
     {
-        $this->fechaAprobContratoComiteContratacion = \DateTime::createFromFormat('d-m-Y', $fechaAprobContratoComiteContratacion);
+        $this->fechaAprobContratoComiteContratacion = $fechaAprobContratoComiteContratacion;
 
         return $this;
     }
@@ -548,14 +548,14 @@ class Contrato
         return $this;
     }
 
-    public function getFechaAprobContratoComiteAdministracion(): ?string
+    public function getFechaAprobContratoComiteAdministracion(): ?\DateTimeInterface
     {
-        return $this->fechaAprobContratoComiteAdministracion->format('d-m-Y');
+        return $this->fechaAprobContratoComiteAdministracion;
     }
 
-    public function setFechaAprobContratoComiteAdministracion(string $fechaAprobContratoComiteAdministracion): self
+    public function setFechaAprobContratoComiteAdministracion(\DateTimeInterface $fechaAprobContratoComiteAdministracion): self
     {
-        $this->fechaAprobContratoComiteAdministracion = \DateTime::createFromFormat('d-m-Y', $fechaAprobContratoComiteAdministracion);
+        $this->fechaAprobContratoComiteAdministracion = $fechaAprobContratoComiteAdministracion;
 
         return $this;
     }

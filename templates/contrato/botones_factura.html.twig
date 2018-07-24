@@ -1,12 +1,16 @@
 <div id="div_factura_botones">
     {% if contrato.estado == 1 %}
+    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_ECONOMICO') %}
         <a class="btn-sm btn-primary" href="{{ path('factura_new',{'id_contrato':id_contrato}) }}">{% trans %}Adicionar{% endtrans %} {% trans %}Factura{% endtrans %}</a>
+    {% endif %}
     {% endif %}
     <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_buscar_factura">
         {% trans %}Buscar{% endtrans %} {% trans %}Factura{% endtrans %}
     </button>
+    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_ECONOMICO') %}
     <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_modificar_factura">
         {% trans %}Modificar{% endtrans %} {% trans %}Factura{% endtrans %}
     </button>
+    {% endif %}
     <a class="btn-sm btn-primary" href="{{ path('factura_index',{'id_contrato':id_contrato}) }}">{% trans %}Listar{% endtrans %} {% trans %}Facturas{% endtrans %}</a>
 </div>

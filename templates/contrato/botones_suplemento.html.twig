@@ -1,12 +1,16 @@
 <div id="div_suplemento_botones">
     {% if contrato.estado == 1 %}
+    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_JURIDICO') %}
         <a class="btn-sm btn-primary" href="{{ path('suplemento_new',{'id_contrato':id_contrato}) }}">{% trans %}Adicionar{% endtrans %} {% trans %}Suplemento{% endtrans %}</a>
+    {% endif %}
     {% endif %}
         <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_buscar_suplemento">
             {% trans %}Buscar{% endtrans %} {% trans %}Suplemento{% endtrans %}
         </button>
+    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_JURIDICO') %}
         <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_modificar_suplemento">
             {% trans %}Modificar{% endtrans %} {% trans %}Suplemento{% endtrans %}
         </button>
+    {% endif %}
         <a class="btn-sm btn-primary" href="{{ path('suplemento_index',{'id_contrato':id_contrato}) }}">{% trans %}Listar{% endtrans %} {% trans %}Suplemento{% endtrans %}</a>
 </div>

@@ -33,7 +33,7 @@
                     <p class="alert-info">{% trans %}No se encontraron registros{% endtrans %}</p>
                 </div>
             {% else %}
-                <table id="table_user_index" class="table table-striped table-bordered" style="width:100%">
+                <table id="table_user_index" class="table table-striped table-bordered" style="width:100%;">
                     <thead>
                     <tr>
                         <th></th>
@@ -81,12 +81,22 @@
     <script src="{{ asset('siscofac/vendors/components/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('siscofac/vendors/datatables/datatables/media/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript">
+        function format ( d ) {
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                '<td>Acciones</td>'+
+                '<td>'+d.id+'</td>'+
+                '</tr>'+
+                '</table>';
+        }
 
         $(document).ready(function (){
             var table = $("#table_user_index").DataTable({
                 select: true,
                 "columnDefs": [
                     {"targets": 0, "searchable": false, "orderable": false, "visible": true},
+                    {"targets": 7, "searchable": false, "orderable": false, "visible": false},
                     {"targets": 8, "searchable": false, "orderable": false, "visible": true},
                 ],
                 "language": {
@@ -115,15 +125,7 @@
                 }
             });
 
-            function format ( d ) {
-                // `d` is the original data object for the row
-                return '<table cellpadding="2" cellspacing="0" border="0" style="padding-left:50px;">'+
-                    '<tr>'+
-                    '<td>Prueba</td>'+
-                    '<td>Contenido</td>'+
-                    '</tr>'+
-                    '</table>';
-            }
+
 
             // Add event listener for opening and closing details
             $('#table_user_index').on('click', 'td.details-control', function () {
@@ -137,7 +139,7 @@
                 }
                 else {
                     // Open this row
-                    row.child( format(row.data()) ).show();
+                    row.child(format(row.data())).show();
                     tr.addClass('shown');
                 }
             });

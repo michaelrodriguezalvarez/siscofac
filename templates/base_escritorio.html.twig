@@ -7,9 +7,28 @@
     <title>{% block title %}{{ getNombreAplicacion() }}{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
     <link rel="stylesheet" href="{{ asset('build/css/siscofac.css') }}" />
+    <style type="text/css">
+        .fondo_escritorio{
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: url({{ asset('siscofac/img/perucho-figueredo.jpg') }}) no-repeat center center /cover;
+            content: '';
+            -webkit-filter: opacity(40%);
+            -moz-filter: opacity(40%);
+            -o-filter: opacity(40%);
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+            filter: alpha(opacity=40);
+            z-index: -1;
+        }
+    </style>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
+<div class="fondo_escritorio"></div>
 <!-- Menu de navegacion-->
 {% include 'principal/menu_escritorio.html.twig' %}
 

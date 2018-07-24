@@ -76,6 +76,7 @@ class ContratoController extends Controller
             ->getCantidadContratosPorAnno($anno_actual);
 
         $contrato = new Contrato();
+
         $form = $this->createForm(ContratoType::class, $contrato,[
             "ultimos_annos_hasta_actual"=>$ultimos_annos_hasta_actual,
             'proveedores'=>$proveedores,            
@@ -86,6 +87,12 @@ class ContratoController extends Controller
             ],
             array('action' => $this->generateUrl('contrato_new'))
         );
+
+        if($request->request->get('contrato')!=null){
+            $llaves = array('fechaInicio','fechaTerminacion','fechaAprobContratoComiteContratacion','fechaAprobContratoComiteAdministracion');
+            $request = $this->getDoctrine()->getRepository(Contrato::class)->parsearStringAFechaRequest($request, 'contrato', $llaves);
+
+        }
 
         $form->handleRequest($request);
 
@@ -203,9 +210,17 @@ class ContratoController extends Controller
             'tipos_de_persona'=>$tipos_de_persona,
             'bancos'=>$bancos,
             'areas_administra_contrato'=>$areas_administra_contrato,
+            'fechaInicioEditar'=>$contrato->getFechaInicio()->format('d-m-Y'),
+            'fechaTerminacionEditar'=>$contrato->getFechaTerminacion()->format('d-m-Y'),
+            'fechaAprobContratoComiteContratacionEditar'=>$contrato->getFechaAprobContratoComiteContratacion()->format('d-m-Y'),
+            'fechaAprobContratoComiteAdministracionEditar'=>$contrato->getFechaAprobContratoComiteAdministracion()->format('d-m-Y')
             ],
             array('action' => $this->generateUrl('contrato_edit',['id' => $contrato->getId()])));
 
+        if($request->request->get('contrato')!=null){
+            $llaves = array('fechaInicio','fechaTerminacion','fechaAprobContratoComiteContratacion','fechaAprobContratoComiteAdministracion');
+            $request = $this->getDoctrine()->getRepository(Contrato::class)->parsearStringAFechaRequest($request, 'contrato', $llaves);
+        }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

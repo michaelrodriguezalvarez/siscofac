@@ -1,5 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    {% if is_granted('ROLE_ADMINISTRADOR') %}
     <button class="btn btn-sm btn-success">{{ button_label|default('Guardar')|trans }}</button>
     <a class="btn btn-sm btn-primary" href="{{ path('user_index') }}">{% trans %}Listar{% endtrans %}</a>
+    {% endif %}
 {{ form_end(form) }}

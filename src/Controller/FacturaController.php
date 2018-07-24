@@ -89,6 +89,12 @@ class FacturaController extends Controller
                 'tipos_de_servicios'=>$tipos_de_servicios,
                 'estados_factura'=>$estados_factura,
             ]);
+
+        if($request->request->get('factura')!=null){
+            $llaves = array('fecha','fechaCheque');
+            $request = $this->getDoctrine()->getRepository(Contrato::class)->parsearStringAFechaRequest($request, 'factura', $llaves);
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -239,7 +245,14 @@ class FacturaController extends Controller
             //'pagado_anteriormente' => $factura->getEstado(),
             'valor_anterior_cup'=>$factura->getValorCup(),
             'valor_anterior_cuc'=>$factura->getValorCuc(),
+            'fechaEditar'=>$factura->getFecha()->format('d-m-Y'),
+            'fechaChequeEditar'=>$factura->getFechaCheque()->format('d-m-Y')
             ]);
+
+        if($request->request->get('factura')!=null){
+            $llaves = array('fecha','fechaCheque');
+            $request = $this->getDoctrine()->getRepository(Contrato::class)->parsearStringAFechaRequest($request, 'factura', $llaves);
+        }
 
         $valor_anterior_factura_cup = $factura->getValorCup();
         $valor_anterior_factura_cuc = $factura->getValorCuc();

@@ -46,6 +46,12 @@ class SuplementoController extends Controller
 
         $suplemento = new Suplemento();
         $form = $this->createForm(SuplementoType::class, $suplemento,['id_contrato'=>$id_contrato]);
+
+        if($request->request->get('suplemento')!=null){
+            $llaves = array('fechaInicio','fechaTerminacion','fechaAcuerdo');
+            $request = $this->getDoctrine()->getRepository(Contrato::class)->parsearStringAFechaRequest($request, 'suplemento', $llaves);
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -136,7 +142,18 @@ class SuplementoController extends Controller
             ->getRepository(Contrato::class)
             ->find($id_contrato);
 
-        $form = $this->createForm(SuplementoType::class, $suplemento,['id_contrato'=>$id_contrato]);
+        $form = $this->createForm(SuplementoType::class, $suplemento,[
+            'id_contrato'=>$id_contrato,
+            'fechaInicioEditar'=>$suplemento->getFechaInicio()->format('d-m-Y'),
+            'fechaTerminacionEditar'=>$suplemento->getFechaTerminacion()->format('d-m-Y'),
+            'fechaAcuerdoEditar'=>$suplemento->getFechaAcuerdo()->format('d-m-Y'),
+        ]);
+
+        if($request->request->get('suplemento')!=null){
+            $llaves = array('fechaInicio','fechaTerminacion','fechaAcuerdo');
+            $request = $this->getDoctrine()->getRepository(Contrato::class)->parsearStringAFechaRequest($request, 'suplemento', $llaves);
+        }
+
         $valor_anterior_suplemento_cup = $suplemento->getValorSuplementoCup();
         $valor_anterior_suplemento_cuc = $suplemento->getValorSuplementoCuc();
         $form->handleRequest($request);

@@ -39,26 +39,40 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #Para los usuarios IS_AUTHENTICATED_ANONYMOUSLY
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        - { path: ^/conf/*, roles: ROLE_ADMINISTRADOR }
-        - { path: ^/nom/*, roles: ROLE_ADMINISTRADOR }
-        - { path: ^/user/*/index, roles: ROLE_ADMINISTRADOR }
-        - { path: ^/user/*/edit, roles: ROLE_ADMINISTRADOR }
+        #Para los usuarios IS_AUTHENTICATED_FULLY o ROLE_CONSULTOR
+        - { path: ^/user/*/show, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^contrato/*/contrato/show, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^contrato/*/suplemento/show, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^contrato/*/factura/show, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^contrato/index, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^suplemento/*/index, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^suplemento/*/*/show, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^factura/*/index, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        - { path: ^factura/*/*/show, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
 
+        #Para los usuarios ROLE_ECONOMICO
+        - { path: ^/factura/*/new, roles: [ROLE_ADMINISTRADOR, ROLE_ECONOMICO] }
+        - { path: ^/factura/*/*/edit, roles: [ROLE_ADMINISTRADOR, ROLE_ECONOMICO] }
+
+        #Para los usuarios ROLE_JURIDICO
+        - { path: ^/nom/proveedor/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
+        - { path: ^/nom/banco/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
+        - { path: ^/nom/area/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
         - { path: ^/suplemento/comite/contratacion/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
         - { path: ^/contrato/comite/contratacion/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
-        - { path: ^/contrato/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
-        - { path: ^/suplemento/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
+        - { path: ^/contrato/new, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
+        - { path: ^/contrato/edit/*, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
+        - { path: ^/suplemento/*/new, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
+        - { path: ^/suplemento/*/*/edit, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO] }
 
-        - { path: ^/factura/*, roles: [ROLE_ADMINISTRADOR, ROLE_ECONOMICO] }
-
-        - { path: ^/user/*/show, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/principal, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/contrato/index, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
-        - { path: ^/factura/*/index, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
-        - { path: ^/suplemento/*/index, roles: [ROLE_ADMINISTRADOR, ROLE_JURIDICO, ROLE_ECONOMICO, ROLE_CONSULTOR] }
+        #Para los usuarios ROLE_ADMINISTRADOR
+        - { path: ^/conf/*, roles: ROLE_ADMINISTRADOR }
+        - { path: ^/user/index, roles: ROLE_ADMINISTRADOR }
+        - { path: ^/user/*/edit, roles: ROLE_ADMINISTRADOR }
+        - { path: ^/nom/provincia/*, roles: ROLE_ADMINISTRADOR }
+        - { path: ^/nom/tipo/persona/*, roles: ROLE_ADMINISTRADOR }
+        - { path: ^/nom/tipo/servicio/*, roles: ROLE_ADMINISTRADOR }

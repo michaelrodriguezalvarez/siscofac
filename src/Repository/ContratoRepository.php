@@ -11,6 +11,7 @@ use function Sodium\add;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\Contrato;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\HttpFoundation\Request;
 
 class ContratoRepository extends EntityRepository
 {
@@ -364,6 +365,14 @@ class ContratoRepository extends EntityRepository
             ->getQuery();
 
         return $qb->execute();
+    }
 
+    public function parsearStringAFechaRequest(Request $request, string $objeto, array $llaves):Request{
+        $objeto_request = $request->request->get($objeto);
+        foreach ($llaves as $llave){
+            $objeto_request[$llave] = \DateTime::createFromFormat('d-m-Y', $objeto_request[$llave]);
+        }
+        $request->request->set($objeto,$objeto_request);
+        return $request;
     }
 }

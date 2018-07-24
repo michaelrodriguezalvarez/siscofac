@@ -1,0 +1,9 @@
+{% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_JURIDICO') %}
+    <div class="col-sm-12 col-lg-4 form-control">
+        <label>Comite Contratacion</label><br>
+        <a class="btn-sm btn-primary" href="{{ path('contrato_comite_contratacion_index') }}">Contratos</a>
+        <a class="btn-sm btn-primary" href="{{ path('suplemento_comite_contratacion_index') }}">Suplementos</a>
+        <br><br>
+    </div>
+    <br><br>
+{% endif %}

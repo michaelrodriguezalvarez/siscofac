@@ -1,4 +1,5 @@
-<div class="col-lg-6" id="div_contrato_botones">
+<div class="col-sm-12 col-lg-4 form-control">
+    <label>Contratos</label><br>
     {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_JURIDICO') %}
     <a class="btn-sm btn-primary" href="{{ path('contrato_new') }}">{% trans %}Adicionar{% endtrans %}</a>
     {% endif %}
@@ -7,18 +8,19 @@
     </button>
     {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_JURIDICO') %}
     <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_modificar_contrato">
-        {% trans %}Modificar{% endtrans %}
+         {% trans %}Modificar{% endtrans %}
     </button>
     {% endif %}
     <a class="btn-sm btn-primary" href="{{ path('contrato_index') }}">{% trans %}Listar{% endtrans %}</a>
-
     <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_suplemento">
-        {% trans %}Suplemento{% endtrans %}
+         {% trans %}Suplemento{% endtrans %}
     </button>
     <button type="button" class="btn-sm btn-primary border" data-toggle="modal" data-target="#modal_factura">
-        {% trans %}Ejecucion{% endtrans %}
+         {% trans %}Ejecucion{% endtrans %}
     </button>
+    {% if is_granted('ROLE_ADMINISTRADOR') %}
+        <button id="btn_purgar_contratos" class="btn btn-sm btn-primary" type="button">Purgar Contratos</button>
+        <input id="_token_contrato_purgar" type="hidden" value="{{ csrf_token('contrato_purgar') }}">
+        <br><br>
+    {% endif %}
 </div>
-
-
-

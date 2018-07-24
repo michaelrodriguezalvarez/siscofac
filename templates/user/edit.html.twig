@@ -35,7 +35,9 @@
             {% endfor %}
             <br>
             {{ include('user/_form.html.twig') }}
+            {% if is_granted('ROLE_ADMINISTRADOR') %}
             {{ include('user/_delete_form.html.twig') }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
